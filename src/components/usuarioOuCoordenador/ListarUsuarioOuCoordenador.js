@@ -1,7 +1,7 @@
 import React from 'react'
-import { Table, Typography, Button, Space } from 'antd';
-import { EyeOutlined, EditOutlined } from '@ant-design/icons'
+import { Table, Typography } from 'antd';
 import { mockUsuarioCoordenadorList } from '../../models/usuarioOuCoordenador'
+import ListActions from '../ListActions'
 
 const columns = [
   {
@@ -43,16 +43,12 @@ const columns = [
   {
     title: 'Ações',
     key: 'operation',
-    render: () => (
-      <Space>
-        <Button shape='circle' type="primary" icon={<EditOutlined />} />
-        <Button shape='circle' type="primary" icon={<EyeOutlined />} />
-      </Space>
-    ),
+    render: () => <ListActions />,
   },
 ];
 
 const ListarUsuarioOuCoordenador = ({ tipo = 'Usuários' }) => {
+
   return (
     <Table
       title={() => <Typography.Title level={2}>Listagem dos {tipo}</Typography.Title>}

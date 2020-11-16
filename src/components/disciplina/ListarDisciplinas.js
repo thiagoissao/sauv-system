@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table, Typography } from 'antd';
 import { mockDisciplinas } from '../../models/disciplinas'
-import ListActions from '../ListActions';
+import ListActions from '../crudBasics/ListActions';
 
 const columns = [
   {

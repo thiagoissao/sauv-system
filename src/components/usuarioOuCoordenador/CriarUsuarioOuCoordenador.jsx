@@ -20,7 +20,7 @@ const CriarUsuarioOuCoordenador = ({ tipo = 'Usuário' }) => {
 
   const onFinish = values => {
     Modal.success({
-      content: `${tipo} ${values['primeiro-nome']} criado com sucesso!`,
+      content: `${tipo} ${values.primeiroNome} criado com sucesso!`,
     });
   };
 
@@ -44,12 +44,12 @@ const CriarUsuarioOuCoordenador = ({ tipo = 'Usuário' }) => {
       <Form layout='vertical' form={form} name="criar-usuario" onFinish={onFinish}>
         <Row gutter={24}>
           <Col span={8}>
-            <Form.Item name="primeiro-nome" label="Primeiro Nome" rules={[{ required: true, message: 'Obrigatório' }]}>
+            <Form.Item name="primeiroNome" label="Primeiro Nome" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Input placeholder='Maria' />
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="ultimo-nome" label="Sobrenome" rules={[{ required: true, message: 'Obrigatório' }]}>
+            <Form.Item name="ultimoNome" label="Sobrenome" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Input placeholder='Silva' />
             </Form.Item>
           </Col>

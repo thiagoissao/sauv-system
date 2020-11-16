@@ -1,7 +1,7 @@
 import React from 'react'
-import { Table, Typography} from 'antd';
+import { Table, Typography } from 'antd';
 import { mockTurmas } from '../../models/turmas'
-import ListActions from '../ListActions'
+import ListActions from '../crudBasics/ListActions'
 
 
 const columns = [

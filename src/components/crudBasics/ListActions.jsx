@@ -14,7 +14,7 @@ import {
   DeleteOutlined
 } from '@ant-design/icons'
 
-const ListActions = ({ onClickEdit, formatterView, record }) => {
+const ListActions = ({ onClickEdit, formatterView, record, disableView = false }) => {
 
   const [open, setOpen] = useState(false)
 
@@ -45,7 +45,7 @@ const ListActions = ({ onClickEdit, formatterView, record }) => {
       }
       <Space>
         <Button onClick={onClickEdit} shape='circle' type="primary" icon={<EditOutlined />} />
-        <Button onClick={() => setOpen(true)} shape='circle' type="primary" icon={<EyeOutlined />} />
+        {!disableView && <Button onClick={() => setOpen(true)} shape='circle' type="primary" icon={<EyeOutlined />} />}
         <Popconfirm
           title="Deletar esse registro?"
           onConfirm={() => message.success('Ação de deleção lógica!')}

@@ -1,17 +1,18 @@
 import React from 'react'
 import { Table, Typography } from 'antd';
-import ListActions from '../ListActions'
+import ListActions from '../crudBasics/ListActions'
+import { formatUsuarioOuCoordenador } from '../../models/usuarioOuCoordenador'
 
 const columns = [
   {
     title: 'Nome',
-    dataIndex: 'primeiro-nome',
-    key: 'primeiro-nome',
+    dataIndex: 'primeiroNome',
+    key: 'primeiroNome',
   },
   {
     title: 'Sobrenome',
-    dataIndex: 'ultimo-nome',
-    key: 'ultimo-nome',
+    dataIndex: 'ultimoNome',
+    key: 'ultimoNome',
   },
   {
     title: 'Gênero',
@@ -43,20 +44,18 @@ const columns = [
     title: 'Ações',
     key: 'operation',
     render: (record) => {
+
+
       const handleClickEdit = () => {
-        console.log(record)
-
-      }
-
-      const handleClickView = () => {
         console.log(record)
 
       }
 
       return (
         <ListActions
+          record={record}
+          formatterView={formatUsuarioOuCoordenador}
           onClickEdit={handleClickEdit}
-          onClickView={handleClickView}
         />
       )
     },

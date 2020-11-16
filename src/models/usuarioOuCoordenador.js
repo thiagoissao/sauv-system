@@ -11,7 +11,7 @@ export const mockUsuarioCoordenador = {
   estado: 'Paraná'
 }
 
-export const mockUsuarioCoordenadorList = [
+export const mockUsuarioList = [
   {
     'primeiro-nome': 'Maria',
     'ultimo-nome': 'de Oliveira',
@@ -48,4 +48,19 @@ export const mockUsuarioCoordenadorList = [
     cidade: 'Maringá',
     estado: 'Paraná'
   }
+]
+
+export const mockCoordenadorList = [
+  {
+    'primeiro-nome': 'José',
+    'ultimo-nome': 'Carlos',
+    genero: 'masculino',
+    cpf: '550.611.760-49',
+    email: 'jose@email.com',
+    celular: '44999883331',
+    logradouro: 'Rua x, 99011',
+    pais: 'Brasil',
+    cidade: 'Maringá',
+    estado: 'Paraná'
+  },
 ]

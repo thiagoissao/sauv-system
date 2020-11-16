@@ -39,7 +39,6 @@ const columns = [
     dataIndex: 'cidade',
     key: 'cidade'
   },
-
   {
     title: 'Ações',
     key: 'operation',

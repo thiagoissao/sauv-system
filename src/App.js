@@ -5,6 +5,9 @@ import CriarDisciplina from './components/disciplina/CriarDisciplina'
 import CriarTurma from './components/turma/CriarTurma'
 import CriarUsuarioOuCoordenador from './components/usuarioOuCoordenador/CriarUsuarioOuCoordenador'
 import ListarUsuarioOuCoordenador from './components/usuarioOuCoordenador/ListarUsuarioOuCoordenador'
+import { mockCoordenadorList, mockUsuarioList } from '../src/models/usuarioOuCoordenador'
+import ListarTurmas from './components/turma/ListarTurmas'
+import ListarDisciplinas from './components/disciplina/ListarDisciplinas'
 
 const menuOptions = {
   visualizar: {
@@ -12,7 +15,11 @@ const menuOptions = {
     opcoes: {
       usuarios: {
         label: 'Usuários',
-        component: () => <ListarUsuarioOuCoordenador tipo='Usuários' />
+        component: () =>
+          <ListarUsuarioOuCoordenador
+            list={mockUsuarioList}
+            tipo='Usuários'
+          />
       },
       alunos: {
         label: 'Alunos',
@@ -22,16 +29,23 @@ const menuOptions = {
         label: 'Professores'
       },
       disciplinas: {
-        label: 'Disciplinas'
+        label: 'Disciplinas',
+        component: () => <ListarDisciplinas />
       },
       turmas: {
-        label: 'Turmas'
+        label: 'Turmas',
+        component: () => <ListarTurmas />
       },
       series: {
         label: 'Séries'
       },
       coordenadores: {
-        label: 'Coordenadores'
+        label: 'Coordenadores',
+        component: () =>
+          <ListarUsuarioOuCoordenador
+            list={mockCoordenadorList}
+            tipo='Coordenadores'
+          />
       },
     }
   },

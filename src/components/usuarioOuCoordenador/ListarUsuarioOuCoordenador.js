@@ -1,6 +1,5 @@
 import React from 'react'
 import { Table, Typography } from 'antd';
-import { mockUsuarioCoordenadorList } from '../../models/usuarioOuCoordenador'
 import ListActions from '../ListActions'
 
 const columns = [
@@ -43,18 +42,36 @@ const columns = [
   {
     title: 'Ações',
     key: 'operation',
-    render: () => <ListActions />,
+    render: (record) => {
+      const handleClickEdit = () => {
+        console.log(record)
+
+      }
+
+      const handleClickView = () => {
+        console.log(record)
+
+      }
+
+      return (
+        <ListActions
+          onClickEdit={handleClickEdit}
+          onClickView={handleClickView}
+        />
+      )
+    },
   },
 ];
 
-const ListarUsuarioOuCoordenador = ({ tipo = 'Usuários' }) => {
+const ListarUsuarioOuCoordenador = ({ tipo = 'Usuários', list }) => {
 
   return (
     <Table
       title={() => <Typography.Title level={2}>Listagem dos {tipo}</Typography.Title>}
       columns={columns}
-      dataSource={mockUsuarioCoordenadorList}
-      scroll={{ x: 1300 }} />
+      dataSource={list}
+      scroll={{ x: 1300 }}
+    />
   )
 }
 export default ListarUsuarioOuCoordenador

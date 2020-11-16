@@ -30,6 +30,7 @@ export default ({ tipo = 'Disciplina' }) => {
     form.setFieldsValue({
       'nome-disciplina': 'Matemática',
       'carga-horaria': '68',
+      'nome-professor': 'Matheus'
     });
   };
 
@@ -52,6 +53,11 @@ export default ({ tipo = 'Disciplina' }) => {
           <Col span={8}>
             <Form.Item name="carga-horaria" label="Carga horaria" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Input placeholder='68' />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item name="nome-professor" label="Nome Professor" rules={[{ required: true, message: 'Obrigatório' }]}>
+              <Input placeholder='Matheus' />
             </Form.Item>
           </Col>
         </Row>

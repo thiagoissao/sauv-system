@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import './App.less'
 import Layout from './Layout'
+import CriarDisciplina from './components/disciplina/CriarDisciplina'
+import CriarTurma from './components/turma/CriarTurma'
 
 const menuOptions = {
   visualizar: {
@@ -44,10 +46,12 @@ const menuOptions = {
         label: 'Professores'
       },
       disciplinas: {
-        label: 'Disciplinas'
+        label: 'Disciplinas',
+        component: () => <CriarDisciplina />
       },
       turmas: {
-        label: 'Turmas'
+        label: 'Turmas',
+        component: () => <CriarTurma />
       },
       series: {
         label: 'Séries'

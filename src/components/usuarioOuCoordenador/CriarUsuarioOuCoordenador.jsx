@@ -1,4 +1,5 @@
 import React from 'react'
+import { mockUsuarioCoordenador } from '../../models/usuarioOuCoordenador'
 import {
   Form,
   Input,
@@ -28,18 +29,7 @@ const CriarUsuarioOuCoordenador = ({ tipo = 'Usuário' }) => {
   };
 
   const onFill = () => {
-    form.setFieldsValue({
-      'primeiro-nome': 'João',
-      'ultimo-nome': 'Souza',
-      genero: 'masculino',
-      cpf: '550.611.760-49',
-      email: 'joaaao@email.com',
-      celular: '4499999999',
-      logradouro: 'Rua x, 99011',
-      pais: 'Brasil',
-      cidade: 'Maringá',
-      estado: 'Paraná'
-    });
+    form.setFieldsValue(mockUsuarioCoordenador);
   };
 
   return (

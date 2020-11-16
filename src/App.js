@@ -3,7 +3,8 @@ import './App.less'
 import Layout from './Layout'
 import CriarDisciplina from './components/disciplina/CriarDisciplina'
 import CriarTurma from './components/turma/CriarTurma'
-import CriarUsuarioOuCoordenador from './components/usuario/CriarUsuarioOuCoordenador'
+import CriarUsuarioOuCoordenador from './components/usuarioOuCoordenador/CriarUsuarioOuCoordenador'
+import ListarUsuarioOuCoordenador from './components/usuarioOuCoordenador/ListarUsuarioOuCoordenador'
 
 const menuOptions = {
   visualizar: {
@@ -11,7 +12,7 @@ const menuOptions = {
     opcoes: {
       usuarios: {
         label: 'Usuários',
-        component: () => <h1>Teste usuário</h1>
+        component: () => <ListarUsuarioOuCoordenador tipo='Usuários' />
       },
       alunos: {
         label: 'Alunos',

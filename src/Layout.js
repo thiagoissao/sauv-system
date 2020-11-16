@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Layout as AntdLayout, Space } from 'antd';
+import { Menu, Layout as AntdLayout } from 'antd';
 import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 
 const { SubMenu } = Menu;
@@ -14,7 +14,7 @@ const Layout = ({ menuOptions, onClick, selectedKeys }) => {
           Sistema Sauv
       </Header>
         <AntdLayout>
-          <Sider>
+          <Sider style={{ background: 'white' }}>
             <Menu
               onClick={onClick}
               selectedKeys={selectedKeys}
@@ -39,7 +39,7 @@ const Layout = ({ menuOptions, onClick, selectedKeys }) => {
               }
             </Menu>
           </Sider>
-          <Content style={{ padding: 16 }}>
+          <Content style={{ padding: 16, background: '#e1f5fe' }}>
             {
               Object.entries(menuOptions).map(([chave, { opcoes }]) =>
                 Object.entries(opcoes).map(([itemChave, { component }]) => (

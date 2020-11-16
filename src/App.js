@@ -3,6 +3,7 @@ import './App.less'
 import Layout from './Layout'
 import CriarDisciplina from './components/disciplina/CriarDisciplina'
 import CriarTurma from './components/turma/CriarTurma'
+import CriarUsuarioOuCoordenador from './components/usuario/CriarUsuarioOuCoordenador'
 
 const menuOptions = {
   visualizar: {
@@ -38,6 +39,7 @@ const menuOptions = {
     opcoes: {
       usuarios: {
         label: 'Usuários',
+        component: () => <CriarUsuarioOuCoordenador />
       },
       alunos: {
         label: 'Alunos'
@@ -57,33 +59,8 @@ const menuOptions = {
         label: 'Séries'
       },
       coordenadores: {
-        label: 'Coordenadores'
-      },
-    }
-  },
-  alterar: {
-    label: 'Alterar',
-    opcoes: {
-      usuarios: {
-        label: 'Usuários',
-      },
-      alunos: {
-        label: 'Alunos'
-      },
-      professores: {
-        label: 'Professores'
-      },
-      disciplinas: {
-        label: 'Disciplinas'
-      },
-      turmas: {
-        label: 'Turmas'
-      },
-      series: {
-        label: 'Séries'
-      },
-      coordenadores: {
-        label: 'Coordenadores'
+        label: 'Coordenadores',
+        component: () => <CriarUsuarioOuCoordenador tipo='Coordenador(a)' />
       },
     }
   },

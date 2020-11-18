@@ -17,7 +17,6 @@ export default ({ tipo = 'Serie' }) => {
   const [form] = Form.useForm();
 
   const onFinish = values => {
-    console.log(values)
     Modal.success({
       content: `${tipo} criada com sucesso!`,
     });

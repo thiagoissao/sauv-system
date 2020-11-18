@@ -54,6 +54,7 @@ const columns = [
           record={record}
           formatterView={formatTurmas}
           onClickEdit={handleClickEdit}
+          disableView
         />
       )
     }

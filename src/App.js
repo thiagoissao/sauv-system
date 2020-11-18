@@ -5,6 +5,7 @@ import CriarDisciplina from './components/disciplina/CriarDisciplina'
 import CriarTurma from './components/turma/CriarTurma'
 import CriarUsuarioOuCoordenador from './components/usuarioOuCoordenador/CriarUsuarioOuCoordenador'
 import ListarUsuarioOuCoordenador from './components/usuarioOuCoordenador/ListarUsuarioOuCoordenador'
+import CriarAluno from './components/aluno/CriarAluno'
 
 const menuOptions = {
   visualizar: {
@@ -43,7 +44,8 @@ const menuOptions = {
         component: () => <CriarUsuarioOuCoordenador />
       },
       alunos: {
-        label: 'Alunos'
+        label: 'Alunos',
+        component: () => <CriarAluno />
       },
       professores: {
         label: 'Professores'

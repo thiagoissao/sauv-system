@@ -1,16 +1,15 @@
 import React from 'react'
 import { mockUsuarioCoordenador } from '../../models/usuarioOuCoordenador'
+import Input from '../Input'
+import FormCard from '../FormCard'
 import {
   Form,
-  Input,
   Button,
   Select,
   Col,
   Row,
   Space,
   Modal,
-  Typography,
-  Divider
 } from 'antd';
 
 const { Option } = Select;
@@ -33,14 +32,7 @@ const CriarUsuarioOuCoordenador = ({ tipo = 'Usuário' }) => {
   };
 
   return (
-    <>
-      <Row gutter={24}>
-        <Col span={24}>
-          <Divider orientation="left" plain>
-            <Typography.Title level={2}>Cadastro de {tipo}</Typography.Title>
-          </Divider>
-        </Col>
-      </Row>
+    <FormCard title={`Cadastro de ${tipo}`}>
       <Form layout='vertical' form={form} name="criar-usuario" onFinish={onFinish}>
         <Row gutter={24}>
           <Col span={8}>
@@ -55,14 +47,17 @@ const CriarUsuarioOuCoordenador = ({ tipo = 'Usuário' }) => {
           </Col>
           <Col span={8}>
             <Form.Item name="genero" label="Gênero" rules={[{ required: true, message: 'Obrigatório' }]}>
-              <Select
-                placeholder="Selecione o gênero"
-                allowClear
-              >
-                <Option value="masculino">Masculino</Option>
-                <Option value="feminino">Feminino</Option>
-                <Option value="outro">Outro</Option>
-              </Select>
+              <div className="testando">
+                <Select
+                  size='large'
+                  placeholder="Selecione o gênero"
+                  allowClear
+                >
+                  <Option value="masculino">Masculino</Option>
+                  <Option value="feminino">Feminino</Option>
+                  <Option value="outro">Outro</Option>
+                </Select>
+              </div>
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -126,7 +121,7 @@ const CriarUsuarioOuCoordenador = ({ tipo = 'Usuário' }) => {
           </Space>
         </Form.Item>
       </Form>
-    </>
+    </FormCard>
   );
 };
 export default CriarUsuarioOuCoordenador

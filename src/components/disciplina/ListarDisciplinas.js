@@ -29,7 +29,7 @@ const columns = [
 const ListarTurmas = ({ tipo = 'Turmas' }) => {
   return (
     <Table
-      title={() => <Typography.Title level={2}>Listagem das {tipo}</Typography.Title>}
+      title={() => <Typography.Title level={3}>Listagem das {tipo}</Typography.Title>}
       columns={columns}
       dataSource={mockDisciplinas}
       scroll={{ x: 1300 }} />

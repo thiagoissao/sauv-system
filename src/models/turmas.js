@@ -52,3 +52,11 @@ export const mockTurmas = [
     ]
   }
 ]
+
+export const formatTurmas = {
+  'nome-turma': 'Nome Turma',
+  'serie-turma': 'Série Turma',
+  'disciplinas': 'Disciplinas',
+  'professores': 'Professores',
+  'alunos': 'Alunos',
+}

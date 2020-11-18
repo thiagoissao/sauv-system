@@ -1,6 +1,19 @@
+export const formatUsuarioOuCoordenador = {
+  primeiroNome: 'Nome',
+  ultimoNome: 'Sobrenome',
+  genero: 'Gênero',
+  cpf: 'CPF',
+  email: 'Email',
+  celular: 'Telefone Celular',
+  logradouro: 'Logradouro',
+  pais: 'País',
+  cidade: 'Cidade',
+  estado: 'Estado'
+}
+
 export const mockUsuarioCoordenador = {
-  'primeiro-nome': 'João',
-  'ultimo-nome': 'Souza',
+  primeiroNome: 'João',
+  ultimoNome: 'Souza',
   genero: 'masculino',
   cpf: '550.611.760-49',
   email: 'joaaao@email.com',
@@ -11,10 +24,10 @@ export const mockUsuarioCoordenador = {
   estado: 'Paraná'
 }
 
-export const mockUsuarioCoordenadorList = [
+export const mockUsuarioList = [
   {
-    'primeiro-nome': 'Maria',
-    'ultimo-nome': 'de Oliveira',
+    primeiroNome: 'Maria',
+    ultimoNome: 'de Oliveira',
     genero: 'feminino',
     cpf: '550.611.760-49',
     email: 'maria@email.com',
@@ -25,8 +38,8 @@ export const mockUsuarioCoordenadorList = [
     estado: 'Paraná'
   },
   {
-    'primeiro-nome': 'João',
-    'ultimo-nome': 'Souza',
+    primeiroNome: 'João',
+    ultimoNome: 'Souza',
     genero: 'masculino',
     cpf: '550.611.760-49',
     email: 'joaaao@email.com',
@@ -37,8 +50,8 @@ export const mockUsuarioCoordenadorList = [
     estado: 'Paraná'
   },
   {
-    'primeiro-nome': 'Larissa',
-    'ultimo-nome': 'Souza',
+    primeiroNome: 'Larissa',
+    ultimoNome: 'Souza',
     genero: 'feminino',
     cpf: '550.611.760-49',
     email: 'larissa@email.com',
@@ -48,4 +61,19 @@ export const mockUsuarioCoordenadorList = [
     cidade: 'Maringá',
     estado: 'Paraná'
   }
+]
+
+export const mockCoordenadorList = [
+  {
+    primeiroNome: 'José',
+    ultimoNome: 'Carlos',
+    genero: 'masculino',
+    cpf: '550.611.760-49',
+    email: 'jose@email.com',
+    celular: '44999883331',
+    logradouro: 'Rua x, 99011',
+    pais: 'Brasil',
+    cidade: 'Maringá',
+    estado: 'Paraná'
+  },
 ]

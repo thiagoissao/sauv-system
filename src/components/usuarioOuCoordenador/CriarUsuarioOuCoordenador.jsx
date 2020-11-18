@@ -1,16 +1,15 @@
 import React from 'react'
 import { mockUsuarioCoordenador } from '../../models/usuarioOuCoordenador'
+import Input from '../Input'
+import FormCard from '../FormCard'
 import {
   Form,
-  Input,
   Button,
   Select,
   Col,
   Row,
   Space,
   Modal,
-  Typography,
-  Divider
 } from 'antd';
 
 const { Option } = Select;
@@ -20,7 +19,7 @@ const CriarUsuarioOuCoordenador = ({ tipo = 'Usuário' }) => {
 
   const onFinish = values => {
     Modal.success({
-      content: `${tipo} ${values['primeiro-nome']} criado com sucesso!`,
+      content: `${tipo} ${values.primeiroNome} criado com sucesso!`,
     });
   };
 
@@ -33,36 +32,32 @@ const CriarUsuarioOuCoordenador = ({ tipo = 'Usuário' }) => {
   };
 
   return (
-    <>
-      <Row gutter={24}>
-        <Col span={24}>
-          <Divider orientation="left" plain>
-            <Typography.Title level={2}>Cadastro de {tipo}</Typography.Title>
-          </Divider>
-        </Col>
-      </Row>
+    <FormCard title={`Cadastro de ${tipo}`}>
       <Form layout='vertical' form={form} name="criar-usuario" onFinish={onFinish}>
         <Row gutter={24}>
           <Col span={8}>
-            <Form.Item name="primeiro-nome" label="Primeiro Nome" rules={[{ required: true, message: 'Obrigatório' }]}>
+            <Form.Item name="primeiroNome" label="Primeiro Nome" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Input placeholder='Maria' />
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="ultimo-nome" label="Sobrenome" rules={[{ required: true, message: 'Obrigatório' }]}>
+            <Form.Item name="ultimoNome" label="Sobrenome" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Input placeholder='Silva' />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item name="genero" label="Gênero" rules={[{ required: true, message: 'Obrigatório' }]}>
-              <Select
-                placeholder="Selecione o gênero"
-                allowClear
-              >
-                <Option value="masculino">Masculino</Option>
-                <Option value="feminino">Feminino</Option>
-                <Option value="outro">Outro</Option>
-              </Select>
+              <div className="testando">
+                <Select
+                  size='large'
+                  placeholder="Selecione o gênero"
+                  allowClear
+                >
+                  <Option value="masculino">Masculino</Option>
+                  <Option value="feminino">Feminino</Option>
+                  <Option value="outro">Outro</Option>
+                </Select>
+              </div>
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -126,7 +121,7 @@ const CriarUsuarioOuCoordenador = ({ tipo = 'Usuário' }) => {
           </Space>
         </Form.Item>
       </Form>
-    </>
+    </FormCard>
   );
 };
 export default CriarUsuarioOuCoordenador

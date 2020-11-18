@@ -1,6 +1,5 @@
 import {
   Form,
-  Input,
   Button,
   Select,
   Col,
@@ -10,6 +9,8 @@ import {
   Typography,
   Divider
 } from 'antd';
+import FormCard from '../FormCard';
+import Input from '../Input'
 
 const { Option } = Select;
 
@@ -33,14 +34,7 @@ export default ({ tipo = 'Turma' }) => {
   };
 
   return (
-    <>
-      <Row gutter={24}>
-        <Col span={24}>
-          <Divider orientation="left" plain>
-            <Typography.Title level={2}>Cadastro de {tipo}</Typography.Title>
-          </Divider>
-        </Col>
-      </Row>
+    <FormCard title={`Cadastro de ${tipo}`}>
       <Form layout='vertical' form={form} name="nome-disciplina" onFinish={onFinish}>
         <Row gutter={24}>
           <Col span={8}>
@@ -63,6 +57,6 @@ export default ({ tipo = 'Turma' }) => {
           </Space>
         </Form.Item>
       </Form>
-    </>
+    </FormCard>
   );
 };

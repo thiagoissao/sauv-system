@@ -65,7 +65,7 @@ const ListarUsuarioOuCoordenador = ({ tipo = 'Usuários', list }) => {
 
   return (
     <Table
-      title={() => <Typography.Title level={2}>Listagem dos {tipo}</Typography.Title>}
+      title={() => <Typography.Title level={3}>Listagem dos {tipo}</Typography.Title>}
       columns={columns}
       dataSource={list}
       scroll={{ x: 1300 }}

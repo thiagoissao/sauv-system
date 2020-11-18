@@ -24,7 +24,7 @@ const columns = [
   },
 ];
 
-const ListarSerie = ({ tipo = 'Serie' }) => {
+const ListarSerie = ({ tipo = 'Séries' }) => {
   return (
     <Table
       title={() => <Typography.Title level={3}>Listagem das {tipo}</Typography.Title>}

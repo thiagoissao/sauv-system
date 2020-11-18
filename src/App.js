@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.less'
 import Layout from './Layout'
 import CriarDisciplina from './components/disciplina/CriarDisciplina'
@@ -13,7 +13,6 @@ import ListarSerie from './components/serie/ListarSerie'
 import { UnorderedListOutlined, FormOutlined } from '@ant-design/icons'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Login from './components/login/Login';
-
 
 const menuOptions = {
   visualizar: {
@@ -69,7 +68,7 @@ const menuOptions = {
         label: 'Alunos'
       },
       professores: {
-        label: 'Professores'
+        label: 'Professores',
       },
       disciplinas: {
         label: 'Disciplinas',
@@ -92,7 +91,7 @@ const menuOptions = {
 }
 
 const App = () => {
-  const [loggedIn, setLoggedIn] = useState(true)
+  const [loggedIn] = useState(!!localStorage.getItem("usuario"))
   const [selectedKeys, setSelectedKeys] = useState('visualizar:usuarios')
 
   return (

@@ -22,7 +22,7 @@ const columns = [
   {
     title: 'Ações',
     key: 'operation',
-    render: () => <ListActions />
+    render: () => <ListActions disableView/>
   },
 ];
 

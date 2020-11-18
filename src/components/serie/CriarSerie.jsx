@@ -49,7 +49,7 @@ import {
           <Row gutter={24}>
             <Col span={8}>
               <Form.Item name="serie" label="Série" rules={[{ required: true, message: 'Obrigatório' }]}>
-                <Input placeholder='8' />
+                <Input placeholder='8' onkeypress='return onlynumber();'/>
               </Form.Item>
             </Col>
             <Col span={8}>

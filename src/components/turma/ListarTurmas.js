@@ -2,6 +2,7 @@ import React from 'react'
 import { Table, Typography } from 'antd';
 import { mockTurmas } from '../../models/turmas'
 import ListActions from '../crudBasics/ListActions'
+import { formatTurmas } from '../../models/turmas'
 
 
 const columns = [
@@ -42,7 +43,20 @@ const columns = [
   {
     title: 'Ações',
     key: 'operation',
-    render: () => <ListActions />
+    render: (record) => {
+
+      const handleClickEdit = () => {
+        console.log(record)
+      }
+      
+      return (
+        <ListActions 
+          record={record}
+          formatterView={formatTurmas}
+          onClickEdit={handleClickEdit}
+        />
+      )
+    }
   },
 ];
 

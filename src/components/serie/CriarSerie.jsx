@@ -2,7 +2,6 @@ import {
     Form,
     Input,
     Button,
-    Select,
     Col,
     Row,
     Space,
@@ -12,12 +11,14 @@ import {
     Checkbox
   } from 'antd';
   
-  //const { Option } = Select;
-  
+  //const { Option } = Select; 
+  const style = {padding: '8px 0'};
+
   export default ({ tipo = 'Serie' }) => {
     const [form] = Form.useForm();
-  
+    
     const onFinish = values => {
+      console.log(values)
       Modal.success({
         content: `${tipo} criada com sucesso!`,
       });
@@ -30,6 +31,8 @@ import {
     const onFill = () => {
       form.setFieldsValue({
         'serie': '8',
+        'disciplinas': [ 'arte', 'ensReligioso', 'biologia', 
+              'ciencias', 'ingles', 'matematica', 'portugues'],
       });
     };
   
@@ -52,41 +55,41 @@ import {
             <Col span={8}>
               <Form.Item name="disciplinas" label="Disciplinas desta série" rules={[{ required: true, message: 'Obrigatório' }]}>
                 <Checkbox.Group style = {{width:'100%'}}>
-                  <Row>
-                    <Col span={8}>
+                  <Row gutter={[16, 8]}>
+                    <Col span={9}>
                       <Checkbox value = "arte">Arte</Checkbox>
                     </Col>
-                    <Col span={8}>
+                    <Col span={9}>
                       <Checkbox value = "biologia">Biologia</Checkbox>
                     </Col>
-                    <Col span={8}>
+                    <Col span={9}>
                       <Checkbox value = "ciencias">Ciências</Checkbox>
                     </Col>
-                    <Col span={8}>
+                    <Col span={9}>
                       <Checkbox value = "edFisica">Ed.Fisica</Checkbox>
                     </Col>
-                    <Col span={8}>
+                    <Col span={9}>
                       <Checkbox value = "ensReligioso">Ens.Religioso</Checkbox>
                     </Col>
-                    <Col span={8}>
+                    <Col span={9}>
                       <Checkbox value = "fisica">Física</Checkbox>
                     </Col>
-                    <Col span={8}>
+                    <Col span={9}>
                       <Checkbox value = "geografia">Geografia</Checkbox>
                     </Col>
-                    <Col span={8}>
+                    <Col span={9}>
                       <Checkbox value = "historia">Hisória</Checkbox>
                     </Col>
-                    <Col span={8}>
+                    <Col span={9}>
                       <Checkbox value = "ingles">Inglês</Checkbox>
                     </Col>
-                    <Col span={8}>
+                    <Col span={9}>
                       <Checkbox value = "matematica">Matemática</Checkbox>
                     </Col>
-                    <Col span={8}>
+                    <Col span={9}>
                       <Checkbox value = "portugues">Português</Checkbox>
                     </Col>
-                    <Col span={8}>
+                    <Col span={9}>
                       <Checkbox value = "quimica">Química</Checkbox>
                     </Col>
                   </Row>

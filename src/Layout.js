@@ -21,11 +21,16 @@ const Layout = ({ menuOptions, onClick, selectedKeys }) => {
               mode="inline"
             >
               {
-                Object.entries(menuOptions).map(([chave, { label, opcoes }]) => {
+                Object.entries(menuOptions).map(([chave, { icon, label, opcoes }]) => {
                   return (
                     <SubMenu
                       key={chave}
-                      title={label}
+                      title={
+                        <span>
+                          {icon}
+                          <span>{label}</span>
+                        </span>
+                      }
                     >
                       {Object.entries(opcoes).map(([itemChave, { label }]) => (
                         <Menu.Item key={`${chave}:${itemChave}`}>

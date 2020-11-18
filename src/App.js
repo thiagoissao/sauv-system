@@ -11,6 +11,9 @@ import ListarTurmas from './components/turma/ListarTurmas'
 import ListarDisciplinas from './components/disciplina/ListarDisciplinas'
 import ListarSerie from './components/serie/ListarSerie'
 import { UnorderedListOutlined, FormOutlined } from '@ant-design/icons'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
+import Login from './components/login/Login';
+
 
 const menuOptions = {
   visualizar: {
@@ -89,15 +92,25 @@ const menuOptions = {
 }
 
 const App = () => {
-
+  const [loggedIn, setLoggedIn] = useState(true)
   const [selectedKeys, setSelectedKeys] = useState('visualizar:usuarios')
 
   return (
-    <Layout
-      onClick={e => setSelectedKeys(e.key)}
-      selectedKeys={selectedKeys}
-      menuOptions={menuOptions}
-    />
+    <>
+      <Router>
+        <Switch>
+          <Route path='/login' component={Login} />
+          <Route exact path="/">
+            {loggedIn ? <Redirect to="/visualizar/usuarios" /> : <Redirect to="/login" />}
+          </Route>
+          <Layout
+            onClick={e => setSelectedKeys(e.key)}
+            selectedKeys={selectedKeys}
+            menuOptions={menuOptions}
+          />
+        </Switch>
+      </Router>
+    </>
   );
 }
 

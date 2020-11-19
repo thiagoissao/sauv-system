@@ -3,12 +3,20 @@ import { Menu, Layout as AntdLayout, Row, Col } from 'antd';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
 import Login from './components/login/Login';
 import LoginButton from './components/login/LoginButton';
+import store from './redux/login';
 
 const { SubMenu } = Menu;
 
-const Layout = ({ menuOptions, onClick, selectedKeys }) => {
-  const { Content, Header, Sider } = AntdLayout
 
+const Layout = ({
+  menuOptions,
+  onClick,
+  selectedKeys,
+}) => {
+  const { Content, Header, Sider } = AntdLayout
+  const { loggedIn } = store.getState()
+
+  if (!loggedIn) return <Redirect to="/login" />
 
   return (
     <AntdLayout>
@@ -56,15 +64,15 @@ const Layout = ({ menuOptions, onClick, selectedKeys }) => {
           </Menu>
         </Sider>
         <Content style={{ padding: 16, background: '#e1f5fe' }}>
-          {
-            Object.entries(menuOptions).map(([chave, { opcoes }]) =>
-              Object.entries(opcoes).map(([itemChave, { component }]) => (
-                <Switch>
+          <Switch>
+            {
+              Object.entries(menuOptions).map(([chave, { opcoes }]) =>
+                Object.entries(opcoes).map(([itemChave, { component }]) => (
                   <Route path={`/${chave}/${itemChave}`} component={component} />
-                </Switch>
-              ))
-            )
-          }
+                ))
+              )
+            }
+          </Switch>
         </Content>
       </AntdLayout>
     </AntdLayout>

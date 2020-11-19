@@ -16,6 +16,7 @@ import ListarSerie from './components/serie/ListarSerie'
 import { UnorderedListOutlined, FormOutlined } from '@ant-design/icons'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Login from './components/login/Login';
+import store from './redux/login'
 
 const menuOptions = {
   visualizar: {
@@ -99,8 +100,8 @@ const menuOptions = {
 }
 
 const App = () => {
-  const [loggedIn] = useState(!!localStorage.getItem("usuario"))
   const [selectedKeys, setSelectedKeys] = useState('visualizar:usuarios')
+  const { loggedIn } = store.getState()
 
   return (
     <>
@@ -110,11 +111,17 @@ const App = () => {
           <Route exact path="/">
             {loggedIn ? <Redirect to="/visualizar/usuarios" /> : <Redirect to="/login" />}
           </Route>
-          <Layout
-            onClick={e => setSelectedKeys(e.key)}
-            selectedKeys={selectedKeys}
-            menuOptions={menuOptions}
-          />
+          {
+            <Layout
+              loggedIn={loggedIn}
+              onClick={e => setSelectedKeys(e.key)}
+              selectedKeys={selectedKeys}
+              menuOptions={menuOptions}
+            />
+          }
+          {
+            !loggedIn && <Redirect to="/login" />
+          }
         </Switch>
       </Router>
     </>

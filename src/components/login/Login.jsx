@@ -2,6 +2,7 @@ import React from 'react';
 import { Row, Col, Card, Form, Button, Input, Typography, message } from 'antd'
 import { users } from '../../models/users'
 import { useHistory } from 'react-router-dom'
+import store, { loginUser } from '../../redux/login';
 
 const Login = () => {
   const history = useHistory()
@@ -10,9 +11,12 @@ const Login = () => {
     if (filter.length === 0) {
       return message.error('Usuário ou senha estão incorretas')
     }
+    store.dispatch(loginUser())
     localStorage.setItem("usuario", usuario)
     history.push('/visualizar/usuarios');
   };
+
+  console.log(store.getState())
 
   return (
     <Card

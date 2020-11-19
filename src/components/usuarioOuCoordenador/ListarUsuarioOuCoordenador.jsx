@@ -43,18 +43,10 @@ const columns = [
     title: 'Ações',
     key: 'operation',
     render: (record) => {
-
-
-      const handleClickEdit = () => {
-        console.log(record)
-
-      }
-
       return (
         <ListActions
           record={record}
           formatterView={formatUsuarioOuCoordenador}
-          onClickEdit={handleClickEdit}
         />
       )
     },

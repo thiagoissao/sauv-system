@@ -13,10 +13,16 @@ import {
   EditOutlined,
   DeleteOutlined
 } from '@ant-design/icons'
+import { useHistory } from 'react-router-dom';
 
-const ListActions = ({ onClickEdit, formatterView, record, disableView = false }) => {
-
+const ListActions = ({ formatterView, record, disableView = false }) => {
+  const history = useHistory()
   const [open, setOpen] = useState(false)
+
+
+  const handleClickEdit = () => {
+    history.push(`${history.location.pathname}/${record.id}`)
+  }
 
   return (
     <>
@@ -44,7 +50,7 @@ const ListActions = ({ onClickEdit, formatterView, record, disableView = false }
         )
       }
       <Space>
-        <Button onClick={onClickEdit} shape='circle' type="primary" icon={<EditOutlined />} />
+        <Button onClick={handleClickEdit} shape='circle' type="primary" icon={<EditOutlined />} />
         {!disableView && <Button onClick={() => setOpen(true)} shape='circle' type="primary" icon={<EyeOutlined />} />}
         <Popconfirm
           title="Deletar esse registro?"

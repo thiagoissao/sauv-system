@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import './App.less'
 import Layout from './Layout'
 import CriarDisciplina from './components/disciplina/CriarDisciplina'
@@ -16,7 +16,7 @@ import ListarSerie from './components/serie/ListarSerie'
 import { UnorderedListOutlined, FormOutlined } from '@ant-design/icons'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Login from './components/login/Login';
-import store from './redux/login'
+import store from './redux/auth'
 
 const menuOptions = {
   visualizar: {

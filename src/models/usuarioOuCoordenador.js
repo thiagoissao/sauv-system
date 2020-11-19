@@ -1,4 +1,5 @@
 export const formatUsuarioOuCoordenador = {
+  id: 1,
   primeiroNome: 'Nome',
   ultimoNome: 'Sobrenome',
   genero: 'Gênero',
@@ -12,6 +13,7 @@ export const formatUsuarioOuCoordenador = {
 }
 
 export const mockUsuarioCoordenador = {
+  id: 2,
   primeiroNome: 'João',
   ultimoNome: 'Souza',
   genero: 'masculino',
@@ -26,6 +28,7 @@ export const mockUsuarioCoordenador = {
 
 export const mockUsuarioList = [
   {
+    id: 3,
     primeiroNome: 'Maria',
     ultimoNome: 'de Oliveira',
     genero: 'feminino',
@@ -38,6 +41,7 @@ export const mockUsuarioList = [
     estado: 'Paraná'
   },
   {
+    id: 4,
     primeiroNome: 'João',
     ultimoNome: 'Souza',
     genero: 'masculino',
@@ -50,6 +54,7 @@ export const mockUsuarioList = [
     estado: 'Paraná'
   },
   {
+    id: 5,
     primeiroNome: 'Larissa',
     ultimoNome: 'Souza',
     genero: 'feminino',
@@ -65,6 +70,7 @@ export const mockUsuarioList = [
 
 export const mockCoordenadorList = [
   {
+    id: 6,
     primeiroNome: 'José',
     ultimoNome: 'Carlos',
     genero: 'masculino',

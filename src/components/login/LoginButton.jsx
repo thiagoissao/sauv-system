@@ -2,7 +2,7 @@ import React from 'react';
 import { Popconfirm, Button } from 'antd'
 import { LogoutOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom'
-import store, { logoffUser } from '../../redux/login';
+import store, { logoffUser } from '../../redux/auth';
 
 const LoginButton = () => {
   const history = useHistory()

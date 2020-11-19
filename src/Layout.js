@@ -3,7 +3,7 @@ import { Menu, Layout as AntdLayout, Row, Col } from 'antd';
 import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
 import Login from './components/login/Login';
 import LoginButton from './components/login/LoginButton';
-import store from './redux/login';
+import store from './redux/auth';
 
 const { SubMenu } = Menu;
 

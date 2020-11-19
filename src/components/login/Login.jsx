@@ -6,17 +6,16 @@ import store, { loginUser } from '../../redux/login';
 
 const Login = () => {
   const history = useHistory()
+
   const handleLogin = ({ usuario, senha }) => {
+
     const filter = users.filter(user => user.senha === senha && user.usuario === usuario)
     if (filter.length === 0) {
       return message.error('Usuário ou senha estão incorretas')
     }
-    store.dispatch(loginUser())
-    localStorage.setItem("usuario", usuario)
+    store.dispatch(loginUser({ usuario, senha }))
     history.push('/visualizar/usuarios');
   };
-
-  console.log(store.getState())
 
   return (
     <Card

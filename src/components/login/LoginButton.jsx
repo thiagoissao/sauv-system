@@ -2,12 +2,13 @@ import React from 'react';
 import { Popconfirm, Button } from 'antd'
 import { LogoutOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom'
+import store, { logoffUser } from '../../redux/login';
 
 const LoginButton = () => {
   const history = useHistory()
 
   const handleLogout = () => {
-    localStorage.clear()
+    store.dispatch(logoffUser())
     history.push('/login')
   }
 

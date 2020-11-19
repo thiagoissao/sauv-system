@@ -7,6 +7,8 @@ import CriarSerie from './components/serie/CriarSerie'
 import CriarUsuarioOuCoordenador from './components/usuarioOuCoordenador/CriarUsuarioOuCoordenador'
 import ListarUsuarioOuCoordenador from './components/usuarioOuCoordenador/ListarUsuarioOuCoordenador'
 import CriarAluno from './components/aluno/CriarAluno'
+import ListarAluno from "./components/aluno/ListarAluno"
+import { mockAlunoList } from "../src/models/aluno"
 import { mockCoordenadorList, mockUsuarioList } from '../src/models/usuarioOuCoordenador'
 import ListarTurmas from './components/turma/ListarTurmas'
 import ListarDisciplinas from './components/disciplina/ListarDisciplinas'
@@ -30,7 +32,11 @@ const menuOptions = {
       },
       alunos: {
         label: 'Alunos',
-        component: () => <h1>Teste Alunos</h1>
+        component: () =>
+          <ListarAluno
+            list={mockAlunoList}
+            tipo="Alunos"
+          />
       },
       professores: {
         label: 'Professores'

@@ -28,6 +28,17 @@ const Layout = ({
             </h1>
           </Col>
           <Col>
+          </Col>
+          <Col>
+          </Col>
+          <Col>
+          </Col>
+          <Col>
+            <h1 style={{ color: 'white' }}>
+              <b>Logado: {localStorage.getItem('usuario')}</b>
+            </h1>
+          </Col>
+          <Col>
             <LoginButton />
           </Col>
         </Row>

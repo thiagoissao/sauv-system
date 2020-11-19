@@ -13,7 +13,7 @@ import { mockCoordenadorList, mockUsuarioList } from '../src/models/usuarioOuCoo
 import ListarTurmas from './components/turma/ListarTurmas'
 import ListarDisciplinas from './components/disciplina/ListarDisciplinas'
 import ListarSerie from './components/serie/ListarSerie'
-import { UnorderedListOutlined, FormOutlined } from '@ant-design/icons'
+import { UnorderedListOutlined, FormOutlined, BarChartOutlined, LockOutlined } from '@ant-design/icons'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Login from './components/login/Login';
 import store from './redux/login'
@@ -95,6 +95,27 @@ const menuOptions = {
         label: 'Coordenadores',
         component: () => <CriarUsuarioOuCoordenador tipo='Coordenador(a)' />
       },
+    }
+  },
+  trancar: {
+    icon: <LockOutlined />,
+    label: 'Trancar',
+    opcoes: {
+      alunos: {
+        label: 'Alunos',
+      },
+      turmas: {
+        label: 'Turmas',
+      }
+    }
+  },
+  relatorio: {
+    icon: <BarChartOutlined />,
+    label: 'Relatorio',
+    opcoes: {
+      turmas: {
+        label: 'Turmas',
+      }
     }
   },
 }

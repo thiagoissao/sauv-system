@@ -30,7 +30,7 @@ const ListActions = ({ onClickEdit, formatterView, record, disableView = false }
           >
             {
               Object.entries(record).map(([key, value]) => (
-                <Row gutter={24}>
+                <Row gutter={24} key={value}>
                   <Col>
                     <p><b>{formatterView[key]}:</b></p>
                   </Col>

@@ -7,7 +7,6 @@ const Login = () => {
   const history = useHistory()
   const handleLogin = ({ usuario, senha }) => {
     const filter = users.filter(user => user.senha === senha && user.usuario === usuario)
-    console.log(filter)
     if (filter.length === 0) {
       return message.error('Usuário ou senha estão incorretas')
     }

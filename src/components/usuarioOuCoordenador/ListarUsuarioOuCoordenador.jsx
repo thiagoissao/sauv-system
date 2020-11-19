@@ -2,6 +2,7 @@ import React from 'react'
 import { Table, Typography } from 'antd';
 import ListActions from '../crudBasics/ListActions'
 import { formatUsuarioOuCoordenador } from '../../models/usuarioOuCoordenador'
+import CriarUsuarioOuCoordenador from './CriarUsuarioOuCoordenador';
 
 const columns = [
   {
@@ -45,6 +46,11 @@ const columns = [
     render: (record) => {
       return (
         <ListActions
+          componentForm={
+            <CriarUsuarioOuCoordenador
+              initialValues={record}
+              title='Edição de Dados'
+            />}
           record={record}
           formatterView={formatUsuarioOuCoordenador}
         />

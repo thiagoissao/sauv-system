@@ -9,18 +9,16 @@ import {
   Col,
   Row,
   Space,
-  Modal,
+  message,
 } from 'antd';
 
 const { Option } = Select;
 
-const CriarUsuarioOuCoordenador = ({ tipo = 'Usuário' }) => {
+const CriarUsuarioOuCoordenador = ({ title, initialValues }) => {
   const [form] = Form.useForm();
 
   const onFinish = values => {
-    Modal.success({
-      content: `${tipo} ${values.primeiroNome} criado com sucesso!`,
-    });
+    message.success(`Usuário foi criado com sucesso!`)
   };
 
   const onReset = () => {
@@ -32,8 +30,13 @@ const CriarUsuarioOuCoordenador = ({ tipo = 'Usuário' }) => {
   };
 
   return (
-    <FormCard title={`Cadastro de ${tipo}`}>
-      <Form layout='vertical' form={form} name="criar-usuario" onFinish={onFinish}>
+    <FormCard title={title}>
+      <Form
+        initialValues={initialValues}
+        layout='vertical'
+        form={form}
+        name="criar-usuario"
+        onFinish={onFinish}>
         <Row gutter={24}>
           <Col span={8}>
             <Form.Item name="primeiroNome" label="Primeiro Nome" rules={[{ required: true, message: 'Obrigatório' }]}>
@@ -110,14 +113,14 @@ const CriarUsuarioOuCoordenador = ({ tipo = 'Usuário' }) => {
         <Form.Item>
           <Space size='small'>
             <Button shape='round' size='large' type="primary" htmlType="submit">
-              Submit
+              Enviar
           </Button>
             <Button shape='round' size='large' htmlType="button" onClick={onReset}>
-              Reset
-        </Button>
+              Resetar
+            </Button>
             <Button shape='round' size='large' type="link" htmlType="button" onClick={onFill}>
-              Fill form
-        </Button>
+              Preencher formulário
+            </Button>
           </Space>
         </Form.Item>
       </Form>

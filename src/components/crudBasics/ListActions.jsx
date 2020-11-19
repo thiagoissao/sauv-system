@@ -13,16 +13,16 @@ import {
   EditOutlined,
   DeleteOutlined
 } from '@ant-design/icons'
-import { useHistory } from 'react-router-dom';
 
-const ListActions = ({ formatterView, record, disableView = false }) => {
-  const history = useHistory()
-  const [open, setOpen] = useState(false)
-
-
-  const handleClickEdit = () => {
-    history.push(`${history.location.pathname}/${record.id}`)
-  }
+const ListActions = ({
+  componentForm,
+  formatterView,
+  record,
+  disableView = false,
+  disableEdit = false,
+}) => {
+  const [openView, setOpenView] = useState(false)
+  const [openEdit, setOpenEdit] = useState(false)
 
   return (
     <>
@@ -30,8 +30,8 @@ const ListActions = ({ formatterView, record, disableView = false }) => {
         formatterView && record && (
           <Modal
             title='Detalhes'
-            visible={open}
-            onCancel={() => setOpen(false)}
+            visible={openView}
+            onCancel={() => setOpenView(false)}
             footer={null}
           >
             {
@@ -49,9 +49,21 @@ const ListActions = ({ formatterView, record, disableView = false }) => {
           </Modal>
         )
       }
+      {
+        componentForm && record && (
+          <Modal
+            width={1200}
+            visible={openEdit}
+            onCancel={() => setOpenEdit(false)}
+            footer={null}
+          >
+            {componentForm}
+          </Modal>
+        )
+      }
       <Space>
-        <Button onClick={handleClickEdit} shape='circle' type="primary" icon={<EditOutlined />} />
-        {!disableView && <Button onClick={() => setOpen(true)} shape='circle' type="primary" icon={<EyeOutlined />} />}
+        {!disableEdit && <Button onClick={() => setOpenEdit(true)} shape='circle' type="primary" icon={<EditOutlined />} />}
+        {!disableView && <Button onClick={() => setOpenView(true)} shape='circle' type="primary" icon={<EyeOutlined />} />}
         <Popconfirm
           title="Deletar esse registro?"
           onConfirm={() => message.success('Ação de deleção lógica!')}

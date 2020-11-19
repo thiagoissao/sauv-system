@@ -79,7 +79,7 @@ const Layout = ({
             {
               Object.entries(menuOptions).map(([chave, { opcoes }]) =>
                 Object.entries(opcoes).map(([itemChave, { component }]) => (
-                  <Route key={`/${chave}/${itemChave}`} path={`/${chave}/${itemChave}`} component={component} />
+                  <Route exact key={`/${chave}/${itemChave}`} path={`/${chave}/${itemChave}`} component={component} />
                 ))
               )
             }

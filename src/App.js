@@ -70,7 +70,10 @@ const menuOptions = {
     opcoes: {
       usuarios: {
         label: 'Usuários',
-        component: () => <CriarUsuarioOuCoordenador />
+        component: () =>
+          <CriarUsuarioOuCoordenador
+            title='Cadastro de Usuários'
+          />
       },
       alunos: {
         label: 'Alunos',
@@ -93,7 +96,10 @@ const menuOptions = {
       },
       coordenadores: {
         label: 'Coordenadores',
-        component: () => <CriarUsuarioOuCoordenador tipo='Coordenador(a)' />
+        component: () =>
+          <CriarUsuarioOuCoordenador
+            title='Cadastro de Coordenadores(as)'
+          />
       },
     }
   },

@@ -13,10 +13,11 @@ import { mockCoordenadorList, mockUsuarioList } from '../src/models/usuarioOuCoo
 import ListarTurmas from './components/turma/ListarTurmas'
 import ListarDisciplinas from './components/disciplina/ListarDisciplinas'
 import ListarSerie from './components/serie/ListarSerie'
-import { UnorderedListOutlined, FormOutlined, BarChartOutlined, LockOutlined } from '@ant-design/icons'
+import { UnorderedListOutlined, FormOutlined, BarChartOutlined, LockOutlined, ControlOutlined } from '@ant-design/icons'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Login from './components/login/Login';
 import store from './redux/auth'
+import ControleTurma from './components/turma/ControleFrequencia'
 
 const menuOptions = {
   visualizar: {
@@ -121,6 +122,19 @@ const menuOptions = {
     opcoes: {
       turmas: {
         label: 'Turmas',
+      }
+    }
+  },
+  controle: {
+    icon: <ControlOutlined />,
+    label: 'Controle',
+    opcoes: {
+      frequencia: {
+        label: 'Frequencia',
+        component: () => <ControleTurma />
+      },
+      notas: {
+        label: 'Notas',
       }
     }
   },

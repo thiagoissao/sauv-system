@@ -20,9 +20,11 @@ const Login = () => {
   return (
     <Row align='middle' justify='space-between' style={{ height: '100vh' }}>
       <Col
-        span={14}
+        span={13}
         style={{
-          background: '#e1f5fe',
+          paddingTop: '10%',
+          background: '#03a9f4',
+          opacity: 0.9,
           height: '100%',
           width: '100%',
           borderTopRightRadius: '5%',
@@ -32,7 +34,7 @@ const Login = () => {
           <Col span={24}>
             <Row justify='center'>
               <Col>
-                <Typography.Title level={2}>
+                <Typography.Title style={{ color: 'white' }} level={2}>
                   Bem-vindo ao SAUV!
                 </Typography.Title>
               </Col>
@@ -40,18 +42,26 @@ const Login = () => {
           </Col>
           <Col>
             <img
-              style={{ height: 400, width: 400 }}
+              style={{
+                height: 400,
+                width: 400,
+                transform: 'rotate(-10deg)'
+              }}
               alt='Sauv LOGO'
-              src='/logo.png'
+              src='/logo_white.png'
             />
           </Col>
         </Row>
       </Col>
-      <Col span={10}>
+      <Col span={11}>
         <Row justify='center'>
           <Col>
             <Card
+              headStyle={{
+                borderColor: '#03a9f4'
+              }}
               style={{
+                borderColor: '#03a9f4',
                 width: 310,
               }}
               title={

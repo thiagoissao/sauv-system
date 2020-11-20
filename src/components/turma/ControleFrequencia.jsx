@@ -1,22 +1,18 @@
 import React from 'react'
-import Input from "../Input"
 import FormCard from '../FormCard'
 import {
   Form,
   Button,
   Select,
-  Col,
   Row,
   Space,
-  Modal,
-  Radio,
 } from 'antd';
 
 const ControleTurma = ({ tipo = "Controle Turma" }) => {
   const [form] = Form.useForm();
 
   const { Option } = Select;
-  
+
 
   return (
     <FormCard title={tipo}>

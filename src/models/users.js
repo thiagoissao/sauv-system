@@ -1,24 +1,30 @@
-export const roles = {
-  coordenador: 'COORDENADOR',
-  funcionario: 'FUNCIONARIO',
-  aluno: 'ALUNO',
-  professor: 'PROFESSOR'
-}
-
 export const users = [
   {
+    primeiroNome: 'Thiago',
+    ultimoNome: 'Yasunaka',
     role: 'COORDENADOR',
-    usuario: 'coordenador',
+    usuario: 'thiagoyasunaka',
     senha: '123'
   },
   {
+    primeiroNome: 'Otavio',
+    ultimoNome: 'Kochi',
     role: 'FUNCIONARIO',
-    usuario: 'funcionario',
+    usuario: 'otaviokochi',
     senha: '123'
   },
   {
+    primeiroNome: 'Gabriel',
+    ultimoNome: 'Santos',
     role: 'PROFESSOR',
-    usuario: 'professor',
+    usuario: 'gabrielsantos',
+    senha: '123'
+  },
+  {
+    primeiroNome: 'Gustavo',
+    ultimoNome: 'Cruz',
+    role: 'PROFESSOR',
+    usuario: 'gustavocruz',
     senha: '123'
   },
 ]

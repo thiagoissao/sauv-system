@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-ro
 import Login from './components/login/Login';
 import LoginButton from './components/login/LoginButton';
 import store from './redux/auth';
+import MenuHeader from './components/MenuHeader';
+import { InfoCircleOutlined } from '@ant-design/icons';
 
 const { SubMenu } = Menu;
 
@@ -28,18 +30,7 @@ const Layout = ({
             </h1>
           </Col>
           <Col>
-          </Col>
-          <Col>
-          </Col>
-          <Col>
-          </Col>
-          <Col>
-            <h1 style={{ color: 'white' }}>
-              <b>Logado: {localStorage.getItem('usuario')}</b>
-            </h1>
-          </Col>
-          <Col>
-            <LoginButton />
+            <MenuHeader />
           </Col>
         </Row>
       </Header>

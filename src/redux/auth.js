@@ -14,7 +14,7 @@ export const login = createSlice({
     logoffUser: state => {
       localStorage.clear()
       return ({ ...state, loggedIn: false })
-    }
+    },
   }
 })
 

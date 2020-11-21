@@ -1,14 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Menu, Layout as AntdLayout, Row, Col } from 'antd';
-import { BrowserRouter as Router, Route, Link, Redirect, Switch } from "react-router-dom";
-import Login from './components/login/Login';
-import LoginButton from './components/login/LoginButton';
+import { Route, Link, Redirect, Switch } from "react-router-dom";
 import store from './redux/auth';
 import MenuHeader from './components/MenuHeader';
-import { InfoCircleOutlined } from '@ant-design/icons';
+import useUser from './hooks/useUser';
 
 const { SubMenu } = Menu;
-
 
 const Layout = ({
   menuOptions,
@@ -17,6 +14,7 @@ const Layout = ({
 }) => {
   const { Content, Header, Sider } = AntdLayout
   const { loggedIn } = store.getState()
+  const user = useUser()
 
   if (!loggedIn) return <Redirect to="/login" />
 
@@ -42,9 +40,10 @@ const Layout = ({
             mode="inline"
           >
             {
-              Object.entries(menuOptions).map(([chave, { icon, label, opcoes }]) => {
+              Object.entries(menuOptions).map(([chave, { icon, label, opcoes, enableFor }]) => {
                 return (
                   <SubMenu
+                    disabled={!user.enableField(enableFor)}
                     key={chave}
                     title={
                       <span>
@@ -53,8 +52,8 @@ const Layout = ({
                       </span>
                     }
                   >
-                    {Object.entries(opcoes).map(([itemChave, { label }]) => (
-                      <Menu.Item key={`${chave}:${itemChave}`}>
+                    {Object.entries(opcoes).map(([itemChave, { label, enableFor }]) => (
+                      <Menu.Item disabled={!user.enableField(enableFor)} key={`${chave}:${itemChave}`}>
                         <span>{label}</span>
                         <Link to={`/${chave}/${itemChave}`} />
                       </Menu.Item>

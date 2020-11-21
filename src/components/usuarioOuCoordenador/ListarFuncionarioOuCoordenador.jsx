@@ -2,7 +2,7 @@ import React from 'react'
 import { Table, Typography } from 'antd';
 import ListActions from '../crudBasics/ListActions'
 import { formatUsuarioOuCoordenador } from '../../models/usuarioOuCoordenador'
-import CriarUsuarioOuCoordenador from './CriarUsuarioOuCoordenador';
+import CriarFuncionarioOuCoordenador from './CriarFuncionarioOuCoordenador';
 
 const columns = [
   {
@@ -47,11 +47,13 @@ const columns = [
       return (
         <ListActions
           componentForm={
-            <CriarUsuarioOuCoordenador
+            <CriarFuncionarioOuCoordenador
               initialValues={record}
               title='Edição de Dados'
             />}
           record={record}
+          enableDeleteFor={['FUNCIONARIO']}
+          enableEditFor={['FUNCIONARIO']}
           formatterView={formatUsuarioOuCoordenador}
         />
       )
@@ -59,7 +61,7 @@ const columns = [
   },
 ];
 
-const ListarUsuarioOuCoordenador = ({ tipo = 'Usuários', list }) => {
+const ListarFuncionarioOuCoordenador = ({ tipo = 'Usuários', list }) => {
 
   return (
     <Table
@@ -70,4 +72,4 @@ const ListarUsuarioOuCoordenador = ({ tipo = 'Usuários', list }) => {
     />
   )
 }
-export default ListarUsuarioOuCoordenador
+export default ListarFuncionarioOuCoordenador

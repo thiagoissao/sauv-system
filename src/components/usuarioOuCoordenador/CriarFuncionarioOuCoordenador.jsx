@@ -14,7 +14,7 @@ import {
 
 const { Option } = Select;
 
-const CriarUsuarioOuCoordenador = ({ title, initialValues }) => {
+const CriarFuncionarioOuCoordenador = ({ title, initialValues }) => {
   const [form] = Form.useForm();
 
   const onFinish = values => {
@@ -127,4 +127,4 @@ const CriarUsuarioOuCoordenador = ({ title, initialValues }) => {
     </FormCard>
   );
 };
-export default CriarUsuarioOuCoordenador
+export default CriarFuncionarioOuCoordenador

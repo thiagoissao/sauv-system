@@ -4,8 +4,8 @@ import Layout from './Layout'
 import CriarDisciplina from './components/disciplina/CriarDisciplina'
 import CriarTurma from './components/turma/CriarTurma'
 import CriarSerie from './components/serie/CriarSerie'
-import CriarUsuarioOuCoordenador from './components/usuarioOuCoordenador/CriarUsuarioOuCoordenador'
-import ListarUsuarioOuCoordenador from './components/usuarioOuCoordenador/ListarUsuarioOuCoordenador'
+import CriarFuncionarioOuCoordenador from './components/usuarioOuCoordenador/CriarFuncionarioOuCoordenador'
+import ListarFuncionarioOuCoordenador from './components/usuarioOuCoordenador/ListarFuncionarioOuCoordenador'
 import CriarAluno from './components/aluno/CriarAluno'
 import ListarAluno from "./components/aluno/ListarAluno"
 import { mockAlunoList } from "../src/models/aluno"
@@ -18,21 +18,34 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Login from './components/login/Login';
 import store from './redux/auth'
 import ControleTurma from './components/turma/ControleFrequencia'
+import { allRoles } from './models/roles'
 
 const menuOptions = {
   visualizar: {
     icon: <UnorderedListOutlined />,
     label: 'Visualizar',
+    enableFor: allRoles,
     opcoes: {
-      usuarios: {
-        label: 'Usuários',
+      funcionarios: {
+        enableFor: allRoles,
+        label: 'Funcionários',
         component: () =>
-          <ListarUsuarioOuCoordenador
+          <ListarFuncionarioOuCoordenador
             list={mockUsuarioList}
-            tipo='Usuários'
+            tipo='Funcionários'
+          />
+      },
+      coordenadores: {
+        enableFor: allRoles,
+        label: 'Coordenadores',
+        component: () =>
+          <ListarFuncionarioOuCoordenador
+            list={mockCoordenadorList}
+            tipo='Coordenadores'
           />
       },
       alunos: {
+        enableFor: allRoles,
         label: 'Alunos',
         component: () =>
           <ListarAluno
@@ -41,72 +54,76 @@ const menuOptions = {
           />
       },
       professores: {
+        enableFor: allRoles,
         label: 'Professores'
       },
       disciplinas: {
+        enableFor: allRoles,
         label: 'Disciplinas',
         component: () => <ListarDisciplinas />
       },
       turmas: {
+        enableFor: allRoles,
         label: 'Turmas',
         component: () => <ListarTurmas />
       },
       series: {
+        enableFor: allRoles,
         label: 'Séries',
         component: () => <ListarSerie />
-      },
-      coordenadores: {
-        label: 'Coordenadores',
-        component: () =>
-          <ListarUsuarioOuCoordenador
-            list={mockCoordenadorList}
-            tipo='Coordenadores'
-          />
       },
     }
   },
   cadastrar: {
+    enableFor: ['COORDENADOR', 'FUNCIONARIO'],
     icon: <FormOutlined />,
     label: 'Cadastrar',
     opcoes: {
-      usuarios: {
-        label: 'Usuários',
+      funcionarios: {
+        label: 'Funcionários',
+        enableFor: ['FUNCIONARIO'],
         component: () =>
-          <CriarUsuarioOuCoordenador
-            title='Cadastro de Usuários'
+          <CriarFuncionarioOuCoordenador
+            title='Cadastro de Funcionários'
+          />
+      },
+      coordenadores: {
+        label: 'Coordenadores',
+        enableFor: ['FUNCIONARIO'],
+        component: () =>
+          <CriarFuncionarioOuCoordenador
+            title='Cadastro de Coordenadores(as)'
           />
       },
       alunos: {
         label: 'Alunos',
+        enableFor: ['COORDENADOR', 'FUNCIONARIO'],
         component: () => <CriarAluno />
       },
       professores: {
+        enableFor: ['COORDENADOR', 'FUNCIONARIO'],
         label: 'Professores',
       },
       disciplinas: {
         label: 'Disciplinas',
+        enableFor: ['FUNCIONARIO'],
         component: () => <CriarDisciplina />
       },
       turmas: {
         label: 'Turmas',
+        enableFor: ['FUNCIONARIO'],
         component: () => <CriarTurma />
       },
       series: {
         label: 'Séries',
+        enableFor: ['FUNCIONARIO'],
         component: () => <CriarSerie />
-      },
-      coordenadores: {
-        label: 'Coordenadores',
-        component: () =>
-          <CriarUsuarioOuCoordenador
-            title='Cadastro de Coordenadores(as)'
-          />
       },
     }
   },
   trancar: {
     icon: <LockOutlined />,
-    label: 'Trancar',
+    label: 'Trancamentos',
     opcoes: {
       alunos: {
         label: 'Alunos',
@@ -118,7 +135,7 @@ const menuOptions = {
   },
   relatorio: {
     icon: <BarChartOutlined />,
-    label: 'Relatorio',
+    label: 'Relatórios',
     opcoes: {
       turmas: {
         label: 'Turmas',
@@ -127,7 +144,7 @@ const menuOptions = {
   },
   controle: {
     icon: <ControlOutlined />,
-    label: 'Controle',
+    label: 'Controles',
     opcoes: {
       frequencia: {
         label: 'Frequencia',

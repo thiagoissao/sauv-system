@@ -13,14 +13,21 @@ import {
   EditOutlined,
   DeleteOutlined
 } from '@ant-design/icons'
+import useUser from '../../hooks/useUser';
+import { allRoles } from '../../models/roles';
 
 const ListActions = ({
   componentForm,
   formatterView,
   record,
+  enableViewFor = allRoles,
+  enableEditFor = allRoles,
+  enableDeleteFor = allRoles,
   disableView = false,
   disableEdit = false,
+  disableDelete = false
 }) => {
+  const user = useUser()
   const [openView, setOpenView] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
 
@@ -62,16 +69,16 @@ const ListActions = ({
         )
       }
       <Space>
-        {!disableEdit && <Button onClick={() => setOpenEdit(true)} shape='circle' type="primary" icon={<EditOutlined />} />}
-        {!disableView && <Button onClick={() => setOpenView(true)} shape='circle' type="primary" icon={<EyeOutlined />} />}
-        <Popconfirm
+        {!disableView && user.enableField(enableViewFor) && <Button onClick={() => setOpenView(true)} shape='circle' type="primary" icon={<EyeOutlined />} />}
+        {!disableEdit && user.enableField(enableEditFor) && <Button onClick={() => setOpenEdit(true)} shape='circle' type="primary" icon={<EditOutlined />} />}
+        {!disableDelete && user.enableField(enableDeleteFor) && <Popconfirm
           title="Deletar esse registro?"
           onConfirm={() => message.success('Ação de deleção lógica!')}
           okText="Sim"
           cancelText="Não"
         >
           <Button shape='circle' type='default' icon={<DeleteOutlined />} />
-        </Popconfirm>
+        </Popconfirm>}
       </Space>
     </>
   )

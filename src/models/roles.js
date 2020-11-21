@@ -1,6 +1,7 @@
 export const roles = {
   COORDENADOR: 'Coordenador',
   FUNCIONARIO: 'Funcionário',
-  ALUNO: 'Aluno',
   PROFESSOR: 'Professor'
 }
+
+export const allRoles = ['COORDENADOR', 'FUNCIONARIO', 'PROFESSOR']

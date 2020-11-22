@@ -23,7 +23,7 @@ export const users = [
   {
     primeiroNome: 'Gustavo',
     ultimoNome: 'Cruz',
-    role: 'PROFESSOR',
+    role: 'FUNCIONARIO',
     usuario: 'gustavocruz',
     senha: '123'
   },

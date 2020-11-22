@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table, Typography } from 'antd';
 import ListActions from '../crudBasics/ListActions'
+import CriarAluno from "./CriarAluno"
 import { formatAluno } from '../../models/aluno'
 
 const columns = [
@@ -27,22 +28,17 @@ const columns = [
   {
     title: 'Ações',
     key: 'operation',
-    render: (record) => {
-
-
-      const handleClickEdit = () => {
-        console.log(record)
-
-      }
-
-      return (
-        <ListActions
-          record={record}
-          formatterView={formatAluno}
-          onClickEdit={handleClickEdit}
-        />
-      )
-    },
+    render: (record) => <ListActions
+      componentForm={
+        <CriarAluno
+          initialValues={record}
+          title='Edição de Dados'
+        />}
+      record={record}
+      enableEditFor={['COORDENADOR', 'FUNCIONARIO']}
+      enableDeleteFor={['COORDENADOR', 'FUNCIONARIO']}
+      formatterView={formatAluno}
+    />
   },
 ];
 

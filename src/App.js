@@ -107,12 +107,12 @@ const menuOptions = {
       disciplinas: {
         label: 'Disciplinas',
         enableFor: ['FUNCIONARIO'],
-        component: () => <CriarDisciplina />
+        component: () => <CriarDisciplina title='Cadastro de Disciplina'/>
       },
       turmas: {
         label: 'Turmas',
         enableFor: ['FUNCIONARIO'],
-        component: () => <CriarTurma />
+        component: () => <CriarTurma title='Cadastro de Turma'/>
       },
       series: {
         label: 'Séries',
@@ -122,35 +122,43 @@ const menuOptions = {
     }
   },
   trancar: {
+    enableFor: ['COORDENADOR', 'FUNCIONARIO'],
     icon: <LockOutlined />,
     label: 'Trancamentos',
     opcoes: {
       alunos: {
         label: 'Alunos',
+        enableFor: ['FUNCIONARIO', 'COORDENADOR'],
       },
       turmas: {
         label: 'Turmas',
+        enableFor: ['COORDENADOR', 'FUNCIONARIO'],
       }
     }
   },
   relatorio: {
+    enableFor: ['COORDENADOR', 'FUNCIONARIO'],
     icon: <BarChartOutlined />,
     label: 'Relatórios',
     opcoes: {
       turmas: {
+        enableFor: ['COORDENADOR', 'FUNCIONARIO'],
         label: 'Turmas',
       }
     }
   },
   controle: {
+    enableFor: ['COORDENADOR', 'FUNCIONARIO'],
     icon: <ControlOutlined />,
     label: 'Controles',
     opcoes: {
       frequencia: {
         label: 'Frequencia',
+        enableFor: ['COORDENADOR', 'FUNCIONARIO'],
         component: () => <ControleTurma />
       },
       notas: {
+        enableFor: ['COORDENADOR', 'FUNCIONARIO'],
         label: 'Notas',
       }
     }

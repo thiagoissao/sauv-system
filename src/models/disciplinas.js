@@ -20,3 +20,9 @@ export const mockDisciplinas = [
     'nome-professor': 'Claudio Dias'
   },
 ]
+
+export const formatDisciplinas = {
+  'nome-disciplina': 'Nome Disciplina',
+  'carga-horaria': 'Carga Horária',
+  'nome-professor': 'Nome Professor',
+}

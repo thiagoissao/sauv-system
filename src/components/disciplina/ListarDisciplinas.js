@@ -2,6 +2,8 @@ import React from 'react'
 import { Table, Typography } from 'antd';
 import { mockDisciplinas } from '../../models/disciplinas'
 import ListActions from '../crudBasics/ListActions';
+import CriarDisciplina from './CriarDisciplina'
+import {formatDisciplinas} from '../../models/disciplinas'
 
 const columns = [
   {
@@ -22,7 +24,17 @@ const columns = [
   {
     title: 'Ações',
     key: 'operation',
-    render: () => <ListActions disableView/>
+    render: (record) => <ListActions
+    componentForm={
+      <CriarDisciplina
+        initialValues={record}
+        title='Edição de Dados'
+      />}
+    record={record}
+    enableEditFor={['COORDENADOR', 'FUNCIONARIO']}
+    enableDeleteFor={['COORDENADOR', 'FUNCIONARIO']}
+    formatterView={formatDisciplinas}
+  />
   },
 ];
 

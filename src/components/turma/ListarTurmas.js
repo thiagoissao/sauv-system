@@ -2,6 +2,7 @@ import React from 'react'
 import { Table, Typography } from 'antd';
 import { mockTurmas } from '../../models/turmas'
 import ListActions from '../crudBasics/ListActions'
+import  CriarTurma  from './CriarTurma'
 import { formatTurmas } from '../../models/turmas'
 
 
@@ -12,9 +13,14 @@ const columns = [
     key: 'nome-turma',
   },
   {
-    title: 'Série Turma',
-    dataIndex: 'serie-turma',
-    key: 'serie-turma',
+    title: 'Série',
+    dataIndex: 'serie',
+    key: 'serie',
+  },
+  {
+    title: 'Turma',
+    dataIndex: 'turma',
+    key: 'turma',
   },
   {
     title: 'Disciplinas',
@@ -44,17 +50,19 @@ const columns = [
     title: 'Ações',
     key: 'operation',
     render: (record) => {
-
-      const handleClickEdit = () => {
-        console.log(record)
-      }
       
       return (
-        <ListActions 
+        <ListActions
+          componentForm={
+            <CriarTurma
+              initialValues={record}
+              title='Edição de Dados'
+            />}
           record={record}
+          enableDeleteFor={['FUNCIONARIO', 'COORDENADOR']}
+          enableEditFor={['FUNCIONARIO', 'COORDENADOR']}
+          enableViewFor={[]}
           formatterView={formatTurmas}
-          onClickEdit={handleClickEdit}
-          disableView
         />
       )
     }

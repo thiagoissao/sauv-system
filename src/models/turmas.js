@@ -1,7 +1,8 @@
 export const mockTurmas = [
   {
     'nome-turma': 'Oitava série A',
-    'serie-turma': '8',
+    'serie': '8',
+    'turma': 'A',
     disciplinas: [
       'Matemática',
       'Ensino religioso',
@@ -19,7 +20,8 @@ export const mockTurmas = [
   },
   {
     'nome-turma': 'Oitava série A',
-    'serie-turma': '8',
+    'serie': '8',
+    'turma': 'A',
     disciplinas: [
       'Matemática',
       'Ensino religioso',
@@ -37,7 +39,8 @@ export const mockTurmas = [
   },
   {
     'nome-turma': 'Setima série A',
-    'serie-turma': '7',
+    'serie': '7',
+    'turma': 'A',
     disciplinas: [
       'Matemática',
       'Geografia'

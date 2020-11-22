@@ -1,25 +1,20 @@
 import {
   Form,
   Button,
-  Select,
   Col,
   Row,
   Space,
-  Modal,
-  Typography,
-  Divider
+  Modal
 } from 'antd';
 import FormCard from '../FormCard';
 import Input from '../Input'
 
-const { Option } = Select;
-
-export default ({ tipo = 'Turma' }) => {
+export default ({ title, initialValues }) => {
   const [form] = Form.useForm();
 
   const onFinish = values => {
     Modal.success({
-      content: `${tipo} da série ${values['serie-turma']} criado com sucesso!`,
+      content: `${title} da ${values['serie']} ${values['turma']} criado com sucesso!`,
     });
   };
 
@@ -27,19 +22,19 @@ export default ({ tipo = 'Turma' }) => {
     form.resetFields();
   };
 
-  const onFill = () => {
-    form.setFieldsValue({
-      'serie-turma': '8',
-    });
-  };
 
   return (
-    <FormCard title={`Cadastro de ${tipo}`}>
-      <Form layout='vertical' form={form} name="nome-disciplina" onFinish={onFinish}>
+    <FormCard title={title}>
+      <Form layout='vertical' form={form} name="nome-disciplina" onFinish={onFinish} initialValues={initialValues}>
         <Row gutter={24}>
           <Col span={8}>
-            <Form.Item name="serie-turma" label="Serie turma" rules={[{ required: true, message: 'Obrigatório' }]}>
+            <Form.Item name="serie" label="Serie" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Input placeholder='8' />
+            </Form.Item>
+          </Col>
+          <Col>
+            <Form.Item name="turma" label="Turma" rules={[{ required: true, message: 'Obrigatório' }]}>
+              <Input placeholder='A' />
             </Form.Item>
           </Col>
         </Row>
@@ -47,13 +42,10 @@ export default ({ tipo = 'Turma' }) => {
           <Space size='small'>
             <Button shape='round' size='large' type="primary" htmlType="submit">
               Submit
-          </Button>
+            </Button>
             <Button shape='round' size='large' htmlType="button" onClick={onReset}>
               Reset
-        </Button>
-            <Button shape='round' size='large' type="link" htmlType="button" onClick={onFill}>
-              Fill form
-        </Button>
+            </Button>
           </Space>
         </Form.Item>
       </Form>

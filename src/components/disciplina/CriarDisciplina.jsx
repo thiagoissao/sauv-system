@@ -11,14 +11,14 @@ import {
   Radio
 } from 'antd';
 
-export default ({ tipo = 'Disciplina' }) => {
+export default ({ title, initialValues }) => {
   const [form] = Form.useForm();
 
   const [value, setValue] = React.useState(1);
 
   const onFinish = values => {
     Modal.success({
-      content: `${tipo} ${values['nome-disciplina']} criado com sucesso!`,
+      content: `${title} ${values['nome-disciplina']} criado com sucesso!`,
     });
   };
 
@@ -39,8 +39,8 @@ export default ({ tipo = 'Disciplina' }) => {
   };
 
   return (
-    <FormCard title={`Cadastro de ${tipo}`}>
-      <Form layout='vertical' form={form} name="nome-disciplina" onFinish={onFinish}>
+    <FormCard title={title}>
+      <Form layout='vertical' form={form} name="nome-disciplina" onFinish={onFinish} initialValues={initialValues}>
         <Row gutter={24}>
           <Col span={8}>
             <Form.Item name="nome-disciplina" label="Nome Disciplina" rules={[{ required: true, message: 'Obrigatório' }]}>

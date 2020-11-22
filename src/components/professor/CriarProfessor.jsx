@@ -10,7 +10,6 @@ import {
     Row,
     Space,
     Modal,
-    message,
 } from 'antd';
 
 const OPTIONS = ["Artes", "Biologia", "Ciências", "Educação Físcia", "Ensino Religioso", "Filosofia", "Física", "Geografia", "História", "Ingles", "Matemática", "Português", "Química", "Sociologia"];

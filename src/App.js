@@ -8,7 +8,10 @@ import CriarFuncionarioOuCoordenador from './components/usuarioOuCoordenador/Cri
 import ListarFuncionarioOuCoordenador from './components/usuarioOuCoordenador/ListarFuncionarioOuCoordenador'
 import CriarAluno from './components/aluno/CriarAluno'
 import ListarAluno from "./components/aluno/ListarAluno"
-import { mockAlunoList } from "../src/models/aluno"
+import { mockAlunoList } from "./models/aluno"
+import CriarProfessor from "./components/professor/CriarProfessor"
+import ListarProfessor from "./components/professor/ListarProfessor"
+import { mockProfessorList } from "./models/professor"
 import { mockCoordenadorList, mockUsuarioList } from '../src/models/usuarioOuCoordenador'
 import ListarTurmas from './components/turma/ListarTurmas'
 import ListarDisciplinas from './components/disciplina/ListarDisciplinas'
@@ -55,7 +58,12 @@ const menuOptions = {
       },
       professores: {
         enableFor: allRoles,
-        label: 'Professores'
+        label: 'Professores',
+        component: () =>
+          <ListarProfessor
+          list={mockProfessorList}
+          tipo="Professores"
+          />
       },
       disciplinas: {
         enableFor: allRoles,
@@ -103,6 +111,7 @@ const menuOptions = {
       professores: {
         enableFor: ['COORDENADOR', 'FUNCIONARIO'],
         label: 'Professores',
+        component: () => <CriarProfessor />
       },
       disciplinas: {
         label: 'Disciplinas',

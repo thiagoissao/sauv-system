@@ -32,4 +32,9 @@ export const mockSerie = [
             'Geografia'
           ],
     }
-];
+]
+
+export const formatSerie = {
+    'serie-ano' : 'Série',
+    'disciplinas': 'Disciplinas',
+}

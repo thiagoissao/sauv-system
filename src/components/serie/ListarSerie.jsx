@@ -2,6 +2,8 @@ import React from 'react'
 import { Table, Typography } from 'antd';
 import { mockSerie } from '../../models/series'
 import ListActions from '../crudBasics/ListActions'
+import CriarSerie from './CriarSerie'
+import { formatSerie } from '../../models/series'
 
 const columns = [
   {
@@ -20,8 +22,24 @@ const columns = [
   {
     title: 'Ações',
     key: 'operation',
-    render: () => <ListActions
-                disableView/>
+    render: (record) => {
+    
+      return ( 
+      <ListActions
+        componentForm={
+          <CriarSerie
+            initialValues={record}
+            title='Edição de Serie'
+          />}
+
+          record={record}
+          enableDeleteFor={['FUNCIONARIO', 'COORDENADOR']}
+          enableEditFor={['FUNCIONARIO', 'COORDENADOR']}
+          enableViewFor={[]}
+          formatterView={formatSerie}
+      />
+      )
+    }
   },
 ];
 

@@ -1,4 +1,5 @@
 import Input from '../Input'
+import React from 'react'
 import FormCard from '../FormCard'
 import {
   Form,
@@ -13,12 +14,14 @@ import {
 //const { Option } = Select; 
 const style = { padding: '8px 0' };
 
-export default ({ tipo = 'Serie' }) => {
+export default ({ title, initialValues }) => {
   const [form] = Form.useForm();
+
+  const [value, setValue] = React.useState(1);
 
   const onFinish = values => {
     Modal.success({
-      content: `${tipo} criada com sucesso!`,
+      content: `${title} realizada com sucesso!`,
     });
   };
 
@@ -34,9 +37,13 @@ export default ({ tipo = 'Serie' }) => {
     });
   };
 
+  const onChange = e => {
+    setValue(e.target.value);
+  };
+
   return (
-    <FormCard title={`Cadastro de ${tipo}`}>
-      <Form layout='vertical' form={form} name="serie-ano" onFinish={onFinish}>
+    <FormCard title={title}>
+      <Form layout='vertical' form={form} name="serie-ano" onFinish={onFinish} initialValues={initialValues}>
         <Row gutter={24}>
           <Col span={8}>
             <Form.Item name="serie" label="Série" rules={[{ required: true, message: 'Obrigatório' }]}>
@@ -45,7 +52,7 @@ export default ({ tipo = 'Serie' }) => {
           </Col>
           <Col span={8}>
             <Form.Item name="disciplinas" label="Disciplinas desta série" rules={[{ required: true, message: 'Obrigatório' }]}>
-              <Checkbox.Group style={{ width: '100%' }}>
+              <Checkbox.Group value={value} style={{ width: '100%' }} >
                 <Row gutter={[16, 8]}>
                   <Col span={9}>
                     <Checkbox value="arte">Arte</Checkbox>
@@ -91,13 +98,13 @@ export default ({ tipo = 'Serie' }) => {
         <Form.Item>
           <Space size='small'>
             <Button shape='round' size='large' type="primary" htmlType="submit">
-              Submit
+              Enviar
             </Button>
             <Button shape='round' size='large' htmlType="button" onClick={onReset}>
-              Reset
+              Limpar
           </Button>
             <Button shape='round' size='large' type="link" htmlType="button" onClick={onFill}>
-              Fill form
+              Preencher Cadastro
           </Button>
           </Space>
         </Form.Item>

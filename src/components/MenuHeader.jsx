@@ -36,7 +36,7 @@ const MenuHeader = () => {
   console.log(user.getUser())
   return (
     <Dropdown overlay={menu} trigger={['click']}>
-      <Tooltip placement='left' color='#0091ea' title={`Papel: ${roles[userData?.role]}`}>
+      <Tooltip placement='left' color='#0091ea' title={`Cargo: ${roles[userData?.role]}`}>
         <Button
           icon={<UserOutlined />}
           shape='round'

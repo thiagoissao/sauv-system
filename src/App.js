@@ -126,7 +126,7 @@ const menuOptions = {
       series: {
         label: 'Séries',
         enableFor: ['FUNCIONARIO'],
-        component: () => <CriarSerie />
+        component: () => <CriarSerie title='Cadastro de Série'/>
       },
     }
   },

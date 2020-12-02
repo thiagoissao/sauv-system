@@ -16,7 +16,7 @@ import { mockCoordenadorList, mockUsuarioList } from '../src/models/usuarioOuCoo
 import ListarTurmas from './components/turma/ListarTurmas'
 import ListarDisciplinas from './components/disciplina/ListarDisciplinas'
 import ListarSerie from './components/serie/ListarSerie'
-import { UnorderedListOutlined, FormOutlined, BarChartOutlined, LockOutlined, ControlOutlined } from '@ant-design/icons'
+import { UnorderedListOutlined, FormOutlined, BarChartOutlined, LockOutlined, ControlOutlined, BookOutlined } from '@ant-design/icons'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Login from './components/login/Login';
 import store from './redux/auth'
@@ -24,6 +24,7 @@ import ControleTurma from './components/turma/ControleFrequencia'
 import { allRoles } from './models/roles'
 import ControleNotas from './components/nota/ControleNotas'
 import TrancarTurma from './components/turma/TrancarTurma'
+import RelatorioTurma from './components/relatório/RelatorioTurma'
 
 const menuOptions = {
   visualizar: {
@@ -176,6 +177,18 @@ const menuOptions = {
       }
     }
   },
+  relatorio: {
+    enableFor: ['COORDENADOR', 'FUNCIONARIO'],
+    icon: <BookOutlined />,
+    label: 'Relatórios',
+    opcoes: {
+      relatorioTurma: {
+        enableFor: ['COORDENADOR', 'FUNCIONARIO'],
+        label: "Relatório de Turma",
+        component: () => <RelatorioTurma title="Relatório de Turma"/>
+      },
+    },
+  }
 }
 
 const App = () => {

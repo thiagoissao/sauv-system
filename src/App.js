@@ -22,6 +22,7 @@ import Login from './components/login/Login';
 import store from './redux/auth'
 import ControleTurma from './components/turma/ControleFrequencia'
 import { allRoles } from './models/roles'
+import ControleNotas from './components/nota/ControleNotas'
 
 const menuOptions = {
   visualizar: {
@@ -61,8 +62,8 @@ const menuOptions = {
         label: 'Professores',
         component: () =>
           <ListarProfessor
-          list={mockProfessorList}
-          tipo="Professores"
+            list={mockProfessorList}
+            tipo="Professores"
           />
       },
       disciplinas: {
@@ -116,17 +117,17 @@ const menuOptions = {
       disciplinas: {
         label: 'Disciplinas',
         enableFor: ['FUNCIONARIO'],
-        component: () => <CriarDisciplina title='Cadastro de Disciplina'/>
+        component: () => <CriarDisciplina title='Cadastro de Disciplina' />
       },
       turmas: {
         label: 'Turmas',
         enableFor: ['FUNCIONARIO'],
-        component: () => <CriarTurma title='Cadastro de Turma'/>
+        component: () => <CriarTurma title='Cadastro de Turma' />
       },
       series: {
         label: 'Séries',
         enableFor: ['FUNCIONARIO'],
-        component: () => <CriarSerie title='Cadastro de Série'/>
+        component: () => <CriarSerie title='Cadastro de Série' />
       },
     }
   },
@@ -157,18 +158,19 @@ const menuOptions = {
     }
   },
   controle: {
-    enableFor: ['COORDENADOR', 'FUNCIONARIO'],
+    enableFor: allRoles,
     icon: <ControlOutlined />,
     label: 'Controles',
     opcoes: {
       frequencia: {
-        label: 'Frequencia',
+        label: 'Frequência',
         enableFor: ['COORDENADOR', 'FUNCIONARIO'],
         component: () => <ControleTurma />
       },
       notas: {
-        enableFor: ['COORDENADOR', 'FUNCIONARIO'],
+        enableFor: ['PROFESSOR'],
         label: 'Notas',
+        component: () => <ControleNotas />
       }
     }
   },

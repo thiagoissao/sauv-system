@@ -25,7 +25,8 @@ const ListActions = ({
   enableDeleteFor = allRoles,
   disableView = false,
   disableEdit = false,
-  disableDelete = false
+  disableDelete = false,
+  formWidth = 1200
 }) => {
   const user = useUser()
   const [openView, setOpenView] = useState(false)
@@ -59,7 +60,7 @@ const ListActions = ({
       {
         componentForm && record && (
           <Modal
-            width={1200}
+            width={formWidth}
             visible={openEdit}
             onCancel={() => setOpenEdit(false)}
             footer={null}

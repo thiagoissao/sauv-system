@@ -51,7 +51,7 @@ export const mockAlunoList = [
   },
   {
     nomeAluno: 'Paulinho da Silva',
-    cpfAluno: "123.456.789-10",
+    cpfAluno: "123.456.789-11",
     rgAluno: "12.345.678-9",
     emailAluno: "joaozinho@email.com",
     sexoAluno: 1,
@@ -68,7 +68,7 @@ export const mockAlunoList = [
   },
   {
     nomeAluno: 'Carlinhos da Silva',
-    cpfAluno: "123.456.789-10",
+    cpfAluno: "123.456.789-12",
     rgAluno: "12.345.678-9",
     emailAluno: "joaozinho@email.com",
     sexoAluno: 1,
@@ -85,7 +85,7 @@ export const mockAlunoList = [
   },
   {
     nomeAluno: 'Maria da Silva',
-    cpfAluno: "123.456.789-10",
+    cpfAluno: "078.005.679-58",
     rgAluno: "12.345.678-9",
     emailAluno: "joaozinho@email.com",
     sexoAluno: 1,

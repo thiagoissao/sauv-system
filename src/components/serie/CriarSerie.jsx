@@ -31,7 +31,7 @@ export default ({ title, initialValues }) => {
 
   const onFill = () => {
     form.setFieldsValue({
-      'serie': '8',
+      'serie-ano': '8',
       'disciplinas': ['arte', 'ensReligioso', 'biologia',
         'ciencias', 'ingles', 'matematica', 'portugues'],
     });
@@ -46,7 +46,7 @@ export default ({ title, initialValues }) => {
       <Form layout='vertical' form={form} name="serie-ano" onFinish={onFinish} initialValues={initialValues}>
         <Row gutter={24}>
           <Col span={8}>
-            <Form.Item name="serie" label="Série" rules={[{ required: true, message: 'Obrigatório' }]}>
+            <Form.Item name="serie-ano" label="Série" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Input placeholder='8' />
             </Form.Item>
           </Col>

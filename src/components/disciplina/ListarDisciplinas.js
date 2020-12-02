@@ -3,13 +3,15 @@ import { Table, Typography } from 'antd';
 import { mockDisciplinas } from '../../models/disciplinas'
 import ListActions from '../crudBasics/ListActions';
 import CriarDisciplina from './CriarDisciplina'
-import {formatDisciplinas} from '../../models/disciplinas'
+import { formatDisciplinas } from '../../models/disciplinas'
 
 const columns = [
   {
     title: 'Nome Disciplina',
     dataIndex: 'nome-disciplina',
     key: 'nome-disciplina',
+    sorter: (a, b) => a["nome-disciplina"].localeCompare(b["nome-disciplina"]),
+    sortDirections: ['descend', 'ascend']
   },
   {
     title: 'Carga horária',
@@ -19,22 +21,24 @@ const columns = [
   {
     title: 'Nome professor',
     dataIndex: 'nome-professor',
-    key: 'nome-professor'
+    key: 'nome-professor',
+    sorter: (a, b) => a["nome-professor"].localeCompare(b["nome-professor"]),
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Ações',
     key: 'operation',
     render: (record) => <ListActions
-    componentForm={
-      <CriarDisciplina
-        initialValues={record}
-        title='Edição de Dados'
-      />}
-    record={record}
-    enableEditFor={['COORDENADOR', 'FUNCIONARIO']}
-    enableDeleteFor={['COORDENADOR', 'FUNCIONARIO']}
-    formatterView={formatDisciplinas}
-  />
+      componentForm={
+        <CriarDisciplina
+          initialValues={record}
+          title='Edição de Dados'
+        />}
+      record={record}
+      enableEditFor={['COORDENADOR', 'FUNCIONARIO']}
+      enableDeleteFor={['COORDENADOR', 'FUNCIONARIO']}
+      formatterView={formatDisciplinas}
+    />
   },
 ];
 

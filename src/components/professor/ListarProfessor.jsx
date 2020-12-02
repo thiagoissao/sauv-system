@@ -25,7 +25,7 @@ const columns = [
     {
         title: 'Disciplinas',
         dataIndex: 'disciplinas',
-        key: 'disciplinas'
+        key: 'disciplinas',
     },
     {
         title: 'Ações',

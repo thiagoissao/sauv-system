@@ -10,6 +10,8 @@ const columns = [
     title: 'Série',
     dataIndex: 'serie-ano',
     key: 'serie-ano',
+    sorter: (a, b) => a["serie-ano"].localeCompare(b["serie-ano"]),
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Disciplinas',
@@ -23,21 +25,21 @@ const columns = [
     title: 'Ações',
     key: 'operation',
     render: (record) => {
-    
-      return ( 
-      <ListActions
-        componentForm={
-          <CriarSerie
-            initialValues={record}
-            title='Edição de Serie'
-          />}
+
+      return (
+        <ListActions
+          componentForm={
+            <CriarSerie
+              initialValues={record}
+              title='Edição de Serie'
+            />}
 
           record={record}
           enableDeleteFor={['FUNCIONARIO', 'COORDENADOR']}
           enableEditFor={['FUNCIONARIO', 'COORDENADOR']}
           enableViewFor={[]}
           formatterView={formatSerie}
-      />
+        />
       )
     }
   },

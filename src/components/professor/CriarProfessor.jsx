@@ -26,7 +26,7 @@ const CriarProfessor = ({ tipo = "Professor" }) => {
 
     const onFinish = values => {
         Modal.success({
-            content: `${tipo} ${values.nomeAluno} cadastrado com sucesso!`,
+            content: `${tipo} ${values.nome} cadastrado com sucesso!`,
         });
     };
 

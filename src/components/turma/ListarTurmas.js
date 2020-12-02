@@ -2,7 +2,7 @@ import React from 'react'
 import { Table, Typography } from 'antd';
 import { mockTurmas } from '../../models/turmas'
 import ListActions from '../crudBasics/ListActions'
-import  CriarTurma  from './CriarTurma'
+import CriarTurma from './CriarTurma'
 import { formatTurmas } from '../../models/turmas'
 
 
@@ -16,11 +16,15 @@ const columns = [
     title: 'Série',
     dataIndex: 'serie',
     key: 'serie',
+    sorter: (a, b) => a.serie.localeCompare(b.serie),
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Turma',
     dataIndex: 'turma',
     key: 'turma',
+    sorter: (a, b) => a.turma.localeCompare(b.turma),
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Disciplinas',
@@ -50,7 +54,7 @@ const columns = [
     title: 'Ações',
     key: 'operation',
     render: (record) => {
-      
+
       return (
         <ListActions
           componentForm={

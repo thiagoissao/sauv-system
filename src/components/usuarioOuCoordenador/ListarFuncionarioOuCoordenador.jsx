@@ -9,21 +9,29 @@ const columns = [
     title: 'Nome',
     dataIndex: 'primeiroNome',
     key: 'primeiroNome',
+    sorter: (a, b) => a.primeiroNome.localeCompare(b.primeiroNome),
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Sobrenome',
     dataIndex: 'ultimoNome',
     key: 'ultimoNome',
+    sorter: (a, b) => a.ultimoNome.localeCompare(b.ultimoNome),
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Gênero',
     dataIndex: 'genero',
-    key: 'genero'
+    key: 'genero',
+    sorter: (a, b) => a.genero.localeCompare(b.genero),
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'E-mail',
     dataIndex: 'email',
-    key: 'email'
+    key: 'email',
+    sorter: (a, b) => a.email.localeCompare(b.email),
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Celular',

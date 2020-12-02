@@ -19,9 +19,9 @@ export const mockTurmas = [
     ]
   },
   {
-    'nome-turma': 'Oitava série A',
+    'nome-turma': 'Oitava série B',
     'serie': '8',
-    'turma': 'A',
+    'turma': 'B',
     disciplinas: [
       'Matemática',
       'Ensino religioso',

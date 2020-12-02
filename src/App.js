@@ -20,7 +20,7 @@ import { UnorderedListOutlined, FormOutlined, BarChartOutlined, LockOutlined, Co
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Login from './components/login/Login';
 import store from './redux/auth'
-import ControleTurma from './components/turma/ControleFrequencia'
+import ControleFrequencia from './components/turma/ControleFrequencia'
 import { allRoles } from './models/roles'
 import ControleNotas from './components/nota/ControleNotas'
 
@@ -164,8 +164,8 @@ const menuOptions = {
     opcoes: {
       frequencia: {
         label: 'Frequência',
-        enableFor: ['COORDENADOR', 'FUNCIONARIO'],
-        component: () => <ControleTurma />
+        enableFor: ['PROFESSOR'],
+        component: () => <ControleFrequencia />
       },
       notas: {
         enableFor: ['PROFESSOR'],

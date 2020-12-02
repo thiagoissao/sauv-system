@@ -18,6 +18,8 @@ const columns = [
     title: 'Nome',
     dataIndex: 'nome',
     key: 'nome',
+    sorter: (a, b) => a.nome.localeCompare(b.nome),
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Disciplina',
@@ -28,21 +30,29 @@ const columns = [
     title: 'Nota 1',
     dataIndex: 'nota1b',
     key: 'nota1b',
+    sorter: (a, b) => a.nota1b - b.nota1b,
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Nota 2',
     dataIndex: 'nota2b',
     key: 'nota2b',
+    sorter: (a, b) => a.nota2b - b.nota2b,
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Nota 3',
     dataIndex: 'nota3b',
     key: 'nota3b',
+    sorter: (a, b) => a.nota3b - b.nota3b,
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Nota 4',
     dataIndex: 'nota4b',
     key: 'nota4b',
+    sorter: (a, b) => a.nota4b - b.nota4b,
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'Editar Notas',

@@ -29,6 +29,7 @@ const EditarNotasForm = ({ title, initialValues }) => {
           <Col span={6}>
             <Form.Item name="nota1b" label="Nota 1">
               <InputNumber
+                step={0.01}
                 size='large'
                 type='number'
                 min={0}
@@ -40,6 +41,7 @@ const EditarNotasForm = ({ title, initialValues }) => {
           <Col span={6}>
             <Form.Item name="nota2b" label="Nota 2">
               <InputNumber
+                step={0.01}
                 size='large'
                 type='number'
                 min={0}
@@ -51,6 +53,7 @@ const EditarNotasForm = ({ title, initialValues }) => {
           <Col span={6}>
             <Form.Item name="nota3b" label="Nota 3">
               <InputNumber
+                step={0.01}
                 size='large'
                 type='number'
                 min={0}
@@ -62,6 +65,7 @@ const EditarNotasForm = ({ title, initialValues }) => {
           <Col span={6}>
             <Form.Item name="nota4b" label="Nota 4">
               <InputNumber
+                step={0.01}
                 size='large'
                 type='number'
                 min={0}

@@ -82,22 +82,22 @@ export const disciplinas = [
   }
 ]
 
-export const alunosMatematica = Array(20).fill({
-  nome: 'Pedro da Silva',
+export const alunosMatematica = Array(20).fill({}).map((aluno, index) => ({
+  nome: `Pedro ${index}`,
   idDisciplina: 1,
   disciplina: 'Matemática',
-  nota1b: 4.3,
-  nota2b: 6,
-  nota3b: 10,
-  nota4b: 9
-})
+  nota1b: Math.floor(Math.random() * 10),
+  nota2b: Math.floor(Math.random() * 10),
+  nota3b: Math.floor(Math.random() * 10),
+  nota4b: Math.floor(Math.random() * 10)
+}))
 
-export const alunosFisica = Array(20).fill({
-  nome: 'Maria Aparecida',
-  idDisciplina: 2,
-  disciplina: 'Física',
-  nota1b: 8,
-  nota2b: 7,
-  nota3b: 10,
-  nota4b: 9
-})
+export const alunosFisica = Array(20).fill({}).map((aluno, index) => ({
+  nome: `Carlos ${index}`,
+  idDisciplina: 1,
+  disciplina: 'Matemática',
+  nota1b: Math.floor(Math.random() * 10),
+  nota2b: Math.floor(Math.random() * 10),
+  nota3b: Math.floor(Math.random() * 10),
+  nota4b: Math.floor(Math.random() * 10)
+}))

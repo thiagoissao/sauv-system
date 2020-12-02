@@ -38,6 +38,18 @@ export const mockUsuarioList = [
     estado: 'Paraná'
   },
   {
+    primeiroNome: 'Ana',
+    ultimoNome: 'Almeida',
+    genero: 'feminino',
+    cpf: '550.611.760-49',
+    email: 'almeida@email.com',
+    celular: '44999884444',
+    logradouro: 'Rua x, 99011',
+    pais: 'Brasil',
+    cidade: 'Maringá',
+    estado: 'Paraná'
+  },
+  {
     primeiroNome: 'João',
     ultimoNome: 'Souza',
     genero: 'masculino',

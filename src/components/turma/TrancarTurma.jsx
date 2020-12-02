@@ -1,4 +1,4 @@
-import { Card, Col, Row, Button } from 'antd';
+import { Card, Col, Row, Button, Popconfirm, message } from 'antd';
 import FormCard from '../FormCard'
 import { LockOutlined } from '@ant-design/icons'
 
@@ -45,7 +45,14 @@ const TrancarTurma = ({ title }) => {
                                         Quantidade de Alunos: 4
                                     </Col>
                                     <Col>
-                                        <Button type="primary" icon={<LockOutlined />}></Button>
+                                        <Popconfirm
+                                            title="Deseja realmente trancar esta turma?"
+                                            onConfirm={() => message.success('Turma trancada com sucesso!')}
+                                            okText="Sim"
+                                            cancelText="Não"
+                                        >
+                                            <Button type="primary" icon={<LockOutlined />}></Button>
+                                        </Popconfirm>
                                     </Col>
                                 </Row>
                             </div>
@@ -125,7 +132,14 @@ const TrancarTurma = ({ title }) => {
                                         Quantidade de Alunos: 7
                                     </Col>
                                     <Col>
-                                        <Button type="primary" icon={<LockOutlined />}></Button>
+                                        <Popconfirm
+                                            title="Deseja realmente trancar esta turma?"
+                                            onConfirm={() => message.success('Turma trancada com sucesso!')}
+                                            okText="Sim"
+                                            cancelText="Não"
+                                        >
+                                            <Button type="primary" icon={<LockOutlined />}></Button>
+                                        </Popconfirm>
                                     </Col>
                                 </Row>
                             </div>

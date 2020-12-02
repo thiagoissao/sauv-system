@@ -1,17 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d8775616217c0fe9282073a6dc1fac87a9cf95db
-# sauv-system
-Branch do Gabriel 
-
-<<<<<<< HEAD
-=======
-=======
->>>>>>> d8775616217c0fe9282073a6dc1fac87a9cf95db
-# Getting Started with Create React App
->>>>>>> 79fe429e1888f0518703cd47e4f8d2592329cb05
-
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts

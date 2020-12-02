@@ -41,7 +41,17 @@ const GerarRelatorio = ({ title }) => {
             title: "CPF do Aluno",
             dataIndex: "cpfAluno",
             key: "cpfAluno",
-        }
+        },
+        {
+            title: "Nome do Responsável",
+            dataIndex: "nomeResponsavel",
+            key: "nomeResponsavel",
+        },
+        {
+            title: "CEP",
+            dataIndex: "cep",
+            key: "cep",
+        },
     ];
 
     return (

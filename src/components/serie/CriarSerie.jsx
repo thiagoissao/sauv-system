@@ -76,7 +76,7 @@ export default ({ title, initialValues }) => {
                     <Checkbox value="geografia">Geografia</Checkbox>
                   </Col>
                   <Col span={9}>
-                    <Checkbox value="historia">Hisória</Checkbox>
+                    <Checkbox value="historia">História</Checkbox>
                   </Col>
                   <Col span={9}>
                     <Checkbox value="ingles">Inglês</Checkbox>

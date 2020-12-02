@@ -30,7 +30,7 @@ const TrancarAluno = ({ title }) => {
 
         setAluno(aluno[0]);
         setOpen(true);
-    }
+    } 
 
     const onConfirm = values => {
         setAluno(false);

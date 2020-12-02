@@ -9,6 +9,8 @@ const columns = [
     title: 'Nome do Aluno',
     dataIndex: 'nomeAluno',
     key: 'nomeAluno',
+    sorter: (a, b) => a.nomeAluno.localeCompare(b.nomeAluno),
+    sortDirections: ['descend','ascend'],
   },
   {
     title: 'CPF do Aluno',
@@ -18,7 +20,9 @@ const columns = [
   {
     title: 'Nome do Responsável',
     dataIndex: 'nomeResponsavel',
-    key: 'nomeResponsavel'
+    key: 'nomeResponsavel',
+    sorter: (a, b) => a.nomeResponsavel.localeCompare(b.nomeResponsavel),
+    sortDirections: ['descend','ascend'],
   },
   {
     title: 'CPF do Responsável',

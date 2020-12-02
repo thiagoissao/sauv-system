@@ -23,6 +23,7 @@ import store from './redux/auth'
 import ControleTurma from './components/turma/ControleFrequencia'
 import { allRoles } from './models/roles'
 import ControleNotas from './components/nota/ControleNotas'
+import TrancarTurma from './components/turma/TrancarTurma'
 
 const menuOptions = {
   visualizar: {
@@ -143,7 +144,8 @@ const menuOptions = {
       turmas: {
         label: 'Turmas',
         enableFor: ['COORDENADOR', 'FUNCIONARIO'],
-      }
+        component: () => <TrancarTurma title="Trancamento de Turma" />
+      },
     }
   },
   relatorio: {

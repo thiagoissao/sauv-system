@@ -5,6 +5,30 @@ import ListActions from '../crudBasics/ListActions'
 import CriarSerie from './CriarSerie'
 import { formatSerie } from '../../models/series'
 
+const formatRecord = record => {
+
+  const formattedDisciplinas = record.disciplinas.map(disciplina => { 
+      if (disciplina === 'Arte') return 'arte'
+      if (disciplina === 'Biologia') return 'biologia'
+      if (disciplina === 'Ciencias') return 'ciencias'
+      if (disciplina === 'Educação Fisica') return 'edFisica'
+      if (disciplina === 'Ensino religioso') return 'ensReligioso'
+      if (disciplina === 'Fisica') return 'fisica'
+      if (disciplina === 'Geografia') return 'geografia'
+      if (disciplina === 'História') return 'historia'
+      if (disciplina === 'Inglês') return 'ingles'
+      if (disciplina === 'Matemática') return 'matematica'
+      if (disciplina === 'Português') return 'portugues'
+      if (disciplina === 'Química') return 'quimica'
+   } );
+
+
+   return ({
+      ...record,
+      disciplinas: formattedDisciplinas
+   })
+}
+
 const columns = [
   {
     title: 'Série',
@@ -23,12 +47,12 @@ const columns = [
     title: 'Ações',
     key: 'operation',
     render: (record) => {
-    
+
       return ( 
       <ListActions
         componentForm={
           <CriarSerie
-            initialValues={record}
+            initialValues={formatRecord(record)}
             title='Edição de Serie'
           />}
 

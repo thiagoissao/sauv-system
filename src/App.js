@@ -24,6 +24,7 @@ import ControleTurma from './components/turma/ControleFrequencia'
 import { allRoles } from './models/roles'
 import ControleNotas from './components/nota/ControleNotas'
 import TrancarTurma from './components/turma/TrancarTurma'
+import TrancarAluno from './components/aluno/TrancarAluno'
 import RelatorioTurma from './components/relatório/RelatorioTurma'
 
 const menuOptions = {
@@ -141,6 +142,7 @@ const menuOptions = {
       alunos: {
         label: 'Alunos',
         enableFor: ['FUNCIONARIO', 'COORDENADOR'],
+        component: () => <TrancarAluno title='Trancamento de Aluno' />
       },
       turmas: {
         label: 'Turmas',

@@ -18,7 +18,7 @@ export default ({ title, initialValues }) => {
 
   const onFinish = values => {
     Modal.success({
-      content: `${title} ${values['nome-disciplina']} criado com sucesso!`,
+      content: `${title} ${values['nome-disciplina']} criado com sucesso com professor(a) ${value}!`,
     });
   };
 

@@ -41,10 +41,10 @@ export default ({ title, initialValues }) => {
         <Form.Item>
           <Space size='small'>
             <Button shape='round' size='large' type="primary" htmlType="submit">
-              Submit
+              Cadastrar
             </Button>
             <Button shape='round' size='large' htmlType="button" onClick={onReset}>
-              Reset
+              Resetar
             </Button>
           </Space>
         </Form.Item>

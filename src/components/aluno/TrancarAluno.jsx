@@ -8,6 +8,7 @@ import {
     Input,
     message,
     Modal,
+    Popconfirm,
 } from 'antd';
 import { mockAlunoList } from './../../models/aluno'
 
@@ -30,7 +31,7 @@ const TrancarAluno = ({ title }) => {
 
         setAluno(aluno[0]);
         setOpen(true);
-    } 
+    }
 
     const onConfirm = values => {
         setAluno(false);
@@ -79,9 +80,17 @@ const TrancarAluno = ({ title }) => {
                         </Row>
                     ))
                 }
-                <Button shape='round' size='large' type="primary" htmlType="submit" onClick={onConfirm}>
-                    Confirmar
-                </Button>
+                <Popconfirm
+                    title="Deseja realmente trancar?"
+                    onConfirm={onConfirm}
+                    okText="Sim"
+                    cancelText="Não"
+                >
+
+                    <Button shape='round' size='large' type="primary" htmlType="submit">
+                        Confirmar
+                    </Button>
+                </Popconfirm>
             </Modal>
         </>
     );

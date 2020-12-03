@@ -26,6 +26,7 @@ import ControleNotas from './components/nota/ControleNotas'
 import TrancarTurma from './components/turma/TrancarTurma'
 import TrancarAluno from './components/aluno/TrancarAluno'
 import RelatorioTurma from './components/relatório/RelatorioTurma'
+import ControleTrocarAlunoTurma from './components/aluno/ControleTrocarAlunoTurma'
 
 const menuOptions = {
   visualizar: {
@@ -159,7 +160,7 @@ const menuOptions = {
       relatorioTurma: {
         enableFor: ['COORDENADOR', 'FUNCIONARIO', 'PROFESSOR'],
         label: "Relatório de Turma",
-        component: () => <RelatorioTurma title="Relatório de Turma"/>
+        component: () => <RelatorioTurma title="Relatório de Turma" />
       },
     },
   },
@@ -168,6 +169,11 @@ const menuOptions = {
     icon: <ControlOutlined />,
     label: 'Controles',
     opcoes: {
+      trocarAlunoTurma: {
+        label: 'Trocar Aluno-Turma',
+        enableFor: ['COORDENADOR'],
+        component: () => <ControleTrocarAlunoTurma />
+      },
       frequencia: {
         label: 'Frequência',
         enableFor: ['PROFESSOR'],

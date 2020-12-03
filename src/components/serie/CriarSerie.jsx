@@ -91,10 +91,10 @@ export default ({ title, initialValues }) => {
         <Form.Item>
           <Space size='small'>
             <Button shape='round' size='large' type="primary" htmlType="submit">
-              Enviar
+              Cadastrar
             </Button>
             <Button shape='round' size='large' htmlType="button" onClick={onReset}>
-              Limpar
+              Resetar
           </Button>
             <Button shape='round' size='large' type="link" htmlType="button" onClick={onFill}>
               Preencher Cadastro

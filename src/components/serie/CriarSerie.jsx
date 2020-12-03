@@ -11,9 +11,6 @@ import {
   Checkbox
 } from 'antd';
 
-//const { Option } = Select; 
-const style = { padding: '8px 0' };
-
 export default ({ title, initialValues }) => {
   const [form] = Form.useForm();
 
@@ -35,10 +32,6 @@ export default ({ title, initialValues }) => {
       'disciplinas': ['arte', 'ensReligioso', 'biologia',
         'ciencias', 'ingles', 'matematica', 'portugues'],
     });
-  };
-
-  const onChange = e => {
-    setValue(e.target.value);
   };
 
   return (

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import './App.less'
 import Layout from './Layout'
 import CriarDisciplina from './components/disciplina/CriarDisciplina'
@@ -27,6 +27,7 @@ import TrancarTurma from './components/turma/TrancarTurma'
 import TrancarAluno from './components/aluno/TrancarAluno'
 import RelatorioTurma from './components/relatório/RelatorioTurma'
 import ControleTrocarAlunoTurma from './components/aluno/ControleTrocarAlunoTurma'
+import api from './services/api'
 
 const menuOptions = {
   visualizar: {
@@ -191,6 +192,19 @@ const menuOptions = {
 const App = () => {
   const [selectedKeys, setSelectedKeys] = useState('visualizar:usuarios')
   const { loggedIn } = store.getState()
+
+  const testApi = async () => {
+    const responsePost = await api.postTestApi()
+    console.log('post', responsePost)
+    const responseGet = await api.getTestApi()
+    console.log('get', responseGet)
+    const responsePatch = await api.patchTestApi()
+    console.log('patch', responsePatch)
+  }
+
+  useEffect(() => {
+    testApi()
+  }, []);
 
   return (
     <>

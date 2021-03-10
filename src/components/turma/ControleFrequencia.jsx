@@ -6,9 +6,7 @@ import {
   Select,
   Row,
   Col,
-  Table,
-  Modal,
-  Typography
+  Table
 } from 'antd';
 import { alunos8A, alunos8B, disciplinas, series, turmas } from '../../models/frequencia';
 import ListActions from '../crudBasics/ListActions';

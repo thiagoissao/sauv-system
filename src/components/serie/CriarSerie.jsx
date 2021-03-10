@@ -10,16 +10,21 @@ import {
   Modal,
   Checkbox
 } from 'antd';
+import Serie from '../../services/series'
 
 export default ({ title, initialValues }) => {
   const [form] = Form.useForm();
-
+  const serie = new Serie();
   const [value, setValue] = React.useState(1);
 
   const onFinish = values => {
-    Modal.success({
-      content: `${title} realizada com sucesso!`,
-    });
+    serie.criar(values)
+      .then(response => {
+        Modal.success({
+          title: `Cadastro da série ${values.anoLetivo} realiazada com sucesso!`,
+          content: `Disciplinas desta série: ${values.disciplinas}!`,
+        });
+      })
   };
 
   const onReset = () => {
@@ -39,7 +44,7 @@ export default ({ title, initialValues }) => {
       <Form layout='vertical' form={form} name="serie-ano" onFinish={onFinish} initialValues={initialValues}>
         <Row gutter={24}>
           <Col span={8}>
-            <Form.Item name="serie-ano" label="Série" rules={[{ required: true, message: 'Obrigatório' }]}>
+            <Form.Item name="anoLetivo" label="Série" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Input placeholder='8' />
             </Form.Item>
           </Col>

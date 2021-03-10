@@ -1,28 +1,27 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table, Typography } from 'antd';
-import { mockDisciplinas } from '../../models/disciplinas'
 import ListActions from '../crudBasics/ListActions';
 import CriarDisciplina from './CriarDisciplina'
-import { formatDisciplinas } from '../../models/disciplinas'
+import Disciplina from '../../services/disciplinas';
 
 const columns = [
   {
     title: 'Nome Disciplina',
-    dataIndex: 'nome-disciplina',
-    key: 'nome-disciplina',
-    sorter: (a, b) => a["nome-disciplina"].localeCompare(b["nome-disciplina"]),
+    dataIndex: 'nomeDisciplina',
+    key: 'nomeDisciplina',
+    sorter: (a, b) => a["nomeDisciplina"].localeCompare(b["nomeDisciplina"]),
     sortDirections: ['descend', 'ascend']
   },
   {
     title: 'Carga horária',
-    dataIndex: 'carga-horaria',
-    key: 'carga-horario',
+    dataIndex: 'cargaHoraria',
+    key: 'cargaHorario',
   },
   {
     title: 'Nome professor',
-    dataIndex: 'nome-professor',
-    key: 'nome-professor',
-    sorter: (a, b) => a["nome-professor"].localeCompare(b["nome-professor"]),
+    dataIndex: 'professor',
+    key: 'professor',
+    sorter: (a, b) => a["professor"].localeCompare(b["professor"]),
     sortDirections: ['descend', 'ascend'],
   },
   {
@@ -37,18 +36,29 @@ const columns = [
       record={record}
       enableEditFor={['COORDENADOR', 'FUNCIONARIO']}
       enableDeleteFor={['COORDENADOR', 'FUNCIONARIO']}
-      formatterView={formatDisciplinas}
     />
   },
 ];
 
-const ListarTurmas = ({ tipo = 'Turmas' }) => {
+const ListarDisciplinas = ({ tipo = 'Disciplinas' }) => {
+  const [disciplinas, setDisciplinas] = useState(false);
+  const classDisciplina = new Disciplina();
+  
+  useEffect(() => {
+    classDisciplina.buscaTodas()
+      .then(response => {
+        setDisciplinas(response.data)
+      })
+      .catch(err => setDisciplinas(false));
+  }, []);
+
+
   return (
     <Table
       title={() => <Typography.Title level={3}>Listagem das {tipo}</Typography.Title>}
       columns={columns}
-      dataSource={mockDisciplinas}
+      dataSource={disciplinas}
       scroll={{ x: 1300 }} />
   )
 }
-export default ListarTurmas
+export default ListarDisciplinas

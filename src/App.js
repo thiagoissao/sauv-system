@@ -11,7 +11,6 @@ import ListarAluno from "./components/aluno/ListarAluno"
 import { mockAlunoList } from "./models/aluno"
 import CriarProfessor from "./components/professor/CriarProfessor"
 import ListarProfessor from "./components/professor/ListarProfessor"
-import { mockProfessorList } from "./models/professor"
 import { mockCoordenadorList, mockUsuarioList } from '../src/models/usuarioOuCoordenador'
 import ListarTurmas from './components/turma/ListarTurmas'
 import ListarDisciplinas from './components/disciplina/ListarDisciplinas'
@@ -66,10 +65,7 @@ const menuOptions = {
         enableFor: allRoles,
         label: 'Professores',
         component: () =>
-          <ListarProfessor
-            list={mockProfessorList}
-            tipo="Professores"
-          />
+          <ListarProfessor tipo="Professores" />
       },
       disciplinas: {
         enableFor: allRoles,

@@ -56,10 +56,12 @@ const columns = [
       return (
         <ListActions
           componentForm={
-            <CriarTurma
-              initialValues={record}
-              title='Edição de Dados'
-            />}
+            ({ setOptionsEdit }) =>
+              <CriarTurma
+                setOptionsEdit={setOptionsEdit}
+                initialValues={record}
+                title='Edição de Dados'
+              />}
           record={record}
           enableDeleteFor={['FUNCIONARIO', 'COORDENADOR']}
           enableEditFor={['FUNCIONARIO', 'COORDENADOR']}
@@ -79,12 +81,12 @@ const ListarTurmas = ({ tipo = 'Turmas' }) => {
       .then(response => {
         console.log(response.data)
         setTurmas(response.data);
-      }) 
+      })
       .catch(error => {
         setTurmas(false);
       })
   }, [])
-  
+
   return (
     <Table
       title={() => <Typography.Title level={3}>Listagem das {tipo}</Typography.Title>}

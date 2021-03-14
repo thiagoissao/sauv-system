@@ -6,24 +6,24 @@ import Serie from '../../services/series'
 
 const formatRecord = record => {
 
-  const formattedDisciplinas = record.map(disciplina => { 
-      if (disciplina === 'arte') return 'Arte'
-      if (disciplina === 'biologia') return 'Biologia'
-      if (disciplina === 'ciencias') return 'Ciências'
-      if (disciplina === 'edFisica') return 'Educação Fisica'
-      if (disciplina === 'ensReligioso') return 'Ensino Religioso'
-      if (disciplina === 'fisica') return 'Física'
-      if (disciplina === 'geografia') return 'Geografia'
-      if (disciplina === 'história') return 'História'
-      if (disciplina === 'ingles') return 'Inglês'
-      if (disciplina === 'matematica') return 'Matemática'
-      if (disciplina === 'portugues') return 'Português'
-      if (disciplina === 'quimica') return 'Quimíca'
-      return disciplina
-   } );
+  const formattedDisciplinas = record.map(disciplina => {
+    if (disciplina === 'arte') return 'Arte'
+    if (disciplina === 'biologia') return 'Biologia'
+    if (disciplina === 'ciencias') return 'Ciências'
+    if (disciplina === 'edFisica') return 'Educação Fisica'
+    if (disciplina === 'ensReligioso') return 'Ensino Religioso'
+    if (disciplina === 'fisica') return 'Física'
+    if (disciplina === 'geografia') return 'Geografia'
+    if (disciplina === 'história') return 'História'
+    if (disciplina === 'ingles') return 'Inglês'
+    if (disciplina === 'matematica') return 'Matemática'
+    if (disciplina === 'portugues') return 'Português'
+    if (disciplina === 'quimica') return 'Quimíca'
+    return disciplina
+  });
 
 
-   return formattedDisciplinas;
+  return formattedDisciplinas;
 }
 
 const columns = [
@@ -48,12 +48,15 @@ const columns = [
     key: 'operation',
     render: (record) => {
 
-      return ( 
-      <ListActions
-        componentForm={
-          <CriarSerie
-            title='Edição de Serie'
-          />}
+      return (
+        <ListActions
+          componentForm={
+            ({ setOptionsEdit }) =>
+              <CriarSerie
+                setOptionsEdit={setOptionsEdit}
+                title='Edição de Serie'
+              />
+          }
 
           record={record}
           enableDeleteFor={['FUNCIONARIO', 'COORDENADOR']}
@@ -72,10 +75,11 @@ const ListarSerie = ({ tipo = 'Séries' }) => {
   useEffect(() => {
     classSeries.buscaTodas()
       .then(response => {
-        setSeries(response.data)})
+        setSeries(response.data)
+      })
       .catch(error => setSeries(false))
-  },[])
-  
+  }, [])
+
   return (
     <Table
       title={() => <Typography.Title level={3}>Listagem das {tipo}</Typography.Title>}

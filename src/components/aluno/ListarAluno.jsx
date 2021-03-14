@@ -10,7 +10,7 @@ const columns = [
     dataIndex: 'nomeAluno',
     key: 'nomeAluno',
     sorter: (a, b) => a.nomeAluno.localeCompare(b.nomeAluno),
-    sortDirections: ['descend','ascend'],
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'CPF do Aluno',
@@ -22,7 +22,7 @@ const columns = [
     dataIndex: 'nomeResponsavel',
     key: 'nomeResponsavel',
     sorter: (a, b) => a.nomeResponsavel.localeCompare(b.nomeResponsavel),
-    sortDirections: ['descend','ascend'],
+    sortDirections: ['descend', 'ascend'],
   },
   {
     title: 'CPF do Responsável',
@@ -34,7 +34,8 @@ const columns = [
     key: 'operation',
     render: (record) => <ListActions
       componentForm={
-        <CriarAluno
+        ({ setOptionsEdit }) => <CriarAluno
+          setOptionsEdit={setOptionsEdit}
           initialValues={record}
           title='Edição de Dados'
         />}

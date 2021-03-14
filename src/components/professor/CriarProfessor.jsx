@@ -1,5 +1,4 @@
 import React from 'react'
-import { mockProfessor } from '../../models/professor'
 import Input from '../Input'
 import FormCard from '../FormCard'
 import {
@@ -11,10 +10,12 @@ import {
     Space,
     Modal,
 } from 'antd';
+import api from '../../services/api'
 
 const OPTIONS = ["Artes", "Biologia", "Ciências", "Educação Físcia", "Ensino Religioso", "Filosofia", "Física", "Geografia", "História", "Ingles", "Matemática", "Português", "Química", "Sociologia"];
 
-const CriarProfessor = ({ tipo = "Professor" }) => {
+const CriarProfessor = ({ initialValues, setOpenEdit }) => {
+    const isNew = !initialValues?.id
     const [form] = Form.useForm();
 
     const { Option } = Select;
@@ -24,28 +25,34 @@ const CriarProfessor = ({ tipo = "Professor" }) => {
         children.push(<Option key={i}>{OPTIONS[i]}</Option>);
     }
 
-    const onFinish = values => {
-        Modal.success({
-            content: `${tipo} ${values.nome} cadastrado com sucesso!`,
-        });
-    };
+    const onFinish = async values => {
+        console.log(values);
+        if (isNew) {
+            const response = await api.postProfessor(values);
+            if (response.ok) {
+                Modal.success({
+                    content: `Cadastro atualizado com sucesso!`,
+                });
+                return
+            }
+            Modal.error({
+                content: `Erro ao salvar, tente novamente.`,
+            });
 
-    const onReset = () => {
-        form.resetFields();
-    };
+        }
+        // const response = await api.patchTestApi 
 
-    const onFill = () => {
-        form.setFieldsValue(mockProfessor);
     };
 
     return (
         <Form
+            initialValues={initialValues}
             layout='vertical'
             form={form}
             name="criar-professor"
             onFinish={onFinish}
         >
-            <FormCard title={"Cadastro de Professor"}>
+            <FormCard title={isNew ? 'Cadastro de Professor' : `Edição de Professor`}>
                 <Row gutter={24}>
                     <Col span={8}>
                         <Form.Item
@@ -93,6 +100,16 @@ const CriarProfessor = ({ tipo = "Professor" }) => {
                             rules={[{ required: true, message: 'O número do Telefone é um campo obrigatório' }]}
                         >
                             <Input placeholder="Ex: (44) 9 9876-5432" />
+                        </Form.Item>
+                    </Col>
+
+                    <Col span={8}>
+                        <Form.Item
+                            label="Formação"
+                            name="formacao"
+                            rules={[{ required: true, message: 'formação um campo obrigatório' }]}
+                        >
+                            <Input placeholder="Ex: Ciência da Computação" />
                         </Form.Item>
                     </Col>
                 </Row>
@@ -168,14 +185,6 @@ const CriarProfessor = ({ tipo = "Professor" }) => {
                 <Space>
                     <Button shape='round' size='large' type="primary" htmlType="submit">
                         Cadastrar
-                    </Button>
-
-                    <Button shape='round' size='large' htmlType="button" onClick={onReset}>
-                        Resetar
-                    </Button>
-
-                    <Button shape='round' size='large' type="link" htmlType="button" onClick={onFill}>
-                        Preencher Formulário
                     </Button>
                 </Space>
             </FormCard>

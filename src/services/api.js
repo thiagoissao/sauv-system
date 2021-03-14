@@ -34,6 +34,10 @@ const patch = (endpoint, data) =>
     body: JSON.stringify(data)
   })
 
+const getProfessores = () => customFetch('professores')
+const postProfessor = body => post('professores', body)
+const updateProfessor = body => post('professores', body)
+
 export const getTestApi = () => customFetch('test')
 export const postTestApi = () => post('test', ({ testing: 'post' }))
 export const patchTestApi = () => patch('test', ({ testing: 'patch' }))
@@ -41,5 +45,8 @@ export const patchTestApi = () => patch('test', ({ testing: 'patch' }))
 export default {
   getTestApi,
   postTestApi,
-  patchTestApi
+  patchTestApi,
+  getProfessores,
+  postProfessor,
+  updateProfessor
 }

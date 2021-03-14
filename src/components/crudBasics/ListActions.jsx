@@ -65,7 +65,7 @@ const ListActions = ({
             onCancel={() => setOpenEdit(false)}
             footer={null}
           >
-            {componentForm}
+            {componentForm({ setOpenEdit })}
           </Modal>
         )
       }

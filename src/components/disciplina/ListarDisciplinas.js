@@ -29,10 +29,12 @@ const columns = [
     key: 'operation',
     render: (record) => <ListActions
       componentForm={
-        <CriarDisciplina
-          initialValues={record}
-          title='Edição de Dados'
-        />}
+        ({ setOptionsEdit }) =>
+          <CriarDisciplina
+            setOptionsEdit={setOptionsEdit}
+            initialValues={record}
+            title='Edição de Dados'
+          />}
       record={record}
       enableEditFor={['COORDENADOR', 'FUNCIONARIO']}
       enableDeleteFor={['COORDENADOR', 'FUNCIONARIO']}
@@ -43,7 +45,7 @@ const columns = [
 const ListarDisciplinas = ({ tipo = 'Disciplinas' }) => {
   const [disciplinas, setDisciplinas] = useState(false);
   const classDisciplina = new Disciplina();
-  
+
   useEffect(() => {
     classDisciplina.buscaTodas()
       .then(response => {

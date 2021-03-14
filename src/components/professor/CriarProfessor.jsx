@@ -25,23 +25,39 @@ const CriarProfessor = ({ initialValues, setOpenEdit }) => {
         children.push(<Option key={i}>{OPTIONS[i]}</Option>);
     }
 
-    const onFinish = async values => {
-        console.log(values);
-        if (isNew) {
-            const response = await api.postProfessor(values);
-            if (response.ok) {
-                Modal.success({
-                    content: `Cadastro atualizado com sucesso!`,
-                });
-                return
-            }
-            Modal.error({
-                content: `Erro ao salvar, tente novamente.`,
+    const cadastrarProfessor = async values => {
+        const response = await api.postProfessor(values);
+        if (response.ok) {
+            Modal.success({
+                content: `Cadastro atualizado com sucesso!`,
             });
-
+            return
         }
-        // const response = await api.patchTestApi 
+        Modal.error({
+            content: `Erro ao salvar, tente novamente.`,
+        });
+    }
 
+    const atualizarProfessor = async values => {
+        const response = await api.updateProfessor(values, initialValues.id)
+        if (response.ok) {
+            Modal.success({
+                content: `Professor atualizado com sucesso!`,
+            });
+            setOpenEdit(false)
+            return
+        }
+        Modal.error({
+            content: `Erro ao salvar, tente novamente.`,
+        });
+    }
+
+    const onFinish = values => {
+        if (isNew) {
+            cadastrarProfessor(values)
+            return
+        }
+        atualizarProfessor(values)
     };
 
     return (

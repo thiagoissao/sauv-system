@@ -2,7 +2,7 @@ import fetch from 'isomorphic-unfetch'
 
 const baseURL = 'http://localhost:5000'
 
-const customFetch = async (endpoint, options) => {
+export const customFetch = async (endpoint, options) => {
   const headers = {
     'Content-Type': 'application/json',
   }
@@ -28,15 +28,15 @@ const post = (endpoint, data) => {
   })
 }
 
-const patch = (endpoint, data) =>
-  customFetch(endpoint, {
+const patch = (endpoint, data, id) =>
+  customFetch(`${endpoint}/${id}`, {
     method: 'PATCH',
     body: JSON.stringify(data)
   })
 
 const getProfessores = () => customFetch('professores')
 const postProfessor = body => post('professores', body)
-const updateProfessor = body => post('professores', body)
+const updateProfessor = (body, id) => patch('professores', body, id)
 
 export const getTestApi = () => customFetch('test')
 export const postTestApi = () => post('test', ({ testing: 'post' }))
@@ -48,5 +48,5 @@ export default {
   patchTestApi,
   getProfessores,
   postProfessor,
-  updateProfessor
+  updateProfessor,
 }

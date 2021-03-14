@@ -15,6 +15,7 @@ import {
 } from '@ant-design/icons'
 import useUser from '../../hooks/useUser';
 import { allRoles } from '../../models/roles';
+import { customFetch } from '../../services/api'
 
 const ListActions = ({
   componentForm,
@@ -26,11 +27,30 @@ const ListActions = ({
   disableView = false,
   disableEdit = false,
   disableDelete = false,
+  endpoint,
   formWidth = 1200
 }) => {
   const user = useUser()
   const [openView, setOpenView] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
+
+  const removeItem = async () => {
+    if (!endpoint) {
+      console.error('Passar a propriedade endpoint no componente ListActions')
+      return
+    }
+
+    if (!record.id) {
+      console.error('O registro não possui ID, portanto não é possível excluir o registro')
+      return
+    }
+    const response = await customFetch(`${endpoint}/${record.id}`, { method: 'DELETE' })
+    if (response.ok) {
+      message.success('Registro deletado! Recarregue a página para ver as alterações')
+      return
+    }
+    message.error('Erro na exclusão do registro')
+  }
 
   return (
     <>
@@ -72,14 +92,15 @@ const ListActions = ({
       <Space>
         {!disableView && user.enableField(enableViewFor) && <Button onClick={() => setOpenView(true)} shape='circle' type="primary" icon={<EyeOutlined />} />}
         {!disableEdit && user.enableField(enableEditFor) && <Button onClick={() => setOpenEdit(true)} shape='circle' type="primary" icon={<EditOutlined />} />}
-        {!disableDelete && user.enableField(enableDeleteFor) && <Popconfirm
-          title="Deletar esse registro?"
-          onConfirm={() => message.success('Ação de deleção lógica!')}
-          okText="Sim"
-          cancelText="Não"
-        >
-          <Button shape='circle' type='default' icon={<DeleteOutlined />} />
-        </Popconfirm>}
+        {!disableDelete && user.enableField(enableDeleteFor) &&
+          <Popconfirm
+            title="Deletar esse registro?"
+            onConfirm={removeItem}
+            okText="Sim"
+            cancelText="Não"
+          >
+            <Button shape='circle' type='default' icon={<DeleteOutlined />} />
+          </Popconfirm>}
       </Space>
     </>
   )

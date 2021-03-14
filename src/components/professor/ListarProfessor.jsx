@@ -4,6 +4,7 @@ import ListActions from '../crudBasics/ListActions'
 import CriarProfessor from './CriarProfessor';
 import { formatProfessor } from '../../models/professor'
 import api from '../../services/api'
+import { ConsoleSqlOutlined } from '@ant-design/icons';
 
 const columns = [
     {
@@ -45,8 +46,9 @@ const columns = [
                 record={record}
                 enableEditFor={['COORDENADOR', 'FUNCIONARIO']}
                 enableDeleteFor={['COORDENADOR', 'FUNCIONARIO']}
+                endpoint='professores'
                 formatterView={formatProfessor}
-            />
+            />,
     },
 ];
 

@@ -58,11 +58,13 @@ const columns = [
           componentForm={
             ({ setOptionsEdit }) =>
               <CriarTurma
+                id={record.id}
                 setOptionsEdit={setOptionsEdit}
                 initialValues={record}
                 title='Edição de Dados'
               />}
           record={record}
+          endpoint="turmas"
           enableDeleteFor={['FUNCIONARIO', 'COORDENADOR']}
           enableEditFor={['FUNCIONARIO', 'COORDENADOR']}
           enableViewFor={[]}
@@ -79,10 +81,10 @@ const ListarTurmas = ({ tipo = 'Turmas' }) => {
   useEffect(() => {
     classTurma.buscaTodas()
       .then(response => {
-        console.log(response.data)
         setTurmas(response.data);
       })
       .catch(error => {
+        console.log(error)
         setTurmas(false);
       })
   }, [])

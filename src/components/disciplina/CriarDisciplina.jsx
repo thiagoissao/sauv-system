@@ -13,18 +13,26 @@ import {
   Radio
 } from 'antd';
 
-export default ({ title, initialValues }) => {
+export default ({ title, initialValues, id }) => {
   const [form] = Form.useForm();
   const disciplina = new Disciplina();
   const [value, setValue] = React.useState(1);
 
   const onFinish = values => {
-    disciplina.criar(values)
+    if(id)  values.id = id
+    disciplina.save(values)
       .then(response => {
-        Modal.success({
-          title: `Cadastro da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
-          content: `Professor(a) é ${value}!`,
-        });
+        if(id) {
+          Modal.success({
+            title: `Atualização da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
+            content: `Professor(a) é ${value}!`,
+          });
+        } else {
+          Modal.success({
+            title: `Cadastro da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
+            content: `Professor(a) é ${value}!`,
+          });
+        }
       })
       .catch(error => {
         Modal.error({
@@ -40,9 +48,9 @@ export default ({ title, initialValues }) => {
 
   const onFill = () => {
     form.setFieldsValue({
-      'nomeDisciplina': 'Matemática',
-      'cargaHoraria': '68',
-      'professor': 'João Pedro'
+      'nomeDisciplina': "Matemática",
+      'cargaHoraria': "68",
+      'professor': "João Pedro"
     });
   };
 

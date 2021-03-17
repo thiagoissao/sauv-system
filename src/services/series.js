@@ -16,20 +16,19 @@ class Serie {
     return await axios.get(url);
   }
 
-  async criar (serie) {
+  async save (serie) {
     const data = {...serie}
-    const url = 'http://localhost:5000/series';
-    return await axios.post(url, {
-      ...data
-    });
-  }
-  
-  async atualizar (id, serie) {
-    const data = {...serie}
-    const url = `http://localhost:5000/series/${id}`;
-    return await axios.put(url, {
-      ...data
-    })
+    if(serie.id) {
+      const url = `http://localhost:5000/series/${serie.id}`;
+      return await axios.put(url, {
+        ...data
+      })
+    } else {
+      const url = 'http://localhost:5000/series';
+      return await axios.post(url, {
+        ...data
+      });
+    }
   }
 
   async deletar (id) {

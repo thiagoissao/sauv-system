@@ -16,21 +16,20 @@ class Disciplinas {
     return await axios.get(url);
   }
 
-  async criar (disciplina) {
-    const data = {...disciplina};
-    const url = 'http://localhost:5000/disciplinas';
-    return await axios.post(url, {
-      ...data
-    })
-  }
-  
-  async atualizar (id, disciplina) {
-    const url = `http://localhost:5000/disciplinas/${id}`;
-    return await axios.put(url, {
-      data: {
-        ...disciplina
-      }
-    })
+  async save (disciplina) {
+    const data = {...disciplina}
+    if(disciplina.id) {
+      const url = `http://localhost:5000/disciplinas/${disciplina.id}`;
+      console.log('aqui')
+      return await axios.put(url, {
+        ...data
+      })
+    } else{
+      const url = 'http://localhost:5000/disciplinas';
+      return await axios.post(url, {
+        ...data
+      })
+    }
   }
 
   async deletar (id) {

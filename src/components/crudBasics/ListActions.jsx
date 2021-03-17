@@ -16,6 +16,9 @@ import {
 import useUser from '../../hooks/useUser';
 import { allRoles } from '../../models/roles';
 import { customFetch } from '../../services/api'
+import Disciplinas from '../../services/disciplinas'
+import Series from '../../services/series'
+import Turmas from '../../services/turmas'
 
 const ListActions = ({
   componentForm,
@@ -39,17 +42,44 @@ const ListActions = ({
       console.error('Passar a propriedade endpoint no componente ListActions')
       return
     }
+  
+    // if (!record.id) {
+    //   console.error('O registro não possui ID, portanto não é possível excluir o registro')
+    //   return
+    // }
+    
+    switch (endpoint) {
+      case "disciplinas":
+        const disciplina = new Disciplinas();
+        disciplina.deletar(record.id)
+          .then(response => {
+            message.success(response.data.message)
+          })
+          .catch(error => {
+            console.log(error)
+            message.error(error.message)})
+        break;
+      case "series":
+        const serie = new Series();
+        serie.deletar(record.id)
+          .then(response => message.success(response.data.message))
+          .catch(error => message.error(error.message))
+        break;
+      case "turmas":
+        const turma = new Turmas();
+        turma.deletar(record.id)
+          .then(response => message.success(response.data.message))
+          .catch(error => message.error(error.message))
+        break;
+    }
+    // const response = await customFetch(`${endpoint}/${record.id}`, { method: 'DELETE' })
 
-    if (!record.id) {
-      console.error('O registro não possui ID, portanto não é possível excluir o registro')
-      return
-    }
-    const response = await customFetch(`${endpoint}/${record.id}`, { method: 'DELETE' })
-    if (response.ok) {
-      message.success('Registro deletado! Recarregue a página para ver as alterações')
-      return
-    }
-    message.error('Erro na exclusão do registro')
+    // if (response.ok) {
+    //   message.success('Registro deletado! Recarregue a página para ver as alterações')
+    //   return
+    // }
+
+    // message.error('Erro na exclusão do registro')
   }
 
   return (

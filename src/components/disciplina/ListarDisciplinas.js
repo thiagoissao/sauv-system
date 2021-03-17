@@ -4,6 +4,7 @@ import ListActions from '../crudBasics/ListActions';
 import CriarDisciplina from './CriarDisciplina'
 import Disciplina from '../../services/disciplinas';
 
+
 const columns = [
   {
     title: 'Nome Disciplina',
@@ -31,11 +32,13 @@ const columns = [
       componentForm={
         ({ setOptionsEdit }) =>
           <CriarDisciplina
+            id={record.id}
             setOptionsEdit={setOptionsEdit}
             initialValues={record}
             title='Edição de Dados'
           />}
       record={record}
+      endpoint="disciplinas"
       enableEditFor={['COORDENADOR', 'FUNCIONARIO']}
       enableDeleteFor={['COORDENADOR', 'FUNCIONARIO']}
     />

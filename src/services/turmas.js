@@ -18,20 +18,19 @@ class Turma {
 
   async criar (turma) {
     const data = {...turma}
-    const url = 'http://localhost:5000/turmas';
-    return await axios.post(url, {
-      ...data
-    });
+    if(turma.id) {
+      const url = `http://localhost:5000/turmas/${turma.id}`;
+      return await axios.put(url, {
+        ...data
+      })
+    } else {
+      const url = 'http://localhost:5000/turmas';
+      return await axios.post(url, {
+        ...data
+      });
+    }
   }
   
-  async atualizar (id, turma) {
-    const data = {...turma}
-    const url = `http://localhost:5000/turmas/${id}`;
-    return await axios.put(url, {
-      ...data
-    })
-  }
-
   async deletar (id) {
     const url = `http://localhost:5000/turmas/${id}`;
     return await axios.delete(url)

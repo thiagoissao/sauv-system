@@ -14,7 +14,7 @@ const formatRecord = record => {
     if (disciplina === 'ensReligioso') return 'Ensino Religioso'
     if (disciplina === 'fisica') return 'Física'
     if (disciplina === 'geografia') return 'Geografia'
-    if (disciplina === 'história') return 'História'
+    if (disciplina === 'historia') return 'História'
     if (disciplina === 'ingles') return 'Inglês'
     if (disciplina === 'matematica') return 'Matemática'
     if (disciplina === 'portugues') return 'Português'
@@ -53,12 +53,14 @@ const columns = [
           componentForm={
             ({ setOptionsEdit }) =>
               <CriarSerie
+                id={record.id}
+                initialValues={record}
                 setOptionsEdit={setOptionsEdit}
                 title='Edição de Serie'
               />
           }
-
           record={record}
+          endpoint="series"
           enableDeleteFor={['FUNCIONARIO', 'COORDENADOR']}
           enableEditFor={['FUNCIONARIO', 'COORDENADOR']}
           enableViewFor={[]}

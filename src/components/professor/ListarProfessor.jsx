@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table, Typography } from 'antd';
 import ListActions from '../crudBasics/ListActions'
 import CriarProfessor from './CriarProfessor';
 import { formatProfessor } from '../../models/professor'
+import api from '../../services/api'
+import { ConsoleSqlOutlined } from '@ant-design/icons';
 
 const columns = [
     {
@@ -30,21 +32,41 @@ const columns = [
     {
         title: 'Ações',
         key: 'operation',
-        render: (record) => <ListActions
-            componentForm={
-                <CriarProfessor
-                    initialValues={record}
-                    title='Edição de Dados'
-                />}
-            record={record}
-            enableEditFor={['COORDENADOR', 'FUNCIONARIO']}
-            enableDeleteFor={['COORDENADOR', 'FUNCIONARIO']}
-            formatterView={formatProfessor}
-        />
+        render: (record) =>
+            <ListActions
+                componentForm={
+                    ({ setOpenEdit }) => (
+                        <CriarProfessor
+                            setOpenEdit={setOpenEdit}
+                            initialValues={record}
+                            title='Edição de Dados'
+                        />
+                    )
+                }
+                record={record}
+                enableEditFor={['COORDENADOR', 'FUNCIONARIO']}
+                enableDeleteFor={['COORDENADOR', 'FUNCIONARIO']}
+                endpoint='professores'
+                formatterView={formatProfessor}
+            />,
     },
 ];
 
-const ListarProfessor = ({ tipo = 'Professores', list }) => {
+const ListarProfessor = ({ tipo = 'Professores' }) => {
+
+    const [list, setList] = useState([])
+
+    const getProfessores = async () => {
+        const response = await api.getProfessores()
+        if (response.ok) {
+            setList(response.data)
+        }
+    }
+
+    useEffect(() => {
+        getProfessores()
+    }, [])
+
     return (
         <Table
             title={() => <Typography.Title level={3}>Listagem dos {tipo}</Typography.Title>}

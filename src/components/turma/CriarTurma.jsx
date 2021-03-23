@@ -7,15 +7,36 @@ import {
   Modal
 } from 'antd';
 import FormCard from '../FormCard';
-import Input from '../Input'
+import Input from '../Input';
+import Turma from '../../services/turmas';
 
-export default ({ title, initialValues }) => {
+export default ({ title, initialValues, id}) => {
   const [form] = Form.useForm();
-
+  const classTurma = new Turma();
   const onFinish = values => {
-    Modal.success({
-      content: `${title} da ${values['serie']} ${values['turma']} criado com sucesso!`,
-    });
+    if(id) values.id = id;
+    classTurma.criar(values)
+      .then(response => {
+        if(id) {
+          Modal.success({
+            title: `Turma alterada com sucesso!`,
+            content: `${values['serie']} ${values['turma']}!`,
+          });
+        } else {
+          Modal.success({
+            title: `Turma criada com sucesso!`,
+            content: `${values['serie']} ${values['turma']}!`,
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        Modal.error({
+          title: `Erro ao criar a turma!`,
+          content: `Verifique se a série existe e se a turma já não está cadastrada no sistema!`,
+        });
+      })
+    
   };
 
   const onReset = () => {

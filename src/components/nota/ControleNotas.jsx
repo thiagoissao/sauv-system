@@ -61,10 +61,12 @@ const columns = [
       return (
         <ListActions
           componentForm={
-            <EditarNotasForm
-              initialValues={record}
-              title={`Editar Nota - ${record.nome}`}
-            />}
+            ({ setOptionsEdit }) =>
+              <EditarNotasForm
+                setOptionsEdit={setOptionsEdit}
+                initialValues={record}
+                title={`Editar Nota - ${record.nome}`}
+              />}
           formWidth={600}
           record={record}
           disableDelete

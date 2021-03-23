@@ -2,7 +2,7 @@ import { Card, Col, Row, Button, Popconfirm, message } from 'antd';
 import FormCard from '../FormCard'
 import { LockOutlined } from '@ant-design/icons'
 
-const TrancarTurma = ({ title }) => {
+const TrancarTurma = ({ title}) => {
 
     return (
         <FormCard title={title}>

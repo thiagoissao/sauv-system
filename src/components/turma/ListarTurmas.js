@@ -1,16 +1,14 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table, Typography } from 'antd';
-import { mockTurmas } from '../../models/turmas'
 import ListActions from '../crudBasics/ListActions'
 import CriarTurma from './CriarTurma'
-import { formatTurmas } from '../../models/turmas'
-
+import Turma from '../../services/turmas'
 
 const columns = [
   {
     title: 'Nome Turma',
-    dataIndex: 'nome-turma',
-    key: 'nome-turma',
+    dataIndex: 'nome',
+    key: 'nome',
   },
   {
     title: 'Série',
@@ -26,30 +24,30 @@ const columns = [
     sorter: (a, b) => a.turma.localeCompare(b.turma),
     sortDirections: ['descend', 'ascend'],
   },
-  {
-    title: 'Disciplinas',
-    dataIndex: 'disciplinas',
-    key: 'disciplinas',
-    render: (record) => {
-      return record.join(', ')
-    }
-  },
-  {
-    title: 'Professores',
-    dataIndex: 'professores',
-    key: 'professores',
-    render: (record) => {
-      return record.join(', ')
-    }
-  },
-  {
-    title: 'Alunos',
-    dataIndex: 'alunos',
-    key: 'alunos',
-    render: (record) => {
-      return record.join(', ')
-    }
-  },
+  // {
+  //   title: 'Disciplinas',
+  //   dataIndex: 'disciplinas',
+  //   key: 'disciplinas',
+  //   render: (record) => {
+  //     return record.join(', ')
+  //   }
+  // },
+  // {
+  //   title: 'Professores',
+  //   dataIndex: 'professores',
+  //   key: 'professores',
+  //   render: (record) => {
+  //     return record.join(', ')
+  //   }
+  // },
+  // {
+  //   title: 'Alunos',
+  //   dataIndex: 'alunos',
+  //   key: 'alunos',
+  //   render: (record) => {
+  //     return record.join(', ')
+  //   }
+  // },
   {
     title: 'Ações',
     key: 'operation',
@@ -58,15 +56,18 @@ const columns = [
       return (
         <ListActions
           componentForm={
-            <CriarTurma
-              initialValues={record}
-              title='Edição de Dados'
-            />}
+            ({ setOptionsEdit }) =>
+              <CriarTurma
+                id={record.id}
+                setOptionsEdit={setOptionsEdit}
+                initialValues={record}
+                title='Edição de Dados'
+              />}
           record={record}
+          endpoint="turmas"
           enableDeleteFor={['FUNCIONARIO', 'COORDENADOR']}
           enableEditFor={['FUNCIONARIO', 'COORDENADOR']}
           enableViewFor={[]}
-          formatterView={formatTurmas}
         />
       )
     }
@@ -74,11 +75,25 @@ const columns = [
 ];
 
 const ListarTurmas = ({ tipo = 'Turmas' }) => {
+  const [turmas, setTurmas] = useState(false);
+  const classTurma = new Turma();
+
+  useEffect(() => {
+    classTurma.buscaTodas()
+      .then(response => {
+        setTurmas(response.data);
+      })
+      .catch(error => {
+        console.log(error)
+        setTurmas(false);
+      })
+  }, [])
+
   return (
     <Table
       title={() => <Typography.Title level={3}>Listagem das {tipo}</Typography.Title>}
       columns={columns}
-      dataSource={mockTurmas}
+      dataSource={turmas}
       scroll={{ x: 1300 }} />
   )
 }

@@ -15,6 +15,10 @@ import {
 } from '@ant-design/icons'
 import useUser from '../../hooks/useUser';
 import { allRoles } from '../../models/roles';
+import { customFetch } from '../../services/api'
+import Disciplinas from '../../services/disciplinas'
+import Series from '../../services/series'
+import Turmas from '../../services/turmas'
 
 const ListActions = ({
   componentForm,
@@ -26,11 +30,57 @@ const ListActions = ({
   disableView = false,
   disableEdit = false,
   disableDelete = false,
+  endpoint,
   formWidth = 1200
 }) => {
   const user = useUser()
   const [openView, setOpenView] = useState(false)
   const [openEdit, setOpenEdit] = useState(false)
+
+  const removeItem = async () => {
+    if (!endpoint) {
+      console.error('Passar a propriedade endpoint no componente ListActions')
+      return
+    }
+  
+    // if (!record.id) {
+    //   console.error('O registro não possui ID, portanto não é possível excluir o registro')
+    //   return
+    // }
+    
+    switch (endpoint) {
+      case "disciplinas":
+        const disciplina = new Disciplinas();
+        disciplina.deletar(record.id)
+          .then(response => {
+            message.success(response.data.message)
+          })
+          .catch(error => {
+            console.log(error)
+            message.error(error.message)})
+        break;
+      case "series":
+        const serie = new Series();
+        serie.deletar(record.id)
+          .then(response => message.success(response.data.message))
+          .catch(error => message.error(error.message))
+        break;
+      case "turmas":
+        const turma = new Turmas();
+        turma.deletar(record.id)
+          .then(response => message.success(response.data.message))
+          .catch(error => message.error(error.message))
+        break;
+    }
+    // const response = await customFetch(`${endpoint}/${record.id}`, { method: 'DELETE' })
+
+    // if (response.ok) {
+    //   message.success('Registro deletado! Recarregue a página para ver as alterações')
+    //   return
+    // }
+
+    // message.error('Erro na exclusão do registro')
+  }
 
   return (
     <>
@@ -65,21 +115,22 @@ const ListActions = ({
             onCancel={() => setOpenEdit(false)}
             footer={null}
           >
-            {componentForm}
+            {componentForm({ setOpenEdit })}
           </Modal>
         )
       }
       <Space>
         {!disableView && user.enableField(enableViewFor) && <Button onClick={() => setOpenView(true)} shape='circle' type="primary" icon={<EyeOutlined />} />}
         {!disableEdit && user.enableField(enableEditFor) && <Button onClick={() => setOpenEdit(true)} shape='circle' type="primary" icon={<EditOutlined />} />}
-        {!disableDelete && user.enableField(enableDeleteFor) && <Popconfirm
-          title="Deletar esse registro?"
-          onConfirm={() => message.success('Ação de deleção lógica!')}
-          okText="Sim"
-          cancelText="Não"
-        >
-          <Button shape='circle' type='default' icon={<DeleteOutlined />} />
-        </Popconfirm>}
+        {!disableDelete && user.enableField(enableDeleteFor) &&
+          <Popconfirm
+            title="Deletar esse registro?"
+            onConfirm={removeItem}
+            okText="Sim"
+            cancelText="Não"
+          >
+            <Button shape='circle' type='default' icon={<DeleteOutlined />} />
+          </Popconfirm>}
       </Space>
     </>
   )

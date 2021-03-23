@@ -1,6 +1,8 @@
 import Input from '../Input'
 import React from 'react'
 import FormCard from '../FormCard'
+import Disciplina from '../../services/disciplinas'
+
 import {
   Form,
   Button,
@@ -11,15 +13,33 @@ import {
   Radio
 } from 'antd';
 
-export default ({ title, initialValues }) => {
+export default ({ title, initialValues, id }) => {
   const [form] = Form.useForm();
-
+  const disciplina = new Disciplina();
   const [value, setValue] = React.useState(1);
 
   const onFinish = values => {
-    Modal.success({
-      content: `${title} ${values['nome-disciplina']} criado com sucesso com professor(a) ${value}!`,
-    });
+    if(id)  values.id = id
+    disciplina.save(values)
+      .then(response => {
+        if(id) {
+          Modal.success({
+            title: `Atualização da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
+            content: `Professor(a) é ${value}!`,
+          });
+        } else {
+          Modal.success({
+            title: `Cadastro da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
+            content: `Professor(a) é ${value}!`,
+          });
+        }
+      })
+      .catch(error => {
+        Modal.error({
+          title: `Erro ao cadastrar a disciplina ${values['nomeDisciplina']}.`,
+          content: `Verifique se a mesma já não existe!`,
+        });
+      })
   };
 
   const onReset = () => {
@@ -28,9 +48,9 @@ export default ({ title, initialValues }) => {
 
   const onFill = () => {
     form.setFieldsValue({
-      'nome-disciplina': 'Matemática',
-      'carga-horaria': '68',
-      'nome-professor': 'Matheus'
+      'nomeDisciplina': "Matemática",
+      'cargaHoraria': "68",
+      'professor': "João Pedro"
     });
   };
 
@@ -40,20 +60,20 @@ export default ({ title, initialValues }) => {
 
   return (
     <FormCard title={title}>
-      <Form layout='vertical' form={form} name="nome-disciplina" onFinish={onFinish} initialValues={initialValues}>
+      <Form layout='vertical' form={form} name="nomeDisciplina" onFinish={onFinish} initialValues={initialValues}>
         <Row gutter={24}>
           <Col span={8}>
-            <Form.Item name="nome-disciplina" label="Nome Disciplina" rules={[{ required: true, message: 'Obrigatório' }]}>
+            <Form.Item name="nomeDisciplina" label="Nome Disciplina" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Input placeholder='Matemática' />
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="carga-horaria" label="Carga horaria" rules={[{ required: true, message: 'Obrigatório' }]}>
+            <Form.Item name="cargaHoraria" label="Carga horaria" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Input placeholder='68' />
             </Form.Item>
           </Col>
           <Col span={8}>
-            <Form.Item name="professores" label="Professor dessa matéria" rules={[{ required: true, message: 'Obrigatório' }]}>
+            <Form.Item name="professor" label="Professor dessa matéria" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Radio.Group onChange={onChange} value={value}>
               <Col span={9}>
                 <Radio value="João Pedro">João Pedro</Radio>

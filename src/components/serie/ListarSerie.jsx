@@ -1,40 +1,37 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { Table, Typography } from 'antd';
-import { mockSerie } from '../../models/series'
 import ListActions from '../crudBasics/ListActions'
 import CriarSerie from './CriarSerie'
-import { formatSerie } from '../../models/series'
+import Serie from '../../services/series'
 
 const formatRecord = record => {
 
-  const formattedDisciplinas = record.disciplinas.map(disciplina => { 
-      if (disciplina === 'Arte') return 'arte'
-      if (disciplina === 'Biologia') return 'biologia'
-      if (disciplina === 'Ciencias') return 'ciencias'
-      if (disciplina === 'Educação Fisica') return 'edFisica'
-      if (disciplina === 'Ensino religioso') return 'ensReligioso'
-      if (disciplina === 'Fisica') return 'fisica'
-      if (disciplina === 'Geografia') return 'geografia'
-      if (disciplina === 'História') return 'historia'
-      if (disciplina === 'Inglês') return 'ingles'
-      if (disciplina === 'Matemática') return 'matematica'
-      if (disciplina === 'Português') return 'portugues'
-      if (disciplina === 'Química') return 'quimica'
-   } );
+  const formattedDisciplinas = record.map(disciplina => {
+    if (disciplina === 'arte') return 'Arte'
+    if (disciplina === 'biologia') return 'Biologia'
+    if (disciplina === 'ciencias') return 'Ciências'
+    if (disciplina === 'edFisica') return 'Educação Fisica'
+    if (disciplina === 'ensReligioso') return 'Ensino Religioso'
+    if (disciplina === 'fisica') return 'Física'
+    if (disciplina === 'geografia') return 'Geografia'
+    if (disciplina === 'historia') return 'História'
+    if (disciplina === 'ingles') return 'Inglês'
+    if (disciplina === 'matematica') return 'Matemática'
+    if (disciplina === 'portugues') return 'Português'
+    if (disciplina === 'quimica') return 'Quimíca'
+    return disciplina
+  });
 
 
-   return ({
-      ...record,
-      disciplinas: formattedDisciplinas
-   })
+  return formattedDisciplinas;
 }
 
 const columns = [
   {
     title: 'Série',
-    dataIndex: 'serie-ano',
-    key: 'serie-ano',
-    sorter: (a, b) => a["serie-ano"].localeCompare(b["serie-ano"]),
+    dataIndex: 'anoLetivo',
+    key: 'anoLetivo',
+    sorter: (a, b) => a["anoLetivo"].localeCompare(b["anoLetivo"]),
     sortDirections: ['descend', 'ascend'],
   },
   {
@@ -42,6 +39,7 @@ const columns = [
     dataIndex: 'disciplinas',
     key: 'disciplinas',
     render: (record) => {
+      record = formatRecord(record);
       return record.join(', ')
     }
   },
@@ -50,19 +48,22 @@ const columns = [
     key: 'operation',
     render: (record) => {
 
-      return ( 
-      <ListActions
-        componentForm={
-          <CriarSerie
-            initialValues={formatRecord(record)}
-            title='Edição de Serie'
-          />}
-
+      return (
+        <ListActions
+          componentForm={
+            ({ setOptionsEdit }) =>
+              <CriarSerie
+                id={record.id}
+                initialValues={record}
+                setOptionsEdit={setOptionsEdit}
+                title='Edição de Serie'
+              />
+          }
           record={record}
+          endpoint="series"
           enableDeleteFor={['FUNCIONARIO', 'COORDENADOR']}
           enableEditFor={['FUNCIONARIO', 'COORDENADOR']}
           enableViewFor={[]}
-          formatterView={formatSerie}
         />
       )
     }
@@ -70,11 +71,22 @@ const columns = [
 ];
 
 const ListarSerie = ({ tipo = 'Séries' }) => {
+  const [series, setSeries] = useState(false);
+  const classSeries = new Serie();
+
+  useEffect(() => {
+    classSeries.buscaTodas()
+      .then(response => {
+        setSeries(response.data)
+      })
+      .catch(error => setSeries(false))
+  }, [])
+
   return (
     <Table
       title={() => <Typography.Title level={3}>Listagem das {tipo}</Typography.Title>}
       columns={columns}
-      dataSource={mockSerie}
+      dataSource={series}
       scroll={{ x: 1000 }} />
   )
 }

@@ -6,9 +6,7 @@ import {
   Select,
   Row,
   Col,
-  Table,
-  Modal,
-  Typography
+  Table
 } from 'antd';
 import { alunos8A, alunos8B, disciplinas, series, turmas } from '../../models/frequencia';
 import ListActions from '../crudBasics/ListActions';
@@ -29,10 +27,12 @@ const columns = [
       return (
         <ListActions
           componentForm={
-            <EditarFrequencia 
-              title="Editar Frequência"
-              values={record}
-            />
+            ({ setOptionsEdit }) =>
+              <EditarFrequencia
+                setOptionsEdit={setOptionsEdit}
+                title="Editar Frequência"
+                values={record}
+              />
           }
           formWidth={600}
           record={record}
@@ -52,11 +52,11 @@ const ControleFrequencia = () => {
   const [values, setValues] = useState({})
   const [idDisciplina, setIdDisciplina] = useState(0)
 
-  const dias = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31]
-  const meses = [1,2,3,4,5,6,7,8,9,10,11,12]
+  const dias = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
+  const meses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
   const ano = [2020]
 
-  
+
   const { Option } = Select;
 
   return (
@@ -148,89 +148,89 @@ const ControleFrequencia = () => {
       }
       {
         idDisciplina !== 0 && (
-        <div style={{ marginTop: 16 }}>
-          <FormCard title="Controle de Frequência - Selecionar dia">
-            <Form
-            layout='vertical'
-            form={formTurma}
-            name="selecionar-turma"
-            onFinish={setValues}>
-              <Row gutter={24} align='bottom'>
-                <Col span={4}>
-                  <Form.Item
-                    label="Dia"
-                    name="dia"
-                    rules={[{ required: true, message: 'Indique o dia' }]}
-                  >
-                    <Select placeholder="Dia">
-                      {
-                        dias.map(dia => (
-                          <Option value={dia}>{dia}</Option>
-                        ))
-                      }
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col span={4}>
-                  <Form.Item
-                    label="Mês"
-                    name="mes"
-                    rules={[{ required: true, message: 'Indique o mês' }]}
-                  >
-                    <Select placeholder="Mês">
-                      {
-                        meses.map(mes => (
-                          <Option value={mes}>{mes}</Option>
-                        ))
-                      }
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col span={4}>
-                  <Form.Item
-                    label="Ano"
-                    name="ano"
-                    rules={[{ required: true, message: 'Indique o ano' }]}
-                  >
-                    <Select placeholder="Ano">
-                      {
-                        ano.map(ano => (
-                          <Option value={ano}>{ano}</Option>
-                        ))
-                      }
-                    </Select>
-                  </Form.Item>
-                </Col>
-                <Col span={4}>
-                  <Form.Item>
-                    <Button style={{ width: '100%' }} shape='round' type="primary" htmlType="submit">
-                      Buscar
+          <div style={{ marginTop: 16 }}>
+            <FormCard title="Controle de Frequência - Selecionar dia">
+              <Form
+                layout='vertical'
+                form={formTurma}
+                name="selecionar-turma"
+                onFinish={setValues}>
+                <Row gutter={24} align='bottom'>
+                  <Col span={4}>
+                    <Form.Item
+                      label="Dia"
+                      name="dia"
+                      rules={[{ required: true, message: 'Indique o dia' }]}
+                    >
+                      <Select placeholder="Dia">
+                        {
+                          dias.map(dia => (
+                            <Option value={dia}>{dia}</Option>
+                          ))
+                        }
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                  <Col span={4}>
+                    <Form.Item
+                      label="Mês"
+                      name="mes"
+                      rules={[{ required: true, message: 'Indique o mês' }]}
+                    >
+                      <Select placeholder="Mês">
+                        {
+                          meses.map(mes => (
+                            <Option value={mes}>{mes}</Option>
+                          ))
+                        }
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                  <Col span={4}>
+                    <Form.Item
+                      label="Ano"
+                      name="ano"
+                      rules={[{ required: true, message: 'Indique o ano' }]}
+                    >
+                      <Select placeholder="Ano">
+                        {
+                          ano.map(ano => (
+                            <Option value={ano}>{ano}</Option>
+                          ))
+                        }
+                      </Select>
+                    </Form.Item>
+                  </Col>
+                  <Col span={4}>
+                    <Form.Item>
+                      <Button style={{ width: '100%' }} shape='round' type="primary" htmlType="submit">
+                        Buscar
                     </Button>
-                  </Form.Item>
-                </Col>
-              </Row>
-            </Form>
-          </FormCard>
-        </div>
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </Form>
+            </FormCard>
+          </div>
         )
       }
       {
         values.dia && values.mes && values.ano && (
-        <div style={{ marginTop: 16 }}>
-          <Form
-            layout='vertical'
-            form={formDisciplina}
-            name="criar-usuario"
+          <div style={{ marginTop: 16 }}>
+            <Form
+              layout='vertical'
+              form={formDisciplina}
+              name="criar-usuario"
             >
               <FormCard title="Frequência dos alunos">
-                  <Table 
-                    columns={columns}
-                    dataSource={values.turma == 'a' ? alunos8A : alunos8B}>        
-                  </Table>
-          
+                <Table
+                  columns={columns}
+                  dataSource={values.turma == 'a' ? alunos8A : alunos8B}>
+                </Table>
+
               </FormCard>
-          </Form>
-        </div>
+            </Form>
+          </div>
         )
       }
     </>

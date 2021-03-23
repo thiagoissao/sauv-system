@@ -6,20 +6,38 @@ import {
   Button,
   Col,
   Row,
+  message,
   Space,
   Modal,
   Checkbox
 } from 'antd';
+import Serie from '../../services/series'
 
-export default ({ title, initialValues }) => {
+export default ({ title, initialValues, id }) => {
   const [form] = Form.useForm();
-
+  const serie = new Serie();
   const [value, setValue] = React.useState(1);
 
   const onFinish = values => {
-    Modal.success({
-      content: `${title} realizada com sucesso!`,
-    });
+    if(id) values.id = id;
+    serie.save(values)
+      .then(response => {
+        if(id) {
+          Modal.success({
+            title: `Atualização da série ${values.anoLetivo} realiazada com sucesso!`,
+            content: `Disciplinas desta série: ${values.disciplinas}!`,
+          });
+        } else {
+          Modal.success({
+            title: `Cadastro da série ${values.anoLetivo} realiazada com sucesso!`,
+            content: `Disciplinas desta série: ${values.disciplinas}!`,
+          });
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        message.error(`${error.message}`)
+      })
   };
 
   const onReset = () => {
@@ -39,7 +57,7 @@ export default ({ title, initialValues }) => {
       <Form layout='vertical' form={form} name="serie-ano" onFinish={onFinish} initialValues={initialValues}>
         <Row gutter={24}>
           <Col span={8}>
-            <Form.Item name="serie-ano" label="Série" rules={[{ required: true, message: 'Obrigatório' }]}>
+            <Form.Item name="anoLetivo" label="Série" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Input placeholder='8' />
             </Form.Item>
           </Col>

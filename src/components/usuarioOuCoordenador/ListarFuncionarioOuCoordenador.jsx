@@ -55,10 +55,12 @@ const columns = [
       return (
         <ListActions
           componentForm={
-            <CriarFuncionarioOuCoordenador
-              initialValues={record}
-              title='Edição de Dados'
-            />}
+            ({ setOptionsEdit }) =>
+              <CriarFuncionarioOuCoordenador
+                setOptionsEdit={setOptionsEdit}
+                initialValues={record}
+                title='Edição de Dados'
+              />}
           record={record}
           enableDeleteFor={['FUNCIONARIO']}
           enableEditFor={['FUNCIONARIO']}

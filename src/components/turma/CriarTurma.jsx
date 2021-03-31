@@ -29,12 +29,18 @@ export default ({ title, initialValues, id}) => {
           });
         }
       })
-      .catch(err => {
-        console.log(err);
-        Modal.error({
-          title: `Erro ao criar a turma!`,
-          content: `Verifique se a série existe e se a turma já não está cadastrada no sistema!`,
-        });
+      .catch(error => {
+        if(error && error.response && error.response.data) {
+          console.log(error.response.data)
+          Modal.error({
+            title: `Erro ao criar a turma!`,
+            content: `${error.response.data.message}`,
+          });
+        } else {
+          Modal.error({
+            title: `Erro ao criar a turma!`,
+          });
+        }
       })
     
   };

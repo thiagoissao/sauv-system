@@ -77,9 +77,13 @@ const ListarSerie = ({ tipo = 'Séries' }) => {
   useEffect(() => {
     classSeries.buscaTodas()
       .then(response => {
+        console.log(response.data)
         setSeries(response.data)
       })
-      .catch(error => setSeries(false))
+      .catch(error => {
+        console.log(error.response.data)
+        setSeries(false)
+      })
   }, [])
 
   return (

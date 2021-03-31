@@ -189,19 +189,6 @@ const App = () => {
   const [selectedKeys, setSelectedKeys] = useState('visualizar:usuarios')
   const { loggedIn } = store.getState()
 
-  const testApi = async () => {
-    const responsePost = await api.postTestApi()
-    console.log('post', responsePost)
-    const responseGet = await api.getTestApi()
-    console.log('get', responseGet)
-    const responsePatch = await api.patchTestApi()
-    console.log('patch', responsePatch)
-  }
-
-  useEffect(() => {
-    testApi()
-  }, []);
-
   return (
     <>
       <Router>

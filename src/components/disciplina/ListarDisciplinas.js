@@ -39,8 +39,8 @@ const columns = [
           />}
       record={record}
       endpoint="disciplinas"
-      enableEditFor={['COORDENADOR', 'FUNCIONARIO']}
-      enableDeleteFor={['COORDENADOR', 'FUNCIONARIO']}
+      enableEditFor={['coordenador', 'funcionario']}
+      enableDeleteFor={['coordenador', 'funcionario']}
     />
   },
 ];

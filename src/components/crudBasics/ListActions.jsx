@@ -14,11 +14,12 @@ import {
   DeleteOutlined
 } from '@ant-design/icons'
 import useUser from '../../hooks/useUser';
-import { allRoles } from '../../models/roles';
 import { customFetch } from '../../services/api'
 import Disciplinas from '../../services/disciplinas'
 import Series from '../../services/series'
 import Turmas from '../../services/turmas'
+
+const allRoles = ['funcionario', 'coordenador', 'professor'];
 
 const ListActions = ({
   componentForm,

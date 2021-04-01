@@ -3,18 +3,23 @@ import { Row, Col, Card, Form, Button, Input, Typography, message, Space } from 
 import { users } from '../../models/users'
 import { useHistory } from 'react-router-dom'
 import store, { loginUser } from '../../redux/auth';
+import apiLogin from '../../services/login'
 
 const Login = () => {
   const history = useHistory()
 
-  const handleLogin = ({ usuario, senha }) => {
-
-    const filter = users.filter(user => user.senha === senha && user.usuario === usuario)
-    if (filter.length === 0) {
-      return message.error('Usuário ou senha estão incorretas')
-    }
-    store.dispatch(loginUser({ usuario, senha }))
-    history.push('/visualizar/usuarios');
+  const handleLogin = async (user) => {
+    const login = new apiLogin();
+    return login.autenticar(user)
+      .then(response => {
+        store.dispatch(loginUser(response.data))
+        history.push('/visualizar/usuarios');
+      })
+      .catch(error => {
+        console.log(error.response.data)
+        return message.error(error.response.data)
+      })
+    // store.dispatch(loginUser({ usuario, senha }))
   };
 
   return (

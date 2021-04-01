@@ -61,8 +61,8 @@ const columns = [
           }
           record={record}
           endpoint="series"
-          enableDeleteFor={['FUNCIONARIO', 'COORDENADOR']}
-          enableEditFor={['FUNCIONARIO', 'COORDENADOR']}
+          enableDeleteFor={['funcionario', 'coordenador']}
+          enableEditFor={['funcionario', 'coordenador']}
           enableViewFor={[]}
         />
       )
@@ -79,7 +79,10 @@ const ListarSerie = ({ tipo = 'Séries' }) => {
       .then(response => {
         setSeries(response.data)
       })
-      .catch(error => setSeries(false))
+      .catch(error => {
+        console.log(error.response.data)
+        setSeries(false)
+      })
   }, [])
 
   return (

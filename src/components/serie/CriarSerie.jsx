@@ -1,5 +1,5 @@
 import Input from '../Input'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import FormCard from '../FormCard'
 import {
   Form,
@@ -12,11 +12,23 @@ import {
   Checkbox
 } from 'antd';
 import Serie from '../../services/series'
+import Disciplina from '../../services/disciplinas'
 
 export default ({ title, initialValues, id }) => {
   const [form] = Form.useForm();
   const serie = new Serie();
-  const [value, setValue] = React.useState(1);
+  const [value, setValue] = useState(1);
+  const [disciplinas, setDisciplinas] = useState(false);
+
+  useEffect(() => {
+    const disciplina = new Disciplina();
+    disciplina.buscaTodas()
+      .then(response => setDisciplinas(response.data))
+      .catch(error => {
+        console.log(error);
+        setDisciplinas(false);
+      })
+  }, [])
 
   const onFinish = values => {
     if(id) values.id = id;
@@ -35,8 +47,17 @@ export default ({ title, initialValues, id }) => {
         }
       })
       .catch(error => {
-        console.log(error)
-        message.error(`${error.message}`)
+        if(error && error.response && error.response.data){
+          console.log(error.response.data)
+          Modal.error({
+            title: `Erro ao criar a turma!`,
+            content: `${error.response.data.message}`,
+          });
+        } else {
+          Modal.error({
+            title: `Erro ao criar a turma!`,
+          });
+        }
       })
   };
 
@@ -65,42 +86,14 @@ export default ({ title, initialValues, id }) => {
             <Form.Item name="disciplinas" label="Disciplinas desta série" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Checkbox.Group value={value} style={{ width: '100%' }} >
                 <Row gutter={[16, 8]}>
-                  <Col span={9}>
-                    <Checkbox value="arte">Arte</Checkbox>
-                  </Col>
-                  <Col span={9}>
-                    <Checkbox value="biologia">Biologia</Checkbox>
-                  </Col>
-                  <Col span={9}>
-                    <Checkbox value="ciencias">Ciências</Checkbox>
-                  </Col>
-                  <Col span={9}>
-                    <Checkbox value="edFisica">Ed.Fisica</Checkbox>
-                  </Col>
-                  <Col span={9}>
-                    <Checkbox value="ensReligioso">Ens.Religioso</Checkbox>
-                  </Col>
-                  <Col span={9}>
-                    <Checkbox value="fisica">Física</Checkbox>
-                  </Col>
-                  <Col span={9}>
-                    <Checkbox value="geografia">Geografia</Checkbox>
-                  </Col>
-                  <Col span={9}>
-                    <Checkbox value="historia">História</Checkbox>
-                  </Col>
-                  <Col span={9}>
-                    <Checkbox value="ingles">Inglês</Checkbox>
-                  </Col>
-                  <Col span={9}>
-                    <Checkbox value="matematica">Matemática</Checkbox>
-                  </Col>
-                  <Col span={9}>
-                    <Checkbox value="portugues">Português</Checkbox>
-                  </Col>
-                  <Col span={9}>
-                    <Checkbox value="quimica">Química</Checkbox>
-                  </Col>
+                  {
+                    disciplinas && disciplinas.map(disciplina => (
+                      <Col span={16}>
+                        <Checkbox value={disciplina.nomeDisciplina}>{disciplina.nomeDisciplina}</Checkbox>
+                      </Col>    
+                    ))
+                  }
+
                 </Row>
               </Checkbox.Group>
             </Form.Item>

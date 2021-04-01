@@ -1,4 +1,5 @@
 import { createSlice, configureStore } from '@reduxjs/toolkit'
+import axios from 'axios';
 
 export const login = createSlice({
   name: 'login',
@@ -7,11 +8,13 @@ export const login = createSlice({
   },
   reducers: {
     loginUser: (state, action) => {
-      const { usuario } = action.payload
-      localStorage.setItem("usuario", usuario)
+      const usuario = action.payload;
+      axios.defaults.headers.common['Authorization'] = `bearer ${action.payload.token}` ;
+      localStorage.setItem("usuario", JSON.stringify(usuario))
       return ({ ...state, loggedIn: true })
     },
     logoffUser: state => {
+      axios.defaults.headers.common['Authorization'] = null;
       localStorage.clear()
       return ({ ...state, loggedIn: false })
     },

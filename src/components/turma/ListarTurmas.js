@@ -65,8 +65,8 @@ const columns = [
               />}
           record={record}
           endpoint="turmas"
-          enableDeleteFor={['FUNCIONARIO', 'COORDENADOR']}
-          enableEditFor={['FUNCIONARIO', 'COORDENADOR']}
+          enableDeleteFor={['funcionario', 'coordenador']}
+          enableEditFor={['funcionario', 'coordenador']}
           enableViewFor={[]}
         />
       )

@@ -26,9 +26,7 @@ const CriarDisciplinas = ({ title, initialValues, id }) => {
   }, [])
 
   const onFinish = values => {
-    console.log(values)
     const professor = professores.filter(professor => professor.nome === values.professor)[0];
-    console.log(professor);
     if (professor.disciplinas.includes(values.nomeDisciplina)) {
       if(id)  values.id = id
       disciplina.save(values)

@@ -61,8 +61,8 @@ const columns = [
           }
           record={record}
           endpoint="series"
-          enableDeleteFor={['FUNCIONARIO', 'COORDENADOR']}
-          enableEditFor={['FUNCIONARIO', 'COORDENADOR']}
+          enableDeleteFor={['funcionario', 'coordenador']}
+          enableEditFor={['funcionario', 'coordenador']}
           enableViewFor={[]}
         />
       )
@@ -77,7 +77,6 @@ const ListarSerie = ({ tipo = 'Séries' }) => {
   useEffect(() => {
     classSeries.buscaTodas()
       .then(response => {
-        console.log(response.data)
         setSeries(response.data)
       })
       .catch(error => {

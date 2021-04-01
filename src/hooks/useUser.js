@@ -5,20 +5,15 @@ import * as R from 'ramda'
 const useUser = () => {
 
   const getUser = () => {
-    const usuarioLocalStorage = localStorage.getItem("usuario")
-    if (usuarioLocalStorage) {
-      const find = users.find(user => user.usuario === usuarioLocalStorage)
-      if (find) {
-        return find
-      }
-    }
-    return {}
+    const usuarioLocalStorage = JSON.parse(localStorage.getItem("usuario"))
+    if (usuarioLocalStorage)
+      return usuarioLocalStorage;
   }
 
   const getUserRole = () => {
     const user = getUser()
     if (R.isEmpty(user)) return undefined
-    return user.role
+    return user.type
   }
 
   const enableField = enableFor => {

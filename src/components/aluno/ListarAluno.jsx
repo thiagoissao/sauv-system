@@ -40,8 +40,8 @@ const columns = [
           title='Edição de Dados'
         />}
       record={record}
-      enableEditFor={['COORDENADOR', 'FUNCIONARIO']}
-      enableDeleteFor={['COORDENADOR', 'FUNCIONARIO']}
+      enableEditFor={['coordenador', 'funcionario']}
+      enableDeleteFor={['coordenador', 'funcionario']}
       formatterView={formatAluno}
     />
   },

@@ -20,13 +20,15 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Login from './components/login/Login';
 import store from './redux/auth'
 import ControleFrequencia from './components/turma/ControleFrequencia'
-import { allRoles } from './models/roles'
+// import { allRoles } from './models/roles'
 import ControleNotas from './components/nota/ControleNotas'
 import TrancarTurma from './components/turma/TrancarTurma'
 import TrancarAluno from './components/aluno/TrancarAluno'
 import RelatorioTurma from './components/relatório/RelatorioTurma'
 import ControleTrocarAlunoTurma from './components/aluno/ControleTrocarAlunoTurma'
 import api from './services/api'
+
+const allRoles = ['funcionario', 'coordenador', 'professor'];
 
 const menuOptions = {
   visualizar: {
@@ -85,13 +87,13 @@ const menuOptions = {
     }
   },
   cadastrar: {
-    enableFor: ['COORDENADOR', 'FUNCIONARIO'],
+    enableFor: ['coordenador', 'funcionario'],
     icon: <FormOutlined />,
     label: 'Cadastrar',
     opcoes: {
       funcionarios: {
         label: 'Funcionários',
-        enableFor: ['FUNCIONARIO'],
+        enableFor: ['funcionario'],
         component: () =>
           <CriarFuncionarioOuCoordenador
             title='Cadastro de Funcionários'
@@ -99,7 +101,7 @@ const menuOptions = {
       },
       coordenadores: {
         label: 'Coordenadores',
-        enableFor: ['FUNCIONARIO'],
+        enableFor: ['funcionario'],
         component: () =>
           <CriarFuncionarioOuCoordenador
             title='Cadastro de Coordenadores(as)'
@@ -107,55 +109,55 @@ const menuOptions = {
       },
       alunos: {
         label: 'Alunos',
-        enableFor: ['COORDENADOR', 'FUNCIONARIO'],
+        enableFor: ['coordenador', 'funcionario'],
         component: () => <CriarAluno />
       },
       professores: {
-        enableFor: ['COORDENADOR', 'FUNCIONARIO'],
+        enableFor: ['coordenador', 'funcionario'],
         label: 'Professores',
         component: () => <CriarProfessor />
       },
       disciplinas: {
         label: 'Disciplinas',
-        enableFor: ['FUNCIONARIO'],
+        enableFor: ['funcionario'],
         component: () => <CriarDisciplina title='Cadastro de Disciplina' />
       },
       turmas: {
         label: 'Turmas',
-        enableFor: ['FUNCIONARIO'],
+        enableFor: ['funcionario'],
         component: () => <CriarTurma title='Cadastro de Turma' />
       },
       series: {
         label: 'Séries',
-        enableFor: ['FUNCIONARIO'],
+        enableFor: ['funcionario'],
         component: () => <CriarSerie title='Cadastro de Série' />
       },
     }
   },
   trancar: {
-    enableFor: ['COORDENADOR', 'FUNCIONARIO'],
+    enableFor: ['coordenador', 'funcionario'],
     icon: <LockOutlined />,
     label: 'Trancamentos',
     opcoes: {
       alunos: {
         label: 'Alunos',
-        enableFor: ['FUNCIONARIO', 'COORDENADOR'],
+        enableFor: ['funcionario', 'coordenador'],
         component: () => <TrancarAluno title='Trancamento de Aluno' />
       },
       turmas: {
         label: 'Turmas',
-        enableFor: ['COORDENADOR', 'FUNCIONARIO'],
+        enableFor: ['coordenador', 'funcionario'],
         component: () => <TrancarTurma title="Trancamento de Turma" />
       },
     }
   },
   relatorio: {
-    enableFor: ['COORDENADOR', 'FUNCIONARIO', 'PROFESSOR'],
+    enableFor: ['coordenador', 'funcionario', 'professor'],
     icon: <BookOutlined />,
     label: 'Relatórios',
     opcoes: {
       relatorioTurma: {
-        enableFor: ['COORDENADOR', 'FUNCIONARIO', 'PROFESSOR'],
+        enableFor: ['coordenador', 'funcionario', 'professor'],
         label: "Relatório de Turma",
         component: () => <RelatorioTurma title="Relatório de Turma" />
       },
@@ -168,16 +170,16 @@ const menuOptions = {
     opcoes: {
       trocarAlunoTurma: {
         label: 'Trocar Aluno-Turma',
-        enableFor: ['COORDENADOR'],
+        enableFor: ['coordenador'],
         component: () => <ControleTrocarAlunoTurma />
       },
       frequencia: {
         label: 'Frequência',
-        enableFor: ['PROFESSOR'],
+        enableFor: ['professor'],
         component: () => <ControleFrequencia />
       },
       notas: {
-        enableFor: ['PROFESSOR'],
+        enableFor: ['professor'],
         label: 'Notas',
         component: () => <ControleNotas />
       }

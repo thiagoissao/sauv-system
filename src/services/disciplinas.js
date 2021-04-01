@@ -20,7 +20,6 @@ class Disciplinas {
     const data = {...disciplina}
     if(disciplina.id) {
       const url = `http://localhost:5000/disciplinas/${disciplina.id}`;
-      console.log('aqui')
       return await axios.put(url, {
         ...data
       })

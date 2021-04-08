@@ -18,7 +18,7 @@ import ListarSerie from './components/serie/ListarSerie'
 import { UnorderedListOutlined, FormOutlined, LockOutlined, ControlOutlined, BookOutlined } from '@ant-design/icons'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 import Login from './components/login/Login';
-import store from './redux/auth'
+import store, { loginUser } from './redux/auth.js';
 import ControleFrequencia from './components/turma/ControleFrequencia'
 // import { allRoles } from './models/roles'
 import ControleNotas from './components/nota/ControleNotas'
@@ -189,7 +189,13 @@ const menuOptions = {
 
 const App = () => {
   const [selectedKeys, setSelectedKeys] = useState('visualizar:usuarios')
-  const { loggedIn } = store.getState()
+  const { loggedIn } = store.getState();
+
+  useEffect(() => {
+    if(loggedIn) {
+      store.dispatch(loginUser(JSON.parse(localStorage.getItem('usuario'))));
+    }
+  }, [])
 
   return (
     <>

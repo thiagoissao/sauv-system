@@ -4,7 +4,6 @@ import store, { logoffUser } from '../redux/auth';
 import { useHistory } from 'react-router-dom';
 import { LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import useUser from '../hooks/useUser'
-import { roles } from '../models/roles';
 
 const MenuHeader = () => {
   const history = useHistory()
@@ -35,13 +34,13 @@ const MenuHeader = () => {
 
   return (
     <Dropdown overlay={menu} trigger={['click']}>
-      <Tooltip placement='left' color='#0091ea' title={`Cargo: ${roles[userData?.role]}`}>
+      <Tooltip placement='left' color='#0091ea' title={`Cargo: ${userData?.tipo}`}>
         <Button
           icon={<UserOutlined />}
           shape='round'
           size='large'
           onClick={e => e.preventDefault()}>
-          {userData?.primeiroNome || 'Usuário'}
+          {userData?.username || 'Usuário'}
         </Button>
       </Tooltip>
     </Dropdown>

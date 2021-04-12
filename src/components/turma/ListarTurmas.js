@@ -65,8 +65,8 @@ const columns = [
               />}
           record={record}
           endpoint="turmas"
-          enableDeleteFor={['FUNCIONARIO', 'COORDENADOR']}
-          enableEditFor={['FUNCIONARIO', 'COORDENADOR']}
+          enableDeleteFor={['funcionario', 'coordenador']}
+          enableEditFor={['funcionario', 'coordenador']}
           enableViewFor={[]}
         />
       )
@@ -84,7 +84,8 @@ const ListarTurmas = ({ tipo = 'Turmas' }) => {
         setTurmas(response.data);
       })
       .catch(error => {
-        console.log(error)
+        if(error && error.response && error.response.data)
+          console.log(error.response.data)
         setTurmas(false);
       })
   }, [])

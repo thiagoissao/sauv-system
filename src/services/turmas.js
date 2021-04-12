@@ -11,22 +11,21 @@ class Turma {
     return await axios.get(url);
   }
   
-  async buscaPorId (id) {
-    const url = `http://localhost:5000/turmas/${id}`;
+  async buscaPorSerie (serie) {
+    const url = `http://localhost:5000/turmas/${serie}`;
     return await axios.get(url);
   }
 
   async criar (turma) {
-    const data = {...turma}
     if(turma.id) {
       const url = `http://localhost:5000/turmas/${turma.id}`;
       return await axios.put(url, {
-        ...data
+        data: {...turma}
       })
     } else {
       const url = 'http://localhost:5000/turmas';
       return await axios.post(url, {
-        ...data
+        data: {...turma}
       });
     }
   }

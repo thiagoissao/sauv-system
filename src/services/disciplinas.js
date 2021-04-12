@@ -17,17 +17,15 @@ class Disciplinas {
   }
 
   async save (disciplina) {
-    const data = {...disciplina}
     if(disciplina.id) {
       const url = `http://localhost:5000/disciplinas/${disciplina.id}`;
-      console.log('aqui')
       return await axios.put(url, {
-        ...data
+        data: {...disciplina}
       })
     } else{
       const url = 'http://localhost:5000/disciplinas';
       return await axios.post(url, {
-        ...data
+        data: {...disciplina}
       })
     }
   }

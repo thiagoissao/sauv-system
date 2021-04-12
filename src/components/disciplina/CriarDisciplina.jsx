@@ -1,7 +1,9 @@
 import Input from '../Input'
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import FormCard from '../FormCard'
 import Disciplina from '../../services/disciplinas'
+import api  from '../../services/api'
+import profs from '../../mock/professors'
 
 import {
   Form,
@@ -13,33 +15,53 @@ import {
   Radio
 } from 'antd';
 
-export default ({ title, initialValues, id }) => {
+const CriarDisciplinas = ({ title, initialValues, id }) => {
   const [form] = Form.useForm();
   const disciplina = new Disciplina();
-  const [value, setValue] = React.useState(1);
+  const [value, setValue] = useState(initialValues ? initialValues.professor : null);
+  const [professores, setProfessores] = useState(false);
+
+  useEffect(() => {
+    setProfessores(profs);
+  }, [])
 
   const onFinish = values => {
-    if(id)  values.id = id
-    disciplina.save(values)
-      .then(response => {
-        if(id) {
-          Modal.success({
-            title: `Atualização da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
-            content: `Professor(a) é ${value}!`,
-          });
-        } else {
-          Modal.success({
-            title: `Cadastro da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
-            content: `Professor(a) é ${value}!`,
-          });
-        }
+    const professor = professores.filter(professor => professor.nome === values.professor)[0];
+    if (professor.disciplinas.includes(values.nomeDisciplina)) {
+      if(id)  values.id = id
+      disciplina.save(values)
+        .then(response => {
+          if(id) {
+            Modal.success({
+              title: `Atualização da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
+              content: `Professor(a) é ${value}!`,
+            });
+          } else {
+            Modal.success({
+              title: `Cadastro da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
+              content: `Professor(a) é ${value}!`,
+            });
+          }
+        })
+        .catch(error => {
+          if(error && error.response && error.response.data) {
+            console.log(error.response.data)
+            Modal.error({
+              title: `Erro ao criar a disciplina!`,
+              content: `${error.response.data.message}`,
+            });
+          } else {
+            Modal.error({
+              title: `Erro ao criar a disciplina!`,
+            });
+          }
+        })
+    } else {
+      Modal.error({
+        title: `Erro ao cadastra a disciplina ${values['nomeDisciplina']}`,
+        content: `Motivo: professor selecionado não ministra essa matéria.`
       })
-      .catch(error => {
-        Modal.error({
-          title: `Erro ao cadastrar a disciplina ${values['nomeDisciplina']}.`,
-          content: `Verifique se a mesma já não existe!`,
-        });
-      })
+    }
   };
 
   const onReset = () => {
@@ -75,18 +97,14 @@ export default ({ title, initialValues, id }) => {
           <Col span={8}>
             <Form.Item name="professor" label="Professor dessa matéria" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Radio.Group onChange={onChange} value={value}>
-              <Col span={9}>
-                <Radio value="João Pedro">João Pedro</Radio>
-              </Col>
-              <Col span={9}>
-                <Radio value="Ana Beatriz">Ana Beatriz</Radio>
-              </Col>
-              <Col span={9}>
-                <Radio value="Ana Carolina">Ana Carolina</Radio>
-              </Col>
-              <Col span={9}>
-                <Radio value="Matheus Ferreira">Matheus Ferreira</Radio>
-              </Col>
+                {
+                  professores &&
+                  professores.map(professor => (
+                    <Col span={9}>
+                      <Radio value={professor.nome}>{professor.nome}</Radio>
+                    </Col>
+                  ))
+                }
               </Radio.Group>
             </Form.Item>
           </Col>
@@ -108,3 +126,5 @@ export default ({ title, initialValues, id }) => {
     </FormCard>
   );
 };
+
+export default CriarDisciplinas;

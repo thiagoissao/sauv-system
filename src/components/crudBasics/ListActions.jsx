@@ -60,22 +60,22 @@ const ListActions = ({
           .catch(error => {
             console.log(error)
             message.error(error.message)})
-        break;
+        return;
       case "series":
         const serie = new Series();
         serie.deletar(record.id)
           .then(response => message.success(response.data.message))
           .catch(error => message.error(error.message))
-        break;
+        return;
       case "turmas":
         const turma = new Turmas();
         turma.deletar(record.id)
           .then(response => message.success(response.data.message))
           .catch(error => message.error(error.message))
-        break;
+        return;
     }
 
-    
+
     const response = await customFetch(`${endpoint}/${record.id}`, { method: 'DELETE' })
 
     if (response.ok) {

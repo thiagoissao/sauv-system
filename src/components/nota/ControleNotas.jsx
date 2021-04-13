@@ -12,6 +12,7 @@ import {
 import { alunosFisica, alunosMatematica, anos, disciplinas, series, turmas } from '../../models/notas';
 import ListActions from '../crudBasics/ListActions';
 import EditarNotasForm from './EditarNotasForm';
+import { ROLE } from '../../utils/enum';
 
 const columns = [
   {
@@ -71,7 +72,7 @@ const columns = [
           record={record}
           disableDelete
           disableView
-          enableEditFor={['PROFESSOR']}
+          enableEditFor={[ROLE.professor]}
         />
       )
     },

@@ -18,8 +18,9 @@ import { customFetch } from '../../services/api'
 import Disciplinas from '../../services/disciplinas'
 import Series from '../../services/series'
 import Turmas from '../../services/turmas'
+import { ROLE } from '../../utils/enum';
 
-const allRoles = ['funcionario', 'coordenador', 'professor'];
+const allRoles = [ROLE.coordenador, ROLE.funcionario, ROLE.professor];
 
 const ListActions = ({
   componentForm,

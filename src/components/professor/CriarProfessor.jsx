@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Input from '../Input'
 import FormCard from '../FormCard'
 import {
@@ -17,13 +17,9 @@ const OPTIONS = ["Artes", "Biologia", "Ciências", "Educação Físcia", "Ensino
 const CriarProfessor = ({ initialValues, setOpenEdit }) => {
     const isNew = !initialValues?.id
     const [form] = Form.useForm();
+		const [disciplinas, setDisciplinas] = useState([])
 
     const { Option } = Select;
-
-    const children = [];
-    for (let i = 0; i < OPTIONS.length; i++) {
-        children.push(<Option key={i}>{OPTIONS[i]}</Option>);
-    }
 
     const cadastrarProfessor = async values => {
         const response = await api.postProfessor(values);
@@ -59,6 +55,17 @@ const CriarProfessor = ({ initialValues, setOpenEdit }) => {
         }
         atualizarProfessor(values)
     };
+
+		const findDisciplinas = async () => {
+			const response = await api.getDisciplinas()
+			if(response.ok){
+				setDisciplinas(response.data)
+			}
+		}
+
+		useEffect(() => {
+			findDisciplinas()
+		}, [])
 
     return (
         <Form
@@ -130,33 +137,25 @@ const CriarProfessor = ({ initialValues, setOpenEdit }) => {
                     </Col>
                 </Row>
 
-                <Row gutter={8}>
-                    <Space>
-                        <Form.Item
-                            label="Nível Acadêmico"
-                            name="nivelAcademico"
-                            rules={[{ required: true, message: 'Indique a Série' }]}
-                        >
-                            <Select placeholder="Nível Acadêmico" style={{ width: 240 }}>
-                                <Option value="1">Mestrado</Option>
-                                <Option value="2">Doutorado</Option>
-                            </Select>
-                        </Form.Item>
-                        <Form.Item
-                            label="Disciplinas"
-                            name="disciplinas"
-                            rules={[{ required: true, message: 'Indique a Turma' }]}
-                        >
-                            <Select
-                                mode="multiple"
-                                allowClear
-                                style={{ width: '240%' }}
-                                placeholder="Selecione as Disciplinas"
-                            >
-                                {children}
-                            </Select>
-                        </Form.Item>
-                    </Space>
+                <Row gutter={12}>
+                  <Col>
+										<Form.Item
+													label="Disciplinas"
+													name="disciplinas"
+													rules={[{ required: true, message: 'Indique a Turma' }]}
+											>
+												<Select
+														mode="multiple"
+														allowClear
+														style={{ width: '240%' }}
+														placeholder="Selecione as Disciplinas"
+												>
+														{disciplinas.map(({nomeDisciplina, id}) => (
+															<Option key={id}>{nomeDisciplina}</Option>
+														))}
+												</Select>
+										</Form.Item>
+									</Col>
                 </Row>
 
                 <Row gutter={24}>

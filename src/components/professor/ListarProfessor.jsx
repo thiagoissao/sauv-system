@@ -4,7 +4,10 @@ import ListActions from '../crudBasics/ListActions'
 import CriarProfessor from './CriarProfessor';
 import { formatProfessor } from '../../models/professor'
 import api from '../../services/api'
-import { ConsoleSqlOutlined } from '@ant-design/icons';
+import { formatDisciplinasToList } from '../../utils/formatters';
+import store from '../../redux/auth';
+import useUser from '../../hooks/useUser';
+import { ROLE } from '../../utils/enum';
 
 const columns = [
     {
@@ -44,8 +47,8 @@ const columns = [
                     )
                 }
                 record={record}
-                enableEditFor={['COORDENADOR', 'FUNCIONARIO']}
-                enableDeleteFor={['COORDENADOR', 'FUNCIONARIO']}
+                enableEditFor={[ROLE.coordenador, ROLE.funcionario]}
+                enableDeleteFor={[ROLE.coordenador, ROLE.funcionario]}
                 endpoint='professores'
                 formatterView={formatProfessor}
             />,
@@ -54,26 +57,29 @@ const columns = [
 
 const ListarProfessor = ({ tipo = 'Professores' }) => {
 
-    const [list, setList] = useState([])
+  const [list, setList] = useState([])
+  const user = useUser()
+  console.log(user.getUser())
 
-    const getProfessores = async () => {
-        const response = await api.getProfessores()
-        if (response.ok) {
-            setList(response.data)
-        }
+  const getProfessores = async () => {
+    const response = await api.getProfessores()
+    if (response.ok) {
+        const data = response.data.map(professor => ({...professor, disciplinas: formatDisciplinasToList(professor.disciplinas)}))
+        setList(data)
     }
+  }
 
-    useEffect(() => {
-        getProfessores()
-    }, [])
+  useEffect(() => {
+    getProfessores()
+  }, [])
 
-    return (
-        <Table
-            title={() => <Typography.Title level={3}>Listagem dos {tipo}</Typography.Title>}
-            columns={columns}
-            dataSource={list}
-            scroll={{ x: 1300 }}
-        />
-    )
+  return (
+    <Table
+      title={() => <Typography.Title level={3}>Listagem dos {tipo}</Typography.Title>}
+      columns={columns}
+      dataSource={list}
+      scroll={{ x: 1300 }}
+    />
+  )
 }
 export default ListarProfessor;

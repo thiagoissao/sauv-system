@@ -20,24 +20,22 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import Login from './components/login/Login';
 import store, { loginUser } from './redux/auth.js';
 import ControleFrequencia from './components/turma/ControleFrequencia'
-// import { allRoles } from './models/roles'
 import ControleNotas from './components/nota/ControleNotas'
 import TrancarTurma from './components/turma/TrancarTurma'
 import TrancarAluno from './components/aluno/TrancarAluno'
 import RelatorioTurma from './components/relatório/RelatorioTurma'
 import ControleTrocarAlunoTurma from './components/aluno/ControleTrocarAlunoTurma'
-import api from './services/api'
+import { ALLROLES, ROLE } from './utils/enum'
 
-const allRoles = ['funcionario', 'coordenador', 'professor'];
 
 const menuOptions = {
   visualizar: {
     icon: <UnorderedListOutlined />,
     label: 'Visualizar',
-    enableFor: allRoles,
+    enableFor: ALLROLES,
     opcoes: {
       funcionarios: {
-        enableFor: allRoles,
+        enableFor: ALLROLES,
         label: 'Funcionários',
         component: () =>
           <ListarFuncionarioOuCoordenador
@@ -46,7 +44,7 @@ const menuOptions = {
           />
       },
       coordenadores: {
-        enableFor: allRoles,
+        enableFor: ALLROLES,
         label: 'Coordenadores',
         component: () =>
           <ListarFuncionarioOuCoordenador
@@ -55,7 +53,7 @@ const menuOptions = {
           />
       },
       alunos: {
-        enableFor: allRoles,
+        enableFor: ALLROLES,
         label: 'Alunos',
         component: () =>
           <ListarAluno
@@ -64,36 +62,36 @@ const menuOptions = {
           />
       },
       professores: {
-        enableFor: allRoles,
+        enableFor: ALLROLES,
         label: 'Professores',
         component: () =>
           <ListarProfessor tipo="Professores" />
       },
       disciplinas: {
-        enableFor: allRoles,
+        enableFor: ALLROLES,
         label: 'Disciplinas',
         component: () => <ListarDisciplinas />
       },
       turmas: {
-        enableFor: allRoles,
+        enableFor: ALLROLES,
         label: 'Turmas',
         component: () => <ListarTurmas />
       },
       series: {
-        enableFor: allRoles,
+        enableFor: ALLROLES,
         label: 'Séries',
         component: () => <ListarSerie />
       },
     }
   },
   cadastrar: {
-    enableFor: ['coordenador', 'funcionario'],
+    enableFor: [ROLE.coordenador, ROLE.funcionario],
     icon: <FormOutlined />,
     label: 'Cadastrar',
     opcoes: {
       funcionarios: {
         label: 'Funcionários',
-        enableFor: ['funcionario'],
+        enableFor: [ROLE.funcionario],
         component: () =>
           <CriarFuncionarioOuCoordenador
             title='Cadastro de Funcionários'
@@ -101,7 +99,7 @@ const menuOptions = {
       },
       coordenadores: {
         label: 'Coordenadores',
-        enableFor: ['funcionario'],
+        enableFor: [ROLE.funcionario],
         component: () =>
           <CriarFuncionarioOuCoordenador
             title='Cadastro de Coordenadores(as)'
@@ -109,77 +107,77 @@ const menuOptions = {
       },
       alunos: {
         label: 'Alunos',
-        enableFor: ['coordenador', 'funcionario'],
+        enableFor: [ROLE.coordenador, ROLE.funcionario],
         component: () => <CriarAluno />
       },
       professores: {
-        enableFor: ['coordenador', 'funcionario'],
+        enableFor: [ROLE.coordenador, ROLE.funcionario],
         label: 'Professores',
         component: () => <CriarProfessor />
       },
       disciplinas: {
         label: 'Disciplinas',
-        enableFor: ['funcionario'],
+        enableFor: [ROLE.funcionario],
         component: () => <CriarDisciplina title='Cadastro de Disciplina' />
       },
       turmas: {
         label: 'Turmas',
-        enableFor: ['funcionario'],
+        enableFor: [ROLE.funcionario],
         component: () => <CriarTurma title='Cadastro de Turma' />
       },
       series: {
         label: 'Séries',
-        enableFor: ['funcionario'],
+        enableFor: [ROLE.funcionario],
         component: () => <CriarSerie title='Cadastro de Série' />
       },
     }
   },
   trancar: {
-    enableFor: ['coordenador', 'funcionario'],
+    enableFor: [ROLE.coordenador, ROLE.funcionario],
     icon: <LockOutlined />,
     label: 'Trancamentos',
     opcoes: {
       alunos: {
         label: 'Alunos',
-        enableFor: ['funcionario', 'coordenador'],
+        enableFor: [ROLE.coordenador, ROLE.funcionario],
         component: () => <TrancarAluno title='Trancamento de Aluno' />
       },
       turmas: {
         label: 'Turmas',
-        enableFor: ['coordenador', 'funcionario'],
+        enableFor: [ROLE.coordenador, ROLE.funcionario],
         component: () => <TrancarTurma title="Trancamento de Turma" />
       },
     }
   },
   relatorio: {
-    enableFor: ['coordenador', 'funcionario', 'professor'],
+    enableFor: ALLROLES,
     icon: <BookOutlined />,
     label: 'Relatórios',
     opcoes: {
       relatorioTurma: {
-        enableFor: ['coordenador', 'funcionario', 'professor'],
+        enableFor: ALLROLES,
         label: "Relatório de Turma",
         component: () => <RelatorioTurma title="Relatório de Turma" />
       },
     },
   },
   controle: {
-    enableFor: allRoles,
+    enableFor: ALLROLES,
     icon: <ControlOutlined />,
     label: 'Controles',
     opcoes: {
       trocarAlunoTurma: {
         label: 'Trocar Aluno-Turma',
-        enableFor: ['coordenador'],
+        enableFor: [ROLE.coordenador],
         component: () => <ControleTrocarAlunoTurma />
       },
       frequencia: {
         label: 'Frequência',
-        enableFor: ['professor'],
+        enableFor: [ROLE.professor],
         component: () => <ControleFrequencia />
       },
       notas: {
-        enableFor: ['professor'],
+        enableFor: [ROLE.professor],
         label: 'Notas',
         component: () => <ControleNotas />
       }

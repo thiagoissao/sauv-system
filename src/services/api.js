@@ -5,7 +5,9 @@ const baseURL = 'http://localhost:5000'
 export const customFetch = async (endpoint, options) => {
   const headers = {
     'Content-Type': 'application/json',
+    'Authorization': `bearer ${JSON.parse(localStorage.getItem('usuario')).token}`
   }
+
 
   const response = await fetch(`${baseURL}/${endpoint}`, {
     ...options,
@@ -38,6 +40,8 @@ const getProfessores = () => customFetch('professores')
 const postProfessor = body => post('professores', body)
 const updateProfessor = (body, id) => patch('professores', body, id)
 
+const getDisciplinas = () => customFetch('disciplinas')
+
 export const getTestApi = () => customFetch('test')
 export const postTestApi = () => post('test', ({ testing: 'post' }))
 export const patchTestApi = () => patch('test', ({ testing: 'patch' }))
@@ -49,4 +53,5 @@ export default {
   getProfessores,
   postProfessor,
   updateProfessor,
+  getDisciplinas
 }

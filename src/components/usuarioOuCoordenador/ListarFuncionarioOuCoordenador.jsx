@@ -3,6 +3,7 @@ import { Table, Typography } from 'antd';
 import ListActions from '../crudBasics/ListActions'
 import { formatUsuarioOuCoordenador } from '../../models/usuarioOuCoordenador'
 import CriarFuncionarioOuCoordenador from './CriarFuncionarioOuCoordenador';
+import { ROLE } from '../../utils/enum';
 
 const columns = [
   {
@@ -62,8 +63,8 @@ const columns = [
                 title='Edição de Dados'
               />}
           record={record}
-          enableDeleteFor={['FUNCIONARIO']}
-          enableEditFor={['FUNCIONARIO']}
+          enableDeleteFor={[ROLE.funcionario]}
+          enableEditFor={[ROLE.funcionario]}
           formatterView={formatUsuarioOuCoordenador}
         />
       )

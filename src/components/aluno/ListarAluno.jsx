@@ -3,6 +3,7 @@ import { Table, Typography } from 'antd';
 import ListActions from '../crudBasics/ListActions'
 import CriarAluno from "./CriarAluno"
 import { formatAluno } from '../../models/aluno'
+import { ROLE } from '../../utils/enum';
 
 const columns = [
   {
@@ -40,8 +41,8 @@ const columns = [
           title='Edição de Dados'
         />}
       record={record}
-      enableEditFor={['coordenador', 'funcionario']}
-      enableDeleteFor={['coordenador', 'funcionario']}
+      enableEditFor={[ROLE.coordenador, ROLE.funcionario]}
+      enableDeleteFor={[ROLE.coordenador, ROLE.funcionario]}
       formatterView={formatAluno}
     />
   },

@@ -3,6 +3,7 @@ import { Table, Typography } from 'antd';
 import ListActions from '../crudBasics/ListActions'
 import CriarTurma from './CriarTurma'
 import Turma from '../../services/turmas'
+import { ROLE } from '../../utils/enum';
 
 const columns = [
   {
@@ -65,8 +66,8 @@ const columns = [
               />}
           record={record}
           endpoint="turmas"
-          enableDeleteFor={['funcionario', 'coordenador']}
-          enableEditFor={['funcionario', 'coordenador']}
+          enableDeleteFor={[ROLE.coordenador, ROLE.funcionario]}
+          enableEditFor={[ROLE.coordenador, ROLE.funcionario]}
           enableViewFor={[]}
         />
       )

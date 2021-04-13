@@ -58,8 +58,6 @@ const columns = [
 const ListarProfessor = ({ tipo = 'Professores' }) => {
 
   const [list, setList] = useState([])
-  const user = useUser()
-  console.log(user.getUser())
 
   const getProfessores = async () => {
     const response = await api.getProfessores()

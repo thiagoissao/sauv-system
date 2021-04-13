@@ -45,10 +45,10 @@ const ListActions = ({
       return
     }
   
-    // if (!record.id) {
-    //   console.error('O registro não possui ID, portanto não é possível excluir o registro')
-    //   return
-    // }
+    if (!record.id) {
+      console.error('O registro não possui ID, portanto não é possível excluir o registro')
+      return
+    }
     
     switch (endpoint) {
       case "disciplinas":
@@ -74,14 +74,16 @@ const ListActions = ({
           .catch(error => message.error(error.message))
         break;
     }
-    // const response = await customFetch(`${endpoint}/${record.id}`, { method: 'DELETE' })
 
-    // if (response.ok) {
-    //   message.success('Registro deletado! Recarregue a página para ver as alterações')
-    //   return
-    // }
+    
+    const response = await customFetch(`${endpoint}/${record.id}`, { method: 'DELETE' })
 
-    // message.error('Erro na exclusão do registro')
+    if (response.ok) {
+      message.success('Registro deletado! Recarregue a página para ver as alterações')
+      return
+    }
+
+    message.error('Erro na exclusão do registro')
   }
 
   return (

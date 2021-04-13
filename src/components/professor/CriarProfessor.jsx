@@ -12,8 +12,6 @@ import {
 } from 'antd';
 import api from '../../services/api'
 
-const OPTIONS = ["Artes", "Biologia", "Ciências", "Educação Físcia", "Ensino Religioso", "Filosofia", "Física", "Geografia", "História", "Ingles", "Matemática", "Português", "Química", "Sociologia"];
-
 const CriarProfessor = ({ initialValues, setOpenEdit }) => {
     const isNew = !initialValues?.id
     const [form] = Form.useForm();
@@ -140,21 +138,18 @@ const CriarProfessor = ({ initialValues, setOpenEdit }) => {
                 <Row gutter={12}>
                   <Col>
 										<Form.Item
-													label="Disciplinas"
-													name="disciplinas"
-													rules={[{ required: true, message: 'Indique a Turma' }]}
-											>
-												<Select
-														mode="multiple"
-														allowClear
-														style={{ width: '240%' }}
-														placeholder="Selecione as Disciplinas"
-												>
-														{disciplinas.map(({nomeDisciplina, id}) => (
-															<Option key={id}>{nomeDisciplina}</Option>
-														))}
-												</Select>
-										</Form.Item>
+											label="Disciplinas"
+											name="disciplinas">
+											<Select
+													mode="multiple"
+													allowClear
+													style={{ width: '240%' }}
+													placeholder="Selecione as Disciplinas">
+													{disciplinas.map(({nomeDisciplina, id}) => (
+														<Option key={id}>{nomeDisciplina}</Option>
+													))}
+											</Select>
+									</Form.Item>
 									</Col>
                 </Row>
 
@@ -190,7 +185,7 @@ const CriarProfessor = ({ initialValues, setOpenEdit }) => {
                         <Form.Item
                             label="Complemento"
                             name="complemento"
-                            rules={[{ required: false }]}
+                            rules={[{ required: true, message: 'Complemento é um campo obrigatório' }]}
                         >
                             <Input placeholder="Ex: Ponto de referência ou detalhe importante" />
                         </Form.Item>

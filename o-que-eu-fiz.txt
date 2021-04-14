@@ -1,5 +1,0 @@
-- autenticacao
-- cadastros de funcionario e coordenador
-- trocar aluno de turma
-- controle de notas
-- controle de permissões

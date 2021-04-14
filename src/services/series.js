@@ -19,14 +19,10 @@ class Serie {
   async save (serie) {
     if(serie.id) {
       const url = `http://localhost:5000/series/${serie.id}`;
-      return await axios.put(url, {
-        data: {...serie}
-      })
+      return await axios.put(url, {...serie})
     } else {
       const url = 'http://localhost:5000/series';
-      return await axios.post(url, {
-        data: {...serie}
-      });
+      return await axios.post(url, {...serie});
     }
   }
 

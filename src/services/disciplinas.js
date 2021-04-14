@@ -19,14 +19,10 @@ class Disciplinas {
   async save (disciplina) {
     if(disciplina.id) {
       const url = `http://localhost:5000/disciplinas/${disciplina.id}`;
-      return await axios.put(url, {
-        data: {...disciplina}
-      })
+      return await axios.put(url, {...disciplina})
     } else{
       const url = 'http://localhost:5000/disciplinas';
-      return await axios.post(url, {
-        data: {...disciplina}
-      })
+      return await axios.post(url, {...disciplina})
     }
   }
 

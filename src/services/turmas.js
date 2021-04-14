@@ -19,14 +19,10 @@ class Turma {
   async criar (turma) {
     if(turma.id) {
       const url = `http://localhost:5000/turmas/${turma.id}`;
-      return await axios.put(url, {
-        data: {...turma}
-      })
+      return await axios.put(url, {...turma})
     } else {
       const url = 'http://localhost:5000/turmas';
-      return await axios.post(url, {
-        data: {...turma}
-      });
+      return await axios.post(url, {...turma});
     }
   }
   

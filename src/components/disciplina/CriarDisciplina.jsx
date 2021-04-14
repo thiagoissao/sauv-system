@@ -2,8 +2,9 @@ import Input from '../Input'
 import React, { useState, useEffect } from 'react'
 import FormCard from '../FormCard'
 import Disciplina from '../../services/disciplinas'
-import api  from '../../services/api'
+import api from '../../services/api'
 import profs from '../../mock/professors'
+import { formatDisciplinasToList } from '../../utils/formatters';
 
 import {
   Form,
@@ -21,17 +22,29 @@ const CriarDisciplinas = ({ title, initialValues, id }) => {
   const [value, setValue] = useState(initialValues ? initialValues.professor : null);
   const [professores, setProfessores] = useState(false);
 
+  const getProfessores = async () => {
+    const response = await api.getProfessores()
+    if (response.ok) {
+      console.log(response.data)
+      const data = response.data.map(professor => ({ ...professor, disciplinas: formatDisciplinasToList(professor.disciplinas) }))
+      setProfessores(data);
+    }
+  }
+
   useEffect(() => {
-    setProfessores(profs);
+  }, [])
+
+  useEffect(() => {
+    getProfessores()
   }, [])
 
   const onFinish = values => {
     const professor = professores.filter(professor => professor.nome === values.professor)[0];
     if (professor.disciplinas.includes(values.nomeDisciplina)) {
-      if(id)  values.id = id
+      if (id) values.id = id
       disciplina.save(values)
         .then(response => {
-          if(id) {
+          if (id) {
             Modal.success({
               title: `Atualização da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
               content: `Professor(a) é ${value}!`,
@@ -44,7 +57,7 @@ const CriarDisciplinas = ({ title, initialValues, id }) => {
           }
         })
         .catch(error => {
-          if(error && error.response && error.response.data) {
+          if (error && error.response && error.response.data) {
             console.log(error.response.data)
             Modal.error({
               title: `Erro ao criar a disciplina!`,

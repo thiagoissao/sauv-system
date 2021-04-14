@@ -13,7 +13,7 @@ const useUser = () => {
   const getUserRole = () => {
     const user = getUser()
     if (R.isEmpty(user)) return undefined
-    return user.type
+    return user.tipo
   }
 
   const enableField = enableFor => {

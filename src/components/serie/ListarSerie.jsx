@@ -3,6 +3,7 @@ import { Table, Typography } from 'antd';
 import ListActions from '../crudBasics/ListActions'
 import CriarSerie from './CriarSerie'
 import Serie from '../../services/series'
+import { ROLE } from '../../utils/enum';
 
 const formatRecord = record => {
 
@@ -61,8 +62,8 @@ const columns = [
           }
           record={record}
           endpoint="series"
-          enableDeleteFor={['funcionario', 'coordenador']}
-          enableEditFor={['funcionario', 'coordenador']}
+          enableDeleteFor={[ROLE.coordenador, ROLE.funcionario]}
+          enableEditFor={[ROLE.coordenador, ROLE.funcionario]}
           enableViewFor={[]}
         />
       )

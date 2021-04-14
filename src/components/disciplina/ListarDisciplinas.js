@@ -3,6 +3,7 @@ import { Table, Typography } from 'antd';
 import ListActions from '../crudBasics/ListActions';
 import CriarDisciplina from './CriarDisciplina'
 import Disciplina from '../../services/disciplinas';
+import { ROLE } from '../../utils/enum';
 
 
 const columns = [
@@ -39,8 +40,8 @@ const columns = [
           />}
       record={record}
       endpoint="disciplinas"
-      enableEditFor={['coordenador', 'funcionario']}
-      enableDeleteFor={['coordenador', 'funcionario']}
+      enableEditFor={[ROLE.coordenador, ROLE.funcionario]}
+      enableDeleteFor={[ROLE.coordenador, ROLE.funcionario]}
     />
   },
 ];

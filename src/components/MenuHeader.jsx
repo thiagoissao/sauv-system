@@ -34,7 +34,7 @@ const MenuHeader = () => {
 
   return (
     <Dropdown overlay={menu} trigger={['click']}>
-      <Tooltip placement='left' color='#0091ea' title={`Cargo: ${userData?.type}`}>
+      <Tooltip placement='left' color='#0091ea' title={`Cargo: ${userData?.tipo}`}>
         <Button
           icon={<UserOutlined />}
           shape='round'

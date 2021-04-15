@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FormCard from '../FormCard'
 import {
   Form,
@@ -6,13 +6,14 @@ import {
   Select,
   Row,
   Col,
-  Table
+  Table,
+  DatePicker
 } from 'antd';
-import { alunos8A, alunos8B, disciplinas, series, turmas } from '../../models/frequencia';
+import * as R from 'ramda'
+import { alunos8A, alunos8B, mockDisciplinas} from '../../models/frequencia';
 import ListActions from '../crudBasics/ListActions';
 import EditarFrequencia from './EditarFrequencia';
-
-
+import api from '../../services/api'
 
 const columns = [
   {
@@ -49,15 +50,41 @@ const columns = [
 const ControleFrequencia = () => {
   const [formTurma] = Form.useForm();
   const [formDisciplina] = Form.useForm();
+  const [formFrequencia] = Form.useForm()
   const [values, setValues] = useState({})
-  const [idDisciplina, setIdDisciplina] = useState(0)
 
-  const dias = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31]
-  const meses = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-  const ano = [2020]
+  const [turmas, setTurmas] = useState([])
+  const [series, setSeries] = useState([])
+  const [disciplinas, setDisciplinas] = useState([])
+  const [frequencias, setFrequencias] = useState([])
+  const getInitialData = async () => {
+    const responseSeries = await api.getSeries()
+    const responseTurmas = await api.getTurmas()
 
+    if(responseSeries.ok && responseTurmas.ok){
+      setTurmas(responseTurmas.data)
+      setSeries(responseSeries.data)
+    }
+  }
+
+  const handleSearchDisciplinas = async form => {
+    const response = await api.getDisciplinasWithTurmaSerie(form)
+    setDisciplinas(mockDisciplinas)
+    if(response.ok){
+      setDisciplinas(response.data)
+    }
+  } 
+
+  const handleSearchFrequenciaAluno = async ({disciplinaId, diaFrequencia}) => {
+    console.log(new Date(diaFrequencia).toISOString())
+  }
+
+  useEffect(() => {
+    getInitialData()
+  }, [])
 
   const { Option } = Select;
+
 
   return (
     <>
@@ -66,35 +93,31 @@ const ControleFrequencia = () => {
           layout='vertical'
           form={formTurma}
           name="selecionar-turma"
-          onFinish={setValues}>
+          onFinish={handleSearchDisciplinas}>
           <Row gutter={24} align='bottom'>
             <Col span={4}>
               <Form.Item
                 label="Série"
-                name="serie"
+                name="serieId"
                 rules={[{ required: true, message: 'Indique a Série' }]}
               >
                 <Select placeholder="Série">
-                  {
-                    series.map(serie => (
-                      <Option value={serie.value}>{serie.label}</Option>
-                    ))
-                  }
+                  {series.map(serie => (
+                    <Option key={serie.id} value={serie.id}>{serie.anoLetivo}ª Série</Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Col>
             <Col span={4}>
               <Form.Item
                 label="Turma"
-                name="turma"
+                name="turmaId"
                 rules={[{ required: true, message: 'Indique a Turma' }]}
               >
                 <Select placeholder="Turma">
-                  {
-                    turmas.map(turma => (
-                      <Option value={turma.value}>{turma.label}</Option>
-                    ))
-                  }
+                  {turmas.map(turma => (
+                    <Option key={turma.id} value={turma.id}>Turma {turma.turma}</Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Col>
@@ -102,35 +125,44 @@ const ControleFrequencia = () => {
               <Form.Item>
                 <Button style={{ width: '100%' }} shape='round' type="primary" htmlType="submit">
                   Buscar
-              </Button>
+                </Button>
               </Form.Item>
             </Col>
           </Row>
         </Form>
       </FormCard>
       {
-        values.serie && values.turma && (
+        !R.isEmpty(disciplinas) && !R.isNil(disciplinas) && (
           <div style={{ marginTop: 16 }}>
             <FormCard title='Controle de Frequência - Selecionar Disciplina'>
               <Form
                 layout='vertical'
                 form={formDisciplina}
                 name="selecionar-disciplina"
-                onFinish={({ disciplina }) => setIdDisciplina(disciplina)}>
+                onFinish={handleSearchFrequenciaAluno}>
                 <Row gutter={24} align='bottom'>
                   <Col span={4}>
                     <Form.Item
                       label="Disciplina"
-                      name="disciplina"
+                      name="disciplinaId"
                       rules={[{ required: true, message: 'Obrigatório' }]}
                     >
                       <Select placeholder="Disciplina">
                         {
                           disciplinas.map(d => (
-                            <Option value={d.idDisciplina}>{d.nome}</Option>
+                            <Option key={d.id} value={d.id}>{d.nomeDisciplina}</Option>
                           ))
                         }
                       </Select>
+                    </Form.Item>
+                  </Col>
+                  <Col span={4}>
+                    <Form.Item
+                      label="Dia"
+                      name="diaFrequencia"
+                      rules={[{ required: true, message: 'Obrigatório' }]}
+                    >
+                      <DatePicker  />
                     </Form.Item>
                   </Col>
                   <Col span={4}>
@@ -147,79 +179,11 @@ const ControleFrequencia = () => {
         )
       }
       {
-        idDisciplina !== 0 && (
-          <div style={{ marginTop: 16 }}>
-            <FormCard title="Controle de Frequência - Selecionar dia">
-              <Form
-                layout='vertical'
-                form={formTurma}
-                name="selecionar-turma"
-                onFinish={setValues}>
-                <Row gutter={24} align='bottom'>
-                  <Col span={4}>
-                    <Form.Item
-                      label="Dia"
-                      name="dia"
-                      rules={[{ required: true, message: 'Indique o dia' }]}
-                    >
-                      <Select placeholder="Dia">
-                        {
-                          dias.map(dia => (
-                            <Option value={dia}>{dia}</Option>
-                          ))
-                        }
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                  <Col span={4}>
-                    <Form.Item
-                      label="Mês"
-                      name="mes"
-                      rules={[{ required: true, message: 'Indique o mês' }]}
-                    >
-                      <Select placeholder="Mês">
-                        {
-                          meses.map(mes => (
-                            <Option value={mes}>{mes}</Option>
-                          ))
-                        }
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                  <Col span={4}>
-                    <Form.Item
-                      label="Ano"
-                      name="ano"
-                      rules={[{ required: true, message: 'Indique o ano' }]}
-                    >
-                      <Select placeholder="Ano">
-                        {
-                          ano.map(ano => (
-                            <Option value={ano}>{ano}</Option>
-                          ))
-                        }
-                      </Select>
-                    </Form.Item>
-                  </Col>
-                  <Col span={4}>
-                    <Form.Item>
-                      <Button style={{ width: '100%' }} shape='round' type="primary" htmlType="submit">
-                        Buscar
-                    </Button>
-                    </Form.Item>
-                  </Col>
-                </Row>
-              </Form>
-            </FormCard>
-          </div>
-        )
-      }
-      {
-        values.dia && values.mes && values.ano && (
+        !R.isEmpty(frequencias) && !R.isNil(frequencias) &&  (
           <div style={{ marginTop: 16 }}>
             <Form
               layout='vertical'
-              form={formDisciplina}
+              form={formFrequencia}
               name="criar-usuario"
             >
               <FormCard title="Frequência dos alunos">

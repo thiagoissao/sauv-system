@@ -41,6 +41,7 @@ const postProfessor = body => post('professores', body)
 const updateProfessor = (body, id) => patch('professores', body, id)
 
 const getDisciplinas = () => customFetch('disciplinas')
+const getDisciplinasWithTurmaSerie = ({turmaId, serieId}) => customFetch(`disciplinas?turmaId=${turmaId}&serieId=${serieId}`) 
 
 const getSeries = () => customFetch('series')
 const getTurmas = () => customFetch('turmas')
@@ -58,6 +59,7 @@ export default {
   postProfessor,
   updateProfessor,
   getDisciplinas,
+  getDisciplinasWithTurmaSerie,
   getSeries,
   getTurmas,
   getRelatorioTurma

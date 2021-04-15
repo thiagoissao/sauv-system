@@ -42,6 +42,10 @@ const updateProfessor = (body, id) => patch('professores', body, id)
 
 const getDisciplinas = () => customFetch('disciplinas')
 
+const getSeries = () => customFetch('series')
+const getTurmas = () => customFetch('turmas')
+const getRelatorioTurma = ({serieId, turmaId, ano}) => customFetch(`relatorio-turma?ano=${ano}&turma=${turmaId}&serie=${serieId}`)
+
 export const getTestApi = () => customFetch('test')
 export const postTestApi = () => post('test', ({ testing: 'post' }))
 export const patchTestApi = () => patch('test', ({ testing: 'patch' }))
@@ -53,5 +57,8 @@ export default {
   getProfessores,
   postProfessor,
   updateProfessor,
-  getDisciplinas
+  getDisciplinas,
+  getSeries,
+  getTurmas,
+  getRelatorioTurma
 }

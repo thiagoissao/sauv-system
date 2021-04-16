@@ -53,10 +53,12 @@ const ControleFrequencia = () => {
   const [formFrequencia] = Form.useForm()
   const [values, setValues] = useState({})
 
+  const [turmaId, setTurmaId] = useState(null)
   const [turmas, setTurmas] = useState([])
   const [series, setSeries] = useState([])
   const [disciplinas, setDisciplinas] = useState([])
   const [frequencias, setFrequencias] = useState([])
+
   const getInitialData = async () => {
     const responseSeries = await api.getSeries()
     const responseTurmas = await api.getTurmas()
@@ -71,12 +73,17 @@ const ControleFrequencia = () => {
     const response = await api.getDisciplinasWithTurmaSerie(form)
     setDisciplinas(mockDisciplinas)
     if(response.ok){
+      setTurmaId(form.turmaId)
       setDisciplinas(response.data)
     }
   } 
 
   const handleSearchFrequenciaAluno = async ({disciplinaId, diaFrequencia}) => {
-    console.log(new Date(diaFrequencia).toISOString())
+    const dia  = new Date(diaFrequencia).toISOString()
+    const response = await api.getFrequencias({turmaId, dia, disciplinaId})
+    if(response.ok) {
+      setFrequencias(response.data)
+    }
   }
 
   useEffect(() => {

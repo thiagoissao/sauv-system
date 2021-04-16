@@ -46,6 +46,7 @@ const getDisciplinasWithTurmaSerie = ({turmaId, serieId}) => customFetch(`discip
 const getSeries = () => customFetch('series')
 const getTurmas = () => customFetch('turmas')
 const getRelatorioTurma = ({serieId, turmaId, ano}) => customFetch(`relatorio-turma?ano=${ano}&turma=${turmaId}&serie=${serieId}`)
+const getFrequencias = ({turmaId, dia, disciplinaId}) => customFetch(`frequencia-aluno?turmaId=${turmaId}&dia=${dia}&disciplinaId=${disciplinaId}`)
 
 export const getTestApi = () => customFetch('test')
 export const postTestApi = () => post('test', ({ testing: 'post' }))
@@ -62,5 +63,6 @@ export default {
   getDisciplinasWithTurmaSerie,
   getSeries,
   getTurmas,
-  getRelatorioTurma
+  getRelatorioTurma,
+  getFrequencias
 }

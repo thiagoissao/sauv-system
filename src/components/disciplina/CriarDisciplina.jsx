@@ -2,8 +2,6 @@ import Input from '../Input'
 import React, { useState, useEffect } from 'react'
 import FormCard from '../FormCard'
 import Disciplina from '../../services/disciplinas'
-import api  from '../../services/api'
-import profs from '../../mock/professors'
 
 import {
   Form,
@@ -12,56 +10,39 @@ import {
   Row,
   Space,
   Modal,
-  Radio
 } from 'antd';
 
 const CriarDisciplinas = ({ title, initialValues, id }) => {
   const [form] = Form.useForm();
   const disciplina = new Disciplina();
-  const [value, setValue] = useState(initialValues ? initialValues.professor : null);
-  const [professores, setProfessores] = useState(false);
-
-  useEffect(() => {
-    setProfessores(profs);
-  }, [])
 
   const onFinish = values => {
-    const professor = professores.filter(professor => professor.nome === values.professor)[0];
-    if (professor.disciplinas.includes(values.nomeDisciplina)) {
-      if(id)  values.id = id
-      disciplina.save(values)
-        .then(response => {
-          if(id) {
-            Modal.success({
-              title: `Atualização da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
-              content: `Professor(a) é ${value}!`,
-            });
-          } else {
-            Modal.success({
-              title: `Cadastro da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
-              content: `Professor(a) é ${value}!`,
-            });
-          }
-        })
-        .catch(error => {
-          if(error && error.response && error.response.data) {
-            console.log(error.response.data)
-            Modal.error({
-              title: `Erro ao criar a disciplina!`,
-              content: `${error.response.data.message}`,
-            });
-          } else {
-            Modal.error({
-              title: `Erro ao criar a disciplina!`,
-            });
-          }
-        })
-    } else {
-      Modal.error({
-        title: `Erro ao cadastra a disciplina ${values['nomeDisciplina']}`,
-        content: `Motivo: professor selecionado não ministra essa matéria.`
+    if (id) values.id = id
+    disciplina.save(values)
+      .then(response => {
+        if (id) {
+          Modal.success({
+            title: `Atualização da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
+          });
+        } else {
+          Modal.success({
+            title: `Cadastro da disciplina ${values['nomeDisciplina']} realizada com sucesso!`,
+          });
+        }
       })
-    }
+      .catch(error => {
+        if (error && error.response && error.response.data) {
+          console.log(error.response.data)
+          Modal.error({
+            title: `Erro ao criar a disciplina!`,
+            content: `${error.response.data.message}`,
+          });
+        } else {
+          Modal.error({
+            title: `Erro ao criar a disciplina!`,
+          });
+        }
+      })
   };
 
   const onReset = () => {
@@ -72,12 +53,7 @@ const CriarDisciplinas = ({ title, initialValues, id }) => {
     form.setFieldsValue({
       'nomeDisciplina': "Matemática",
       'cargaHoraria': "68",
-      'professor': "João Pedro"
     });
-  };
-
-  const onChange = e => {
-    setValue(e.target.value);
   };
 
   return (
@@ -94,20 +70,6 @@ const CriarDisciplinas = ({ title, initialValues, id }) => {
           <Col span={8}>
             <Form.Item name="cargaHoraria" label="Carga horaria" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Input placeholder='68' />
-            </Form.Item>
-          </Col>
-          <Col span={8}>
-            <Form.Item name="professor" label="Professor dessa matéria" rules={[{ required: true, message: 'Obrigatório' }]}>
-              <Radio.Group onChange={onChange} value={value}>
-                {
-                  professores &&
-                  professores.map(professor => (
-                    <Col span={9}>
-                      <Radio value={professor.nome}>{professor.nome}</Radio>
-                    </Col>
-                  ))
-                }
-              </Radio.Group>
             </Form.Item>
           </Col>
         </Row>

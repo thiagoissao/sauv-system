@@ -57,7 +57,9 @@ const CriarDisciplinas = ({ title, initialValues, id }) => {
   };
 
   return (
-    <FormCard title={title}>
+    <FormCard 
+      tip='Preencha os dados abaixo para criar uma disciplina nova'
+      title={title}>
       <Form layout='vertical' form={form} name="nomeDisciplina" onFinish={onFinish} initialValues={initialValues}>
         <Row gutter={24}>
           <Col span={8}>

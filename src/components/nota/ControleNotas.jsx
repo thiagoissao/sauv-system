@@ -90,7 +90,9 @@ const ControleNotas = () => {
 
   return (
     <>
-      <FormCard title='Controle de Notas - Selecionar Turma'>
+      <FormCard 
+        tip='As notas dos alunos para cada disciplina é atualizada nesta seção, para isso, preencha as informações requeridas e faça as mudanças necessárias'
+        title='Controle de Notas - Selecionar Turma'>
         <Form
           layout='vertical'
           form={formTurma}

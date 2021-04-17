@@ -7,12 +7,7 @@ class Serie {
   }
 
   async buscaPorAnoLetivo (anoLetivo) {
-    const url = `http://localhost:5000/series?anoLetivo=${anoLetivo}`;
-    return await axios.get(url);
-  }
-
-  async buscaPorId (id) {
-    const url = `http://localhost:5000/series/${id}`;
+    const url = `http://localhost:5000/series/${anoLetivo}`;
     return await axios.get(url);
   }
 

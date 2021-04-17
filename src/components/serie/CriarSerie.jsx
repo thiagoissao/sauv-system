@@ -74,7 +74,9 @@ export default ({ title, initialValues, id }) => {
   };
 
   return (
-    <FormCard title={title}>
+    <FormCard 
+      tip='Faça o cadastro de uma série preenchendo o formulário abaixo, após isso clique em cadastrar para confirmar os dados'
+      title={title}>
       <Form layout='vertical' form={form} name="serie-ano" onFinish={onFinish} initialValues={initialValues}>
         <Row gutter={24}>
           <Col span={8}>

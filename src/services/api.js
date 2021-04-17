@@ -31,7 +31,12 @@ const post = (endpoint, data) => {
 }
 
 const patch = (endpoint, data, id) =>
+  id ? 
   customFetch(`${endpoint}/${id}`, {
+    method: 'PATCH',
+    body: JSON.stringify(data)
+  }) : 
+  customFetch(`${endpoint}`, {
     method: 'PATCH',
     body: JSON.stringify(data)
   })
@@ -43,10 +48,14 @@ const updateProfessor = (body, id) => patch('professores', body, id)
 const getDisciplinas = () => customFetch('disciplinas')
 const getDisciplinasWithTurmaSerie = ({turmaId, serieId}) => customFetch(`disciplinas?turmaId=${turmaId}&serieId=${serieId}`) 
 
+const getAlunos = () => customFetch('aluno')
+
 const getSeries = () => customFetch('series')
 const getTurmas = () => customFetch('turmas')
 const getRelatorioTurma = ({serieId, turmaId, ano}) => customFetch(`relatorio-turma?ano=${ano}&turma=${turmaId}&serie=${serieId}`)
 const getFrequencias = ({turmaId, dia, disciplinaId}) => customFetch(`frequencia-aluno?turmaId=${turmaId}&dia=${dia}&disciplinaId=${disciplinaId}`)
+
+const trancarAluno = cpf => patch('trancar', { cpf })
 
 export const getTestApi = () => customFetch('test')
 export const postTestApi = () => post('test', ({ testing: 'post' }))
@@ -64,5 +73,7 @@ export default {
   getSeries,
   getTurmas,
   getRelatorioTurma,
-  getFrequencias
+  getFrequencias,
+  trancarAluno,
+  getAlunos
 }

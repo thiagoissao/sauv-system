@@ -51,7 +51,9 @@ export default ({ title, initialValues, id}) => {
 
 
   return (
-    <FormCard title={title}>
+    <FormCard 
+      tip='Para fazer o cadastro de uma turma, é necessário que ela pertença a uma série'
+      title={title}>
       <Form layout='vertical' form={form} name="nome-disciplina" onFinish={onFinish} initialValues={initialValues}>
         <Row gutter={24}>
           <Col span={8}>

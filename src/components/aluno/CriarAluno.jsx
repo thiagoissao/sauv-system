@@ -45,7 +45,9 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
             name="criar-aluno"
             onFinish={onFinish}
         >
-            <FormCard title={'Cadastro de Aluno'}>
+            <FormCard
+            tip='Preencha os dados corretamente para criar um aluno para o sistema'
+            title={'Cadastro de Aluno'}>
                 <Row gutter={24}>
                     <Col span={8}>
                         <Form.Item

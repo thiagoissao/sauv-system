@@ -30,7 +30,7 @@ const CriarFuncionarioOuCoordenador = ({ title, initialValues }) => {
   };
 
   return (
-    <FormCard title={title}>
+    <FormCard title={title} tip='Cadastro de funcionários ou coordenador, assim que o registro for salvo com sucesso, este usuário será posível realizar login'>
       <Form
         initialValues={initialValues}
         layout='vertical'

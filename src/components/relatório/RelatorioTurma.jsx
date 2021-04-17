@@ -79,7 +79,9 @@ const GerarRelatorio = ({ title }) => {
               name="GerarRelatorio"
               onFinish={onFinish}
           >
-              <FormCard title={title}>
+              <FormCard
+                tip='Preencha as informações abaixo para exibir os dados de disciplinas e turma'
+                title={title}>
                   <Row gutter={8}>
                     <Space>
                       <Form.Item

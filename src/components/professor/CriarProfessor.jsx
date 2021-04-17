@@ -73,7 +73,9 @@ const CriarProfessor = ({ initialValues, setOpenEdit }) => {
             name="criar-professor"
             onFinish={onFinish}
         >
-            <FormCard title={isNew ? 'Cadastro de Professor' : `Edição de Professor`}>
+            <FormCard 
+                tip='Formulário de criação para professor, após o cadastro, este registro será possível realizar login no sistema'
+                title={isNew ? 'Cadastro de Professor' : `Edição de Professor`}>
                 <Row gutter={24}>
                     <Col span={8}>
                         <Form.Item

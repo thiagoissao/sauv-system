@@ -12,11 +12,13 @@ import {
     Modal,
     Radio,
 } from 'antd';
+import useSerieTurma from '../../hooks/useSerieTurma';
 
 const CriarAluno = ({ tipo = "Aluno" }) => {
     const [form] = Form.useForm();
 
     const { Option } = Select;
+    const {series, turmas} = useSerieTurma()
 
     const [value, setValue] = React.useState(1);
 
@@ -104,14 +106,9 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                                     rules={[{ required: true, message: 'Indique a Série' }]}
                                 >
                                     <Select placeholder="Série" style={{ width: 120 }}>
-                                        <Option value="1">1ª Série</Option>
-                                        <Option value="2">2ª Série</Option>
-                                        <Option value="3">3ª Série</Option>
-                                        <Option value="4">4ª Série</Option>
-                                        <Option value="5">5ª Série</Option>
-                                        <Option value="6">6ª Série</Option>
-                                        <Option value="7">7ª Série</Option>
-                                        <Option value="8">8ª Série</Option>
+                                        {series.map(serie => (
+                                            <Option value={serie.id}>{serie.anoLetivo}ª Série</Option>
+                                        ))}
                                     </Select>
                                 </Form.Item>
                                 <Form.Item
@@ -120,9 +117,9 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                                     rules={[{ required: true, message: 'Indique a Turma' }]}
                                 >
                                     <Select placeholder="Turma" style={{ width: 120 }}>
-                                        <Option value="a">Turma A</Option>
-                                        <Option value="b">Turma B</Option>
-                                        <Option value="c">Turma C</Option>
+                                        {turmas.map(turma => (
+                                            <Option value={turma.turma}>Turma {turma.turma}</Option>
+                                        ))}
                                     </Select>
                                 </Form.Item>
                             </Space>

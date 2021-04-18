@@ -12,7 +12,6 @@ import FormCard from '../FormCard';
 import Input from '../Input';
 import Turma from '../../services/turmas';
 import api from '../../services/api'
-import { formatDisciplinasToList } from '../../utils/formatters';
 import Serie from '../../services/series';
 import FormItem from 'antd/lib/form/FormItem';
 
@@ -40,7 +39,6 @@ export default ({ title, initialValues, id }) => {
           return prev || disciplinas.includes(disciplina);
         }, false)
       })
-      console.log(professoresFilter);
       setProfessores(professoresFilter);
     }
   }

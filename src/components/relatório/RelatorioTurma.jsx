@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import FormCard from '../FormCard'
 import { Form, Select, Button, Row, Space, Table } from "antd"
 import api from '../../services/api'
-import {relatorioTurma} from '../../models/relatorio'
+import useSerieTurma from "../../hooks/useSerieTurma";
 
 const columnsDisciplina = [
   {
@@ -43,34 +43,19 @@ const columnsAluno = [
 const GerarRelatorio = ({ title }) => {
     const { Option } = Select;
     const [form] = Form.useForm();
+    const {turmas, series} = useSerieTurma()
+    
 
-    const [turmas, setTurmas] = useState([])
-    const [series, setSeries] = useState([])
     const [relatorio, setRelatorio] = useState(null)
 
-    const onFinish = ({serieId, turmaId, ano}) => {
-      const response = api.getRelatorioTurma({serieId, turmaId, ano})
-      setRelatorio(relatorioTurma)
+    const onFinish = async ({serieId, turmaId, ano}) => {
+      const response = await api.getRelatorioTurma({serieId, turmaId, ano})
       if(response.ok){
         setRelatorio(response.data)        
       }
     };
 
     const onReset = () => form.resetFields();
-
-    const getInitialData = async () => {
-      const responseSeries = await api.getSeries()
-      const responseTurmas = await api.getTurmas()
-
-      if(responseSeries.ok && responseTurmas.ok){
-        setTurmas(responseTurmas.data)
-        setSeries(responseSeries.data)
-      }
-    }
-
-    useEffect(() => {
-      getInitialData()
-    }, [])
 
     return (
       <>
@@ -91,7 +76,7 @@ const GerarRelatorio = ({ title }) => {
                       >
                         <Select placeholder="Série" style={{ width: 120 }}>
                             {series.map(serie => (
-                              <Option value={serie.id}>{serie.anoLetivo}ª Série</Option>
+                              <Option key={serie.id} value={serie.id}>{serie.anoLetivo}ª Série</Option>
                             ))}
                         </Select>
                       </Form.Item>
@@ -102,7 +87,7 @@ const GerarRelatorio = ({ title }) => {
                       >
                         <Select placeholder="Turma" style={{ width: 120 }}>
                           {turmas.map(turma => (
-                            <Option value={turma.id}>Turma {turma.turma}</Option>
+                            <Option key={turma.turma} value={turma.turma}>Turma {turma.turma}</Option>
                           ))}
                         </Select>
                       </Form.Item>
@@ -112,12 +97,9 @@ const GerarRelatorio = ({ title }) => {
                           rules={[{ required: true, message: 'Indique o Ano' }]}
                       >
                         <Select placeholder="Ano" style={{ width: 120 }}>
-                          <Option value="2015">2015</Option>
-                          <Option value="2016">2016</Option>
-                          <Option value="2017">2017</Option>
-                          <Option value="2018">2018</Option>
-                          <Option value="2019">2019</Option>
-                          <Option value="2020">2020</Option>
+                            {turmas.map(turma => (
+                              <Option key={turma.ano} value={turma.ano}>{turma.ano}</Option>
+                            ))}
                         </Select>
                       </Form.Item>
                     </Space>
@@ -138,12 +120,12 @@ const GerarRelatorio = ({ title }) => {
                 <FormCard title="Relatório">
                   <Table
                     columns={columnsDisciplina}
-                    dataSource={relatorioTurma.disciplinas}
+                    dataSource={relatorio?.disciplinas}
                     scroll={{ x: 1300 }}
                   />
                   <Table
                     columns={columnsAluno}
-                    dataSource={relatorioTurma.alunos}
+                    dataSource={relatorio?.alunos}
                     scroll={{ x: 1300 }}
                   />
                 </FormCard>

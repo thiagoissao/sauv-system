@@ -1,5 +1,4 @@
 export const formatAluno = {
-  id: "Id",
   nome: "Nome do Aluno",
   cpf: "CPF do Aluno",
   rg: "RG do Aluno",
@@ -7,7 +6,7 @@ export const formatAluno = {
   sexo: "Sexo do Aluno",
   serie: "Série",
   turma: "Turma",
-  ano: "Ano",
+  anoTurma: "Ano Turma",
   nomeResponsavel: "Nome do Responsável",
   cpfResponsavel: "CPF do Responsável",
   telefoneResponsavel: "Telefone do Responsável",

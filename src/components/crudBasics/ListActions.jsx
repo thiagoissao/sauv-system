@@ -45,12 +45,21 @@ const ListActions = ({
       console.error('Passar a propriedade endpoint no componente ListActions')
       return
     }
-  
+
+    switch(endpoint) {
+      case "aluno":
+        const aluno = new Aluno();
+        aluno.deletar(record)
+          .then(response => message.success(response.data.message))
+          .catch(error => message.error(error.message))
+        return;
+    }
+    
     if (!record.id) {
       console.error('O registro não possui ID, portanto não é possível excluir o registro')
       return
     }
-    
+
     switch (endpoint) {
       case "disciplinas":
         const disciplina = new Disciplinas();

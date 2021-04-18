@@ -7,8 +7,11 @@ class Aluno {
   }
 
   async buscaCPF (cpf) {
-    const url = `http://localhost:5000/aluno`;
-    return await axios.get(url, cpf);
+    cpf = cpf.replace(".","")
+    cpf = cpf.replace(".","")
+    cpf = cpf.replace("-","")
+    const url = `http://localhost:5000/aluno/${parseInt(cpf)}`;
+    return await axios.get(url);
   }
 
   async criar (aluno) {
@@ -18,12 +21,12 @@ class Aluno {
 
   async atualizar (aluno) {
     const url = `http://localhost:5000/aluno`;
-    return await axios.put(url, aluno)
+    return await axios.patch(url, aluno)
   }
 
-  async deletar (id) {
-    const url = `http://localhost:5000/aluno/${id}`;
-    return await axios.delete(url)
+  async deletar (aluno) {
+    const url = `http://localhost:5000/aluno`;
+    return await axios.delete(url, {data:aluno})
   }
 
 }

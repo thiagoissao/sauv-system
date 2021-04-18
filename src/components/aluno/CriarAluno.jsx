@@ -3,6 +3,7 @@ import { mockAluno } from "../../models/aluno"
 import Input from "../Input"
 import FormCard from '../FormCard'
 import Aluno from '../../services/aluno'
+import api from '../../services/api'
 
 import {
     Form,
@@ -28,9 +29,16 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
         setValue(e.target.value);
     };
 
-    const onFinish = values => {
-        aluno.criar(values)
-        Modal.success({title: "Aluno Cadastrado com Sucesso."})
+    const onFinish = async values => {
+        const response = await aluno.buscaCPF(values.cpf)
+
+        if (response.data.length == 0) {
+            aluno.criar(values)
+            Modal.success({title: "Aluno Cadastrado com Sucesso."})
+        } else {
+            aluno.atualizar(values)
+            Modal.success({title: "Aluno Atualizado com Sucesso."})
+        }
     };
 
     const onReset = () => {
@@ -108,7 +116,7 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                                 >
                                     <Select placeholder="Série" style={{ width: 120 }}>
                                         {series.map(serie => (
-                                            <Option value={serie.id}>{serie.anoLetivo}ª Série</Option>
+                                            <Option value={serie.id}>{serie.serie}ª Série</Option>
                                         ))}
                                     </Select>
                                 </Form.Item>
@@ -125,13 +133,15 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                                 </Form.Item>
                                 <Form.Item
                                     label="Ano"
-                                    name="ano"
+                                    name="anoTurma"
                                     rules={[{ required: true, message: 'Indique o Ano' }]}
                                 >
                                     <Select placeholder="Ano" style={{ width: 120 }}>
-                                        <Option value="2019">2019</Option>
-                                        <Option value="2020">2020</Option>
-                                        <Option value="2021">2021</Option>
+                                        {turmas.map(turma => (
+                                            <Option value={turma.ano}>
+                                            {turma.ano}
+                                            </Option>
+                                        ))}
                                     </Select>
                                 </Form.Item>
                             </Space>

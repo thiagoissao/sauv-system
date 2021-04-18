@@ -18,6 +18,7 @@ import { customFetch } from '../../services/api'
 import Disciplinas from '../../services/disciplinas'
 import Series from '../../services/series'
 import Turmas from '../../services/turmas'
+import Aluno from '../../services/aluno'
 import { ROLE } from '../../utils/enum';
 
 const allRoles = [ROLE.coordenador, ROLE.funcionario, ROLE.professor];
@@ -82,7 +83,7 @@ const ListActions = ({
       message.success('Registro deletado! Recarregue a página para ver as alterações')
       return
     }
-
+    
     message.error('Erro na exclusão do registro')
   }
 

@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { mockAluno } from "../../models/aluno"
 import Input from "../Input"
 import FormCard from '../FormCard'
+import Aluno from '../../services/aluno'
+
 import {
     Form,
     Button,
@@ -15,19 +17,18 @@ import {
 
 const CriarAluno = ({ tipo = "Aluno" }) => {
     const [form] = Form.useForm();
+    const aluno = new Aluno();
+    const [value, setValue] = React.useState(1);
 
     const { Option } = Select;
-
-    const [value, setValue] = React.useState(1);
 
     const onChange = e => {
         setValue(e.target.value);
     };
 
     const onFinish = values => {
-        Modal.success({
-            content: `${tipo} ${values.nomeAluno} cadastrado com sucesso!`,
-        });
+        aluno.criar(values)
+        Modal.success({title: "Aluno Cadastrado com Sucesso."})
     };
 
     const onReset = () => {
@@ -50,7 +51,7 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                     <Col span={8}>
                         <Form.Item
                             label="Nome Completo"
-                            name="nomeAluno"
+                            name="nome"
                             rules={[{ required: true, message: 'Nome é um campo obrigatório' }]}
                         >
                             <Input placeholder="Ex: João da Silva" />
@@ -59,7 +60,7 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                     <Col span={8}>
                         <Form.Item
                             label="CPF"
-                            name="cpfAluno"
+                            name="cpf"
                             rules={[{ required: true, message: 'CPF é um campo obrigatório' }]}
                         >
                             <Input placeholder="Ex: 333.666.999-11" />
@@ -68,7 +69,7 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                     <Col span={8}>
                         <Form.Item
                             label="RG"
-                            name="rgAluno"
+                            name="rg"
                             rules={[{ required: true, message: 'RG é um campo obrigatório' }]}
                         >
                             <Input placeholder="Ex: 12.345.678-9" />
@@ -77,7 +78,7 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                     <Col span={8}>
                         <Form.Item
                             label="Email"
-                            name="emailAluno"
+                            name="email"
                             rules={[{ required: false }]}
                         >
                             <Input placeholder="Ex: aluno@email.com" />
@@ -85,7 +86,7 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
 
                         <Form.Item
                             label="Sexo"
-                            name="sexoAluno"
+                            name="sexo"
                             rules={[{ required: true, message: 'Indique o sexo do aluno' }]}
                         >
                             <Radio.Group onChange={onChange} value={value}>
@@ -121,6 +122,17 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                                         <Option value="a">Turma A</Option>
                                         <Option value="b">Turma B</Option>
                                         <Option value="c">Turma C</Option>
+                                    </Select>
+                                </Form.Item>
+                                <Form.Item
+                                    label="Ano"
+                                    name="ano"
+                                    rules={[{ required: true, message: 'Indique o Ano' }]}
+                                >
+                                    <Select placeholder="Ano" style={{ width: 120 }}>
+                                        <Option value="2019">2019</Option>
+                                        <Option value="2020">2020</Option>
+                                        <Option value="2021">2021</Option>
                                     </Select>
                                 </Form.Item>
                             </Space>

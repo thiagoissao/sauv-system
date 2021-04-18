@@ -1,9 +1,19 @@
 import React from 'react'
-import { Card as AntCard, Typography } from 'antd'
+import { Card as AntCard, Tooltip, Typography,  } from 'antd'
+import {QuestionCircleOutlined} from '@ant-design/icons'
 
-const FormCard = ({ children, title, ...props }) =>
+const Tip = ({title}) => {
+  return(
+    <Tooltip title={title}>
+      <QuestionCircleOutlined />
+    </Tooltip>
+  )
+}
+
+const FormCard = ({ children, title, tip, ...props }) =>
   <AntCard
     title={<Typography.Title level={3}>{title}</Typography.Title>}
+    extra={tip && <Tip title={tip} />}
     {...props}
   >
     {children}

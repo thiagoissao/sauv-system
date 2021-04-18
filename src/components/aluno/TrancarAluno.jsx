@@ -11,6 +11,7 @@ import {
     Popconfirm,
 } from 'antd';
 import { mockAlunoList } from './../../models/aluno'
+import api from '../../services/api';
 
 
 const TrancarAluno = ({ title }) => {
@@ -18,34 +19,44 @@ const TrancarAluno = ({ title }) => {
     const [open, setOpen] = useState(false);
     const [aluno, setAluno] = useState({});
 
-    const onFinish = values => {
-        console.log(values.idAluno);
+    const onFinish = async ({cpf}) => {
 
-        var aluno = mockAlunoList.filter(alun => alun.cpfAluno === values.idAluno);
+        const response = await api.getAlunos()
+        if(!response.ok){
+            return message.error('Erro na requisição, tente novamente');
+        } 
 
-        console.log(aluno);
+        const alunos = response.data
+        const alunosFiltered = alunos.filter(pessoa => pessoa.cpf === cpf);
 
-        if (aluno.length === 0) {
-            return message.error('Aluno não encontrado!');
+        if(alunosFiltered.length > 0){
+            setAluno(alunosFiltered[0]);
+            setOpen(true);    
+            return
         }
 
-        setAluno(aluno[0]);
-        setOpen(true);
+        return message.error('Aluno não encontrado!');
     }
 
-    const onConfirm = values => {
-        setAluno(false);
-        setOpen(false);
-        return message.success('Matricula trancada!');
+    const onConfirm = async () => {
+        const response = await api.trancarAluno(aluno.cpf)
+        if(response.ok){
+            setAluno(false);
+            setOpen(false);
+            return message.success('Matricula trancada!');
+        }
+        return message.error('Erro!')
     }
 
     return (
         <>
-            <FormCard title={title}>
+            <FormCard 
+                tip='Para trancar o aluno da instituição, é necessário preencher o seu CPF'
+                title={title}>
                 <Form form={form} name="trancamento-aluno" onFinish={onFinish}>
                     <Row gutter={24}>
                         <Col span={8}>
-                            <Form.Item name="idAluno" label="RA/CPF" rules={[{ required: true, message: 'Obrigatório' }]}>
+                            <Form.Item name="cpf" label="CPF" rules={[{ required: true, message: 'Obrigatório' }]}>
                                 <Input placeholder='0781234345' />
                             </Form.Item>
                         </Col>
@@ -69,8 +80,8 @@ const TrancarAluno = ({ title }) => {
             >
 
                 {
-                    Object.entries(aluno).map(([key, value]) => (
-                        <Row gutter={24} key={value}>
+                    Object.entries(aluno).map(([key, value], index) => (
+                        <Row gutter={24} key={index}>
                             <Col>
                                 <p><b>{[key]}:</b></p>
                             </Col>

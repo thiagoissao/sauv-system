@@ -11,6 +11,8 @@ import {
     Modal,
 } from 'antd';
 import api from '../../services/api'
+import { Usuario } from '../../services/usuario';
+import { ROLE } from '../../utils/enum';
 
 const CriarProfessor = ({ initialValues, setOpenEdit }) => {
     const isNew = !initialValues?.id
@@ -21,6 +23,13 @@ const CriarProfessor = ({ initialValues, setOpenEdit }) => {
 
     const cadastrarProfessor = async values => {
         const response = await api.postProfessor(values);
+        const user = new Usuario()
+        await user.criar({
+            username: values.username,
+            senha: values.password,
+            tipo: ROLE.professor
+        })
+            user.criar()
         if (response.ok) {
             Modal.success({
                 content: `Cadastro atualizado com sucesso!`,
@@ -73,7 +82,9 @@ const CriarProfessor = ({ initialValues, setOpenEdit }) => {
             name="criar-professor"
             onFinish={onFinish}
         >
-            <FormCard title={isNew ? 'Cadastro de Professor' : `Edição de Professor`}>
+            <FormCard 
+                tip='Formulário de criação para professor, após o cadastro, este registro será possível realizar login no sistema'
+                title={isNew ? 'Cadastro de Professor' : `Edição de Professor`}>
                 <Row gutter={24}>
                     <Col span={8}>
                         <Form.Item
@@ -135,22 +146,39 @@ const CriarProfessor = ({ initialValues, setOpenEdit }) => {
                     </Col>
                 </Row>
 
-                <Row gutter={12}>
-                  <Col>
-										<Form.Item
-											label="Disciplinas"
-											name="disciplinas">
-											<Select
-													mode="multiple"
-													allowClear
-													style={{ width: '240%' }}
-													placeholder="Selecione as Disciplinas">
-													{disciplinas.map(({nomeDisciplina, id}) => (
-														<Option key={id}>{nomeDisciplina}</Option>
-													))}
-											</Select>
-									</Form.Item>
-									</Col>
+                <Row gutter={24}>
+                  <Col span={8}>
+                    <Form.Item
+                            label="Disciplinas"
+                            name="disciplinas">
+                            <Select
+                                    mode="multiple"
+                                    allowClear
+                                    placeholder="Selecione as Disciplinas">
+                                    {disciplinas.map(({nomeDisciplina, id}) => (
+                                        <Option key={id}>{nomeDisciplina}</Option>
+                                    ))}
+                            </Select>
+                    </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                        <Form.Item
+                            label="Username"
+                            name="username"
+                            rules={[{ required: true, message: 'Username é um campo obrigatório' }]}
+                        >
+                            <Input  />
+                        </Form.Item>
+                    </Col>
+                    <Col span={8}>
+                        <Form.Item
+                            label="Senha"
+                            name="password"
+                            rules={[{ required: true, message: 'Senha é um campo obrigatório' }]}
+                        >
+                            <Input type='password' />
+                        </Form.Item>
+                    </Col>
                 </Row>
 
                 <Row gutter={24}>

@@ -16,10 +16,24 @@ export const turmas = [
   },
 ]
 
-export const disciplinas = [
+export const mockDisciplinas = [
   {
-    idDisciplina: 1,
-    nome: 'Matemática'
+    "id": 1,
+    "nomeDisciplina": "Matemática",
+    "cargaHoraria": 15,
+    "professor": "otavio"
+  },
+  {
+    "id": 2,
+    "nomeDisciplina": "Física",
+    "cargaHoraria": 15,
+    "professor": "thiago"
+  },
+  {
+    "id": 3,
+    "nomeDisciplina": "Computação",
+    "cargaHoraria": 15,
+    "professor": "gustavo"
   }
 ]
 

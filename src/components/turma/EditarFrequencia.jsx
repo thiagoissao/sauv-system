@@ -18,7 +18,9 @@ const EditarFrequencia = ({ title }) => {
   };
 
   return (
-    <FormCard title={title}>
+    <FormCard
+      tip='Para o controle de frequência dos alunos, é necessário preencher as informações abaixo'
+      title={title}>
       <Form
         layout='vertical'
         form={form}

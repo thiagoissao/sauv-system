@@ -20,13 +20,6 @@ const columns = [
     key: 'cargaHorario',
   },
   {
-    title: 'Nome professor',
-    dataIndex: 'professor',
-    key: 'professor',
-    sorter: (a, b) => a["professor"].localeCompare(b["professor"]),
-    sortDirections: ['descend', 'ascend'],
-  },
-  {
     title: 'Ações',
     key: 'operation',
     render: (record) => <ListActions

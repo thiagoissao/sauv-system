@@ -5,7 +5,9 @@ import { LockOutlined } from '@ant-design/icons'
 const TrancarTurma = ({ title}) => {
 
     return (
-        <FormCard title={title}>
+        <FormCard 
+            tip='Caso uma turma não tenha alunos suficiente, é possível fechar a turma e com isso os alunos da turma fechada irá ser distribuída para outras turmas equivalentes'
+            title={title}>
 
             <div className="site-card-wrapper">
                 <Row gutter={16}>

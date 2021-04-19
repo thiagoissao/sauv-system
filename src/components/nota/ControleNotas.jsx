@@ -9,10 +9,14 @@ import {
   Table,
   Typography
 } from 'antd';
-import { alunosFisica, alunosMatematica, anos, disciplinas, series, turmas } from '../../models/notas';
+import * as R from 'ramda'
+import { alunosFisica, alunosMatematica } from '../../models/notas';
 import ListActions from '../crudBasics/ListActions';
 import EditarNotasForm from './EditarNotasForm';
 import { ROLE } from '../../utils/enum';
+import useSerieTurma from '../../hooks/useSerieTurma';
+import api from '../../services/api';
+
 
 const columns = [
   {
@@ -83,10 +87,28 @@ const columns = [
 const ControleNotas = () => {
   const [formTurma] = Form.useForm();
   const [formDisciplina] = Form.useForm();
-  const [values, setValues] = useState({})
-  const [idDisciplina, setIdDisciplina] = useState(0)
+  const [disciplinas, setDisciplinas] = useState(null)
+  const [notas, setNotas] = useState(null)
+
+  const {turmas, series} = useSerieTurma()
 
   const { Option } = Select;
+
+  const handleSearchDisciplinas = async ({turmaId, serieId}) => {
+    const response = await api.getDisciplinasWithTurmaSerie({turmaId, serieId})
+    if(response.ok){
+      setDisciplinas(response.data)
+    }
+  }
+
+  const handleSearchNotas = async ({disciplinaId}) => {
+    const turmaId = formTurma.getFieldValue('turmaId')
+    const serieId = formTurma.getFieldValue('serieId')
+    const response = await api.getNotas({turmaId, serieId, disciplinaId})
+    if(response.ok) {
+      setNotas(response.data)
+    }
+  }
 
   return (
     <>
@@ -97,8 +119,34 @@ const ControleNotas = () => {
           layout='vertical'
           form={formTurma}
           name="selecionar-turma"
-          onFinish={setValues}>
+          onFinish={handleSearchDisciplinas}>
           <Row gutter={24} align='bottom'>
+            <Col span={4}>
+              <Form.Item
+                label="Série"
+                name="serieId"
+                rules={[{ required: true, message: 'Indique a Série' }]}
+              >
+                <Select placeholder="Série">
+                  {series.map(serie => (
+                    <Option key={serie.id} value={serie.id}>{serie.anoLetivo}ª Série</Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={4}>
+              <Form.Item
+                label="Turma"
+                name="turmaId"
+                rules={[{ required: true, message: 'Indique a Turma' }]}
+              >
+                <Select placeholder="Turma">
+                  {turmas.map(turma => (
+                    <Option key={turma.turma} value={turma.turma}>Turma {turma.turma}</Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
             <Col span={4}>
               <Form.Item
                 label="Ano"
@@ -106,41 +154,9 @@ const ControleNotas = () => {
                 rules={[{ required: true, message: 'Obrigatório' }]}
               >
                 <Select placeholder="Ano">
-                  {
-                    anos.map(ano => (
-                      <Option value={ano.value}>{ano.label}</Option>
-                    ))
-                  }
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={4}>
-              <Form.Item
-                label="Série"
-                name="serie"
-                rules={[{ required: true, message: 'Indique a Série' }]}
-              >
-                <Select placeholder="Série">
-                  {
-                    series.map(serie => (
-                      <Option value={serie.value}>{serie.label}</Option>
-                    ))
-                  }
-                </Select>
-              </Form.Item>
-            </Col>
-            <Col span={4}>
-              <Form.Item
-                label="Turma"
-                name="turma"
-                rules={[{ required: true, message: 'Indique a Turma' }]}
-              >
-                <Select placeholder="Turma">
-                  {
-                    turmas.map(turma => (
-                      <Option value={turma.value}>{turma.label}</Option>
-                    ))
-                  }
+                  {turmas.map(turma => (
+                    <Option key={turma.ano} value={turma.ano}>{turma.ano}</Option>
+                  ))}
                 </Select>
               </Form.Item>
             </Col>
@@ -148,32 +164,32 @@ const ControleNotas = () => {
               <Form.Item>
                 <Button style={{ width: '100%' }} shape='round' type="primary" htmlType="submit">
                   Buscar
-              </Button>
+                </Button>
               </Form.Item>
             </Col>
           </Row>
         </Form>
       </FormCard>
       {
-        values.ano && values.serie && values.turma && (
+        !R.isNil(disciplinas) && (
           <div style={{ marginTop: 16 }}>
             <FormCard title='Controle de Notas - Selecionar Disciplina'>
               <Form
                 layout='vertical'
                 form={formDisciplina}
                 name="criar-usuario"
-                onFinish={({ disciplina }) => setIdDisciplina(disciplina)}>
+                onFinish={handleSearchNotas}>
                 <Row gutter={24} align='bottom'>
                   <Col span={4}>
                     <Form.Item
                       label="Disciplina"
-                      name="disciplina"
+                      name="disciplinaId"
                       rules={[{ required: true, message: 'Obrigatório' }]}
                     >
                       <Select placeholder="Disciplina">
                         {
                           disciplinas.map(d => (
-                            <Option value={d.idDisciplina}>{d.nome}</Option>
+                            <Option key={d.id} value={d.id}>{d.nomeDisciplina}</Option>
                           ))
                         }
                       </Select>
@@ -193,12 +209,13 @@ const ControleNotas = () => {
         )
       }
       {
-        idDisciplina !== 0 && (
+        notas && (
           <div style={{ marginTop: 16 }}>
             <Table
               title={() => <Typography.Title level={3}>Notas da Turma</Typography.Title>}
               columns={columns}
-              dataSource={idDisciplina === 1 ? alunosMatematica : alunosFisica}
+              // dataSource={alunosFisica}
+              dataSource={notas}
               scroll={{ x: 1300 }}
             />
           </div>

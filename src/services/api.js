@@ -54,6 +54,7 @@ const getSeries = () => customFetch('series')
 const getTurmas = () => customFetch('turmas')
 const getRelatorioTurma = ({serieId, turmaId, ano}) => customFetch(`relatorio-turma?ano=${ano}&turma=${turmaId}&serie=${serieId}`)
 const getFrequencias = ({turmaId, dia, disciplinaId}) => customFetch(`frequencia-aluno?turmaId=${turmaId}&dia=${dia}&disciplinaId=${disciplinaId}`)
+const getNotas = ({turmaId, serieId, disciplinaId}) => customFetch(`notas?turmaId=${turmaId}&disciplinaId=${disciplinaId}&serieId=${serieId}`)
 
 const trancarAluno = cpf => patch('trancar', { cpf })
 
@@ -75,5 +76,6 @@ export default {
   getRelatorioTurma,
   getFrequencias,
   trancarAluno,
-  getAlunos
+  getAlunos,
+  getNotas
 }

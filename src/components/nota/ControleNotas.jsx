@@ -104,7 +104,8 @@ const ControleNotas = () => {
   const handleSearchNotas = async ({disciplinaId}) => {
     const turmaId = formTurma.getFieldValue('turmaId')
     const serieId = formTurma.getFieldValue('serieId')
-    const response = await api.getNotas({turmaId, serieId, disciplinaId})
+    const ano = formTurma.getFieldValue('ano')
+    const response = await api.getNotas({turmaId, serieId, disciplinaId, ano})
     if(response.ok) {
       setNotas(response.data)
     }

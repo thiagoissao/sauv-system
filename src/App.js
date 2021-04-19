@@ -4,14 +4,17 @@ import Layout from './Layout'
 import CriarDisciplina from './components/disciplina/CriarDisciplina'
 import CriarTurma from './components/turma/CriarTurma'
 import CriarSerie from './components/serie/CriarSerie'
-import CriarFuncionarioOuCoordenador from './components/usuarioOuCoordenador/CriarFuncionarioOuCoordenador'
-import ListarFuncionarioOuCoordenador from './components/usuarioOuCoordenador/ListarFuncionarioOuCoordenador'
+import CriarCoordenador from './components/coordenador/CriarCoordenador'
+import ListarCoordenador from './components/coordenador/ListarCoordenador'
+import CriarFuncionario from './components/funcionario/CriarFuncionario'
+import ListarFuncionario from './components/funcionario/ListarFuncionario'
 import CriarAluno from './components/aluno/CriarAluno'
 import ListarAluno from "./components/aluno/ListarAluno"
 import { mockAlunoList } from "./models/aluno"
 import CriarProfessor from "./components/professor/CriarProfessor"
 import ListarProfessor from "./components/professor/ListarProfessor"
-import { mockCoordenadorList, mockUsuarioList } from '../src/models/usuarioOuCoordenador'
+import { mockCoordenadorList } from '../src/models/coordenador'
+import { mockFuncionarioList } from '../src/models/funcionario'
 import ListarTurmas from './components/turma/ListarTurmas'
 import ListarDisciplinas from './components/disciplina/ListarDisciplinas'
 import ListarSerie from './components/serie/ListarSerie'
@@ -38,8 +41,8 @@ const menuOptions = {
         enableFor: ALLROLES,
         label: 'Funcionários',
         component: () =>
-          <ListarFuncionarioOuCoordenador
-            list={mockUsuarioList}
+          <ListarFuncionario
+            list={mockFuncionarioList}
             tipo='Funcionários'
           />
       },
@@ -47,7 +50,7 @@ const menuOptions = {
         enableFor: ALLROLES,
         label: 'Coordenadores',
         component: () =>
-          <ListarFuncionarioOuCoordenador
+          <ListarCoordenador
             list={mockCoordenadorList}
             tipo='Coordenadores'
           />
@@ -93,7 +96,7 @@ const menuOptions = {
         label: 'Funcionários',
         enableFor: [ROLE.funcionario],
         component: () =>
-          <CriarFuncionarioOuCoordenador
+          <CriarFuncionario
             title='Cadastro de Funcionários'
           />
       },
@@ -101,7 +104,7 @@ const menuOptions = {
         label: 'Coordenadores',
         enableFor: [ROLE.funcionario],
         component: () =>
-          <CriarFuncionarioOuCoordenador
+          <CriarCoordenador
             title='Cadastro de Coordenadores(as)'
           />
       },

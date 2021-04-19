@@ -3,7 +3,6 @@ import { mockAluno } from "../../models/aluno"
 import Input from "../Input"
 import FormCard from '../FormCard'
 import Aluno from '../../services/aluno'
-import api from '../../services/api'
 
 import {
     Form,

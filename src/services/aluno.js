@@ -10,6 +10,7 @@ class Aluno {
     cpf = cpf.replace(".","")
     cpf = cpf.replace(".","")
     cpf = cpf.replace("-","")
+    console.log(cpf)
     const url = `http://localhost:5000/aluno/${parseInt(cpf)}`;
     return await axios.get(url);
   }

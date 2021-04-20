@@ -36,12 +36,12 @@ export default ({ title, initialValues, id }) => {
       .then(response => {
         if(id) {
           Modal.success({
-            title: `Atualização da série ${values.anoLetivo} realiazada com sucesso!`,
+            title: `Atualização da série ${values.serie} realiazada com sucesso!`,
             content: `Disciplinas desta série: ${values.disciplinas}!`,
           });
         } else {
           Modal.success({
-            title: `Cadastro da série ${values.anoLetivo} realiazada com sucesso!`,
+            title: `Cadastro da série ${values.serie} realiazada com sucesso!`,
             content: `Disciplinas desta série: ${values.disciplinas}!`,
           });
         }
@@ -80,7 +80,7 @@ export default ({ title, initialValues, id }) => {
       <Form layout='vertical' form={form} name="serie-ano" onFinish={onFinish} initialValues={initialValues}>
         <Row gutter={24}>
           <Col span={8}>
-            <Form.Item name="anoLetivo" label="Série" rules={[{ required: true, message: 'Obrigatório' }]}>
+            <Form.Item name="serie" label="Série" rules={[{ required: true, message: 'Obrigatório' }]}>
               <Input placeholder='8' />
             </Form.Item>
           </Col>

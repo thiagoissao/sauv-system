@@ -76,7 +76,7 @@ const GerarRelatorio = ({ title }) => {
                       >
                         <Select placeholder="Série" style={{ width: 120 }}>
                             {series.map(serie => (
-                              <Option key={serie.id} value={serie.id}>{serie.anoLetivo}ª Série</Option>
+                              <Option key={serie.id} value={serie.id}>{serie.serie}ª Série</Option>
                             ))}
                         </Select>
                       </Form.Item>

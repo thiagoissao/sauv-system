@@ -16,7 +16,8 @@ import {
 } from 'antd';
 import useSerieTurma from '../../hooks/useSerieTurma';
 
-const CriarAluno = ({ tipo = "Aluno" }) => {
+const CriarAluno = ({ initialValues, tipo = "Aluno" }) => {
+    const isNew = !initialValues?.cpf
     const [form] = Form.useForm();
     const aluno = new Aluno();
     const [value, setValue] = React.useState(1);
@@ -29,9 +30,7 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
     };
 
     const onFinish = async values => {
-        const response = await aluno.buscaCPF(values.cpf)
-
-        if (response.data.length == 0) {
+        if (isNew) {
             aluno.criar(values)
             Modal.success({title: "Aluno Cadastrado com Sucesso."})
         } else {
@@ -50,6 +49,7 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
 
     return (
         <Form
+            initialValues = {initialValues} 
             layout="vertical"
             form={form}
             name="criar-aluno"
@@ -74,7 +74,7 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                             name="cpf"
                             rules={[{ required: true, message: 'CPF é um campo obrigatório' }]}
                         >
-                            <Input placeholder="Ex: 333.666.999-11" />
+                            <Input disabled= {!isNew} placeholder="Ex: 333.666.999-11" />
                         </Form.Item>
                     </Col>
                     <Col span={8}>
@@ -83,7 +83,7 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                             name="rg"
                             rules={[{ required: true, message: 'RG é um campo obrigatório' }]}
                         >
-                            <Input placeholder="Ex: 12.345.678-9" />
+                            <Input disabled= {!isNew} placeholder="Ex: 12.345.678-9" />
                         </Form.Item>
                     </Col>
                     <Col span={8}>
@@ -113,7 +113,7 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                                     name="serie"
                                     rules={[{ required: true, message: 'Indique a Série' }]}
                                 >
-                                    <Select placeholder="Série" style={{ width: 120 }}>
+                                    <Select disabled= {!isNew} placeholder="Série" style={{ width: 120 }}>
                                         {series.map(serie => (
                                             <Option value={serie.id}>{serie.serie}ª Série</Option>
                                         ))}
@@ -124,7 +124,7 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                                     name="turma"
                                     rules={[{ required: true, message: 'Indique a Turma' }]}
                                 >
-                                    <Select placeholder="Turma" style={{ width: 120 }}>
+                                    <Select disabled= {!isNew} placeholder="Turma" style={{ width: 120 }}>
                                         {turmas.map(turma => (
                                             <Option value={turma.turma}>Turma {turma.turma}</Option>
                                         ))}
@@ -135,7 +135,7 @@ const CriarAluno = ({ tipo = "Aluno" }) => {
                                     name="anoTurma"
                                     rules={[{ required: true, message: 'Indique o Ano' }]}
                                 >
-                                    <Select placeholder="Ano" style={{ width: 120 }}>
+                                    <Select disabled= {!isNew} placeholder="Ano" style={{ width: 120 }}>
                                         {turmas.map(turma => (
                                             <Option value={turma.ano}>
                                             {turma.ano}

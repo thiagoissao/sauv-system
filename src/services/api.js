@@ -46,15 +46,20 @@ const postProfessor = body => post('professores', body)
 const updateProfessor = (body, id) => patch('professores', body, id)
 
 const getDisciplinas = () => customFetch('disciplinas')
+const getDisciplinasById = id => customFetch(`disciplinas/${id}`)
 const getDisciplinasWithTurmaSerie = ({turmaId, serieId}) => customFetch(`disciplinas?turmaId=${turmaId}&serieId=${serieId}`) 
 
 const getAlunos = () => customFetch('aluno')
+const getAlunoByCpf = cpf => customFetch(`aluno/${cpf}`)
 
 const getSeries = () => customFetch('series')
 const getTurmas = () => customFetch('turmas')
 const getRelatorioTurma = ({serieId, turmaId, ano}) => customFetch(`relatorio-turma?ano=${ano}&turma=${turmaId}&serie=${serieId}`)
 const getFrequencias = ({turmaId, dia, disciplinaId}) => customFetch(`frequencia-aluno?turmaId=${turmaId}&dia=${dia}&disciplinaId=${disciplinaId}`)
-const getNotas = ({turmaId, serieId, disciplinaId}) => customFetch(`notas?turmaId=${turmaId}&disciplinaId=${disciplinaId}&serieId=${serieId}`)
+
+const getNotas = ({turmaId, disciplinaId}) => customFetch(`notas/${turmaId}/${disciplinaId}`)
+const patchNota = nota => patch(`notas/${nota.id}`, nota)
+const postNota = nota => post('notas', nota)
 
 const trancarAluno = cpf => patch('trancar', { cpf })
 
@@ -77,5 +82,9 @@ export default {
   getFrequencias,
   trancarAluno,
   getAlunos,
-  getNotas
+  getNotas,
+  postNota,
+  patchNota,
+  getAlunoByCpf,
+  getDisciplinasById
 }

@@ -10,19 +10,25 @@ import { ROLE } from "../../utils/enum";
 const { Option } = Select;
 
 const CriarFuncionario = ({ title, initialValues }) => {
+  const isNew = !initialValues?.cpf;
   const [form] = Form.useForm();
   const funcionario = new Funcionario();
   const usuario = new Usuario();
 
-  const onFinish = async values => {
+  const onFinish = async (values) => {
     await usuario.criar({
       username: values.username,
       senha: values.password,
       tipo: ROLE.funcionario,
-    })
+    });
 
-    funcionario.criar(values)
-    Modal.success({ title: `Funcionario foi criado com sucesso!` });
+    if (isNew) {
+      funcionario.criar(values);
+      Modal.success({ title: `Funcionário foi criado com sucesso!` });
+    } else {
+      funcionario.atualizar(values);
+      Modal.success({ title: `Funcionário foi atualizado com sucesso!` });
+    }
   };
 
   const onReset = () => {

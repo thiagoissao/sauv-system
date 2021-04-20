@@ -10,19 +10,25 @@ import { ROLE } from "../../utils/enum";
 const { Option } = Select;
 
 const CriarCoordenador = ({ title, initialValues }) => {
+  const isNew = !initialValues?.cpf;
   const [form] = Form.useForm();
   const coordenador = new Coordenador();
   const usuario = new Usuario();
 
-  const onFinish = async values => {
+  const onFinish = async (values) => {
     await usuario.criar({
       username: values.username,
       senha: values.password,
       tipo: ROLE.coordenador,
-    })
+    });
 
-    coordenador.criar(values)
-    Modal.success({ title: `Coordenador foi criado com sucesso!` });
+    if (isNew) {
+      coordenador.criar(values);
+      Modal.success({ title: `Coordenador foi criado com sucesso!` });
+    } else {
+      coordenador.atualizar(values);
+      Modal.success({ title: `Coordenador foi atualizado com sucesso!` });
+    }
   };
 
   const onReset = () => {

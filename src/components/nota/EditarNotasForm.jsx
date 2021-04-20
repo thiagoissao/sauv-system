@@ -9,12 +9,36 @@ import {
   message,
   InputNumber,
 } from 'antd';
+import api from '../../services/api';
 
-const EditarNotasForm = ({ title, initialValues }) => {
+const EditarNotasForm = ({
+  title,
+  initialValues, 
+  cpfAluno, 
+  turmaId, 
+  disciplinaId
+}) => {
+  const isNew = !initialValues
+
   const [form] = Form.useForm();
 
-  const onFinish = () => {
-    message.success(`Nota alterada com sucesso!`)
+  const onFinish = async values => {
+    if(!isNew) {
+      const response = await api.patchNota({...initialValues, ...values})
+      if(response.ok) {
+        message.success(`Nota alterada com sucesso!`)
+        return
+      }
+      message.error(`Erro`)
+      return
+    }  
+
+    const response = await api.postNota({...values, cpfAluno, turmaId, disciplinaId})
+    if(response.ok) {
+      message.success(`Nota alterada com sucesso!`)
+      return
+    }
+    message.error(`Erro ao criar nota`)
   };
 
   return (

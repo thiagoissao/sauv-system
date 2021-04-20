@@ -16,7 +16,6 @@ const Login = () => {
         history.push('/visualizar/usuarios');
       })
       .catch(error => {
-        console.log(error.response.data)
         return message.error(error.response.data)
       })
     // store.dispatch(loginUser({ usuario, senha }))

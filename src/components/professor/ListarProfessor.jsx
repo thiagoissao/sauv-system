@@ -5,8 +5,6 @@ import CriarProfessor from './CriarProfessor';
 import { formatProfessor } from '../../models/professor'
 import api from '../../services/api'
 import { formatDisciplinasToList } from '../../utils/formatters';
-import store from '../../redux/auth';
-import useUser from '../../hooks/useUser';
 import { ROLE } from '../../utils/enum';
 
 const columns = [

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import FormCard from '../FormCard'
 import {
   Form,
@@ -7,15 +7,16 @@ import {
   Row,
   Col,
   Table,
-  Typography
+  Typography,
+  Modal
 } from 'antd';
 import * as R from 'ramda'
-import { alunosFisica, alunosMatematica } from '../../models/notas';
 import ListActions from '../crudBasics/ListActions';
 import EditarNotasForm from './EditarNotasForm';
 import { ROLE } from '../../utils/enum';
 import useSerieTurma from '../../hooks/useSerieTurma';
 import api from '../../services/api';
+import responsiveObserve from 'antd/lib/_util/responsiveObserve';
 
 
 const columns = [
@@ -28,7 +29,7 @@ const columns = [
   },
   {
     title: 'Disciplina',
-    dataIndex: 'disciplina',
+    dataIndex: 'nomeDisciplina',
     key: 'disciplina',
   },
   {
@@ -87,8 +88,12 @@ const columns = [
 const ControleNotas = () => {
   const [formTurma] = Form.useForm();
   const [formDisciplina] = Form.useForm();
+  const [formAluno] = Form.useForm();
   const [disciplinas, setDisciplinas] = useState(null)
   const [notas, setNotas] = useState(null)
+  const [cpfAlunoSelected, setCpfAlunoSelected] = useState(null)
+  const [openNewNota, setOpenNewNota] = useState(false)
+  const [alunos, setAlunos] = useState([])
 
   const {turmas, series} = useSerieTurma()
 
@@ -103,15 +108,92 @@ const ControleNotas = () => {
 
   const handleSearchNotas = async ({disciplinaId}) => {
     const turmaId = formTurma.getFieldValue('turmaId')
-    const serieId = formTurma.getFieldValue('serieId')
-    const response = await api.getNotas({turmaId, serieId, disciplinaId})
+    const response = await api.getNotas({turmaId, disciplinaId})
     if(response.ok) {
       setNotas(response.data)
     }
   }
 
+  const handleClickProsseguir = ({cpfAluno}) => {
+    console.log(cpfAluno)
+    setCpfAlunoSelected(cpfAluno)
+  }
+
+  const filterAlunos = async () => {
+    const response = await api.getAlunos()
+    if(response.ok){
+
+      const responseTurma = await api.getTurmas()
+      if(responseTurma.ok) {
+        const turma = responseTurma.data.find(t => t.id === formTurma.getFieldValue('turmaId'))
+
+        const alunos = response.data.filter(aluno => 
+          aluno.serie === formTurma.getFieldValue('serieId') && 
+          aluno.turma === turma.turma &&
+          aluno.anoTurma === formTurma.getFieldValue('ano'))
+  
+        setAlunos(alunos)
+      }
+    }
+  }
+
+  useEffect(() => {
+    if(openNewNota){
+      filterAlunos()
+    }
+  }, [openNewNota])
+
   return (
     <>
+      <Modal
+        width={1000}
+        visible={openNewNota}
+        onCancel={() => setOpenNewNota(false)}
+        footer={null}
+      >
+        <FormCard 
+        tip='Selecione um aluno para atribuir as notas'
+        title='Controle de Notas - Atribuir nota'>
+        <Form
+          layout='vertical'
+          form={formAluno}
+          name="selecionar-aluno"
+          onFinish={handleClickProsseguir}>
+          <Row gutter={24} align='bottom'>
+            <Col span={10}>
+              <Form.Item
+                label="Aluno"
+                name="cpfAluno"
+                rules={[{ required: true, message: 'Selecione um aluno' }]}
+              >
+                <Select placeholder="Aluno">
+                  {alunos.map(aluno => (
+                    <Option key={aluno.cpf} value={aluno.cpf}>{`${aluno.nome} CPF: ${aluno.cpf}`}</Option>
+                  ))}
+                </Select>
+              </Form.Item>
+            </Col>
+            <Col span={4}>
+              <Form.Item>
+                <Button style={{ width: '100%' }} shape='round' type="primary" htmlType="submit">
+                  Prosseguir
+                </Button>
+              </Form.Item>
+            </Col>
+          </Row>
+        </Form>
+        {
+          cpfAlunoSelected && (
+            <EditarNotasForm
+              turmaId={formTurma.getFieldValue('turmaId')}
+              disciplinaId={formDisciplina.getFieldValue('disciplinaId')}
+              cpfAluno={cpfAlunoSelected}
+              title={`Criar Nota`}
+            />
+          )
+        }
+      </FormCard>
+      </Modal>
       <FormCard 
         tip='As notas dos alunos para cada disciplina é atualizada nesta seção, para isso, preencha as informações requeridas e faça as mudanças necessárias'
         title='Controle de Notas - Selecionar Turma'>
@@ -142,7 +224,7 @@ const ControleNotas = () => {
               >
                 <Select placeholder="Turma">
                   {turmas.map(turma => (
-                    <Option key={turma.turma} value={turma.turma}>Turma {turma.turma}</Option>
+                    <Option key={turma.id} value={turma.id}>Turma {turma.turma}</Option>
                   ))}
                 </Select>
               </Form.Item>
@@ -214,10 +296,12 @@ const ControleNotas = () => {
             <Table
               title={() => <Typography.Title level={3}>Notas da Turma</Typography.Title>}
               columns={columns}
-              // dataSource={alunosFisica}
               dataSource={notas}
               scroll={{ x: 1300 }}
             />
+            <Button shape='round' type="primary" onClick={() => setOpenNewNota(true)}>
+              Inserir nova nota
+            </Button>
           </div>
         )
       }

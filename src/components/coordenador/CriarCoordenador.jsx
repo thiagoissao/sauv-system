@@ -2,7 +2,7 @@ import React from "react";
 import { mockCoordenador } from "../../models/coordenador";
 import Input from "../Input";
 import FormCard from "../FormCard";
-import { Form, Button, Select, Col, Row, Space, message, Modal } from "antd";
+import { Form, Button, Select, Col, Row, Space, Modal } from "antd";
 import { Usuario } from "../../services/usuario";
 import Coordenador from "../../services/coordenador";
 import { ROLE } from "../../utils/enum";
@@ -16,18 +16,36 @@ const CriarCoordenador = ({ title, initialValues }) => {
   const usuario = new Usuario();
 
   const onFinish = async (values) => {
-    await usuario.criar({
-      username: values.username,
-      senha: values.password,
-      tipo: ROLE.coordenador,
-    });
-
     if (isNew) {
-      coordenador.criar(values);
-      Modal.success({ title: `Coordenador foi criado com sucesso!` });
+      const coorResponse = await coordenador.criar(values).catch((error) => {
+        return new Error(error);
+      });
+
+      const userResponse = await usuario
+        .criar({
+          username: values.username,
+          senha: values.password,
+          tipo: ROLE.coordenador,
+        })
+        .catch((error) => {
+          return new Error(error);
+        });
+      if (coorResponse instanceof Error || userResponse instanceof Error) {
+        if (coorResponse instanceof Error)
+          Modal.error({ title: "Erro ao criar o coordenador" });
+        if (userResponse instanceof Error)
+          Modal.error({ title: "Erro ao criar o usuário" });
+      } else Modal.success({ title: `Coordenador foi criado com sucesso!` });
     } else {
-      coordenador.atualizar(values);
-      Modal.success({ title: `Coordenador foi atualizado com sucesso!` });
+      const coorResponse = await coordenador
+        .atualizar(values)
+        .catch((error) => {
+          return new Error(error);
+        });
+
+      if (coorResponse instanceof Error)
+        Modal.error({ title: "Erro ao atualizar coordenador " });
+      else Modal.success({ title: `Coordenador foi atualizado com sucesso!` });
     }
   };
 
@@ -42,7 +60,7 @@ const CriarCoordenador = ({ title, initialValues }) => {
   return (
     <FormCard
       title={title}
-      tip="Cadastro de funcionários ou coordenador, assim que o registro for salvo com sucesso, este usuário será posível realizar login"
+      tip="Cadastro de coordenador, assim que o registro for salvo com sucesso, este usuário será posível realizar login"
     >
       <Form
         initialValues={initialValues}
@@ -56,18 +74,18 @@ const CriarCoordenador = ({ title, initialValues }) => {
             <Form.Item
               name="username"
               label="Nome de Usuário"
-              rules={[{ required: true, message: "Obrigatório" }]}
+              rules={[{ required: isNew, message: "Obrigatório" }]}
             >
-              <Input placeholder="" />
+              <Input disabled={!isNew} placeholder="Usuário" />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item
               name="password"
               label="Senha"
-              rules={[{ required: true, message: "Obrigatório" }]}
+              rules={[{ required: isNew, message: "Obrigatório" }]}
             >
-              <Input placeholder="" />
+              <Input disabled={!isNew} placeholder="Senha" />
             </Form.Item>
           </Col>
         </Row>
@@ -96,17 +114,11 @@ const CriarCoordenador = ({ title, initialValues }) => {
               label="Gênero"
               rules={[{ required: true, message: "Obrigatório" }]}
             >
-              <div className="testando">
-                <Select
-                  size="large"
-                  placeholder="Selecione o gênero"
-                  allowClear
-                >
-                  <Option value="masculino">Masculino</Option>
-                  <Option value="feminino">Feminino</Option>
-                  <Option value="outro">Outro</Option>
-                </Select>
-              </div>
+              <Select size="large" placeholder="Selecione o gênero" allowClear>
+                <Option value="masculino">Masculino</Option>
+                <Option value="feminino">Feminino</Option>
+                <Option value="outro">Outro</Option>
+              </Select>
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -115,12 +127,12 @@ const CriarCoordenador = ({ title, initialValues }) => {
               label="CPF"
               rules={[{ required: true, message: "Obrigatório" }]}
             >
-              <Input placeholder="Digite somente números" />
+              <Input disabled={!isNew} placeholder="Digite somente números" />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item name="rg" label="RG">
-              <Input placeholder="Digite somente números" />
+              <Input disabled={!isNew} placeholder="Digite somente números" />
             </Form.Item>
           </Col>
           <Col span={8}>

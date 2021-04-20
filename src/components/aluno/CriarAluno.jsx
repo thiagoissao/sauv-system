@@ -1,20 +1,11 @@
-import React, { useState, useEffect } from 'react'
-import { mockAluno } from "../../models/aluno"
-import Input from "../Input"
-import FormCard from '../FormCard'
-import Aluno from '../../services/aluno'
+import React, { useState, useEffect } from "react";
+import { mockAluno } from "../../models/aluno";
+import Input from "../Input";
+import FormCard from "../FormCard";
+import Aluno from "../../services/aluno";
 
-import {
-    Form,
-    Button,
-    Select,
-    Col,
-    Row,
-    Space,
-    Modal,
-    Radio,
-} from 'antd';
-import useSerieTurma from '../../hooks/useSerieTurma';
+import { Form, Button, Select, Col, Row, Space, Modal, Radio } from "antd";
+import useSerieTurma from "../../hooks/useSerieTurma";
 
 const CriarAluno = ({ initialValues, tipo = "Aluno" }) => {
     const isNew = !initialValues?.cpf

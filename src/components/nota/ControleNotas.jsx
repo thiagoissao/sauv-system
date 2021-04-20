@@ -10,7 +10,6 @@ import {
   Typography
 } from 'antd';
 import * as R from 'ramda'
-import { alunosFisica, alunosMatematica } from '../../models/notas';
 import ListActions from '../crudBasics/ListActions';
 import EditarNotasForm from './EditarNotasForm';
 import { ROLE } from '../../utils/enum';
@@ -103,11 +102,23 @@ const ControleNotas = () => {
 
   const handleSearchNotas = async ({disciplinaId}) => {
     const turmaId = formTurma.getFieldValue('turmaId')
-    const serieId = formTurma.getFieldValue('serieId')
-    const ano = formTurma.getFieldValue('ano')
-    const response = await api.getNotas({turmaId, serieId, disciplinaId, ano})
+    const response = await api.getNotas({turmaId, disciplinaId})
     if(response.ok) {
-      setNotas(response.data)
+      const newNotas = await  Promise.all(response.data.map(async nota => {
+        const responseAluno = await api.getAlunoByCpf(nota.cpfAluno)
+        const responseDisciplina = await api.getDisciplinasById(nota.disciplinaId)
+
+        if(responseAluno.ok && responseDisciplina) {
+          return({
+            ...nota,
+            nome: responseAluno.data[0].nome,
+            disciplina: response.data[0].nomeDisciplina
+          })
+        }
+
+        return nota
+      }))
+      setNotas(newNotas)
     }
   }
 
@@ -143,7 +154,7 @@ const ControleNotas = () => {
               >
                 <Select placeholder="Turma">
                   {turmas.map(turma => (
-                    <Option key={turma.turma} value={turma.turma}>Turma {turma.turma}</Option>
+                    <Option key={turma.id} value={turma.id}>Turma {turma.turma}</Option>
                   ))}
                 </Select>
               </Form.Item>
@@ -215,7 +226,6 @@ const ControleNotas = () => {
             <Table
               title={() => <Typography.Title level={3}>Notas da Turma</Typography.Title>}
               columns={columns}
-              // dataSource={alunosFisica}
               dataSource={notas}
               scroll={{ x: 1300 }}
             />

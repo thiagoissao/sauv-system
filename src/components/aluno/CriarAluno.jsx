@@ -166,7 +166,7 @@ const CriarAluno = ({ initialValues, tipo = "Aluno" }) => {
                             name="cpfResponsavel"
                             rules={[{ required: true, message: 'CPF é um campo obrigatório' }]}
                         >
-                            <Input placeholder="Ex: 333.666.999-11" />
+                            <Input disabled={!isNew} placeholder="Ex: 333.666.999-11" />
                         </Form.Item>
                     </Col>
                     <Col span={8}>

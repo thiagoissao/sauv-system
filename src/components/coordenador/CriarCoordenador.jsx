@@ -16,14 +16,13 @@ const CriarCoordenador = ({ title, initialValues }) => {
   const usuario = new Usuario();
 
   const onFinish = async (values) => {
-    await usuario.criar({
-      username: values.username,
-      senha: values.password,
-      tipo: ROLE.coordenador,
-    });
-
     if (isNew) {
       coordenador.criar(values);
+      await usuario.criar({
+        username: values.username,
+        senha: values.password,
+        tipo: ROLE.coordenador,
+      });
       Modal.success({ title: `Coordenador foi criado com sucesso!` });
     } else {
       coordenador.atualizar(values);
@@ -42,7 +41,7 @@ const CriarCoordenador = ({ title, initialValues }) => {
   return (
     <FormCard
       title={title}
-      tip="Cadastro de funcionários ou coordenador, assim que o registro for salvo com sucesso, este usuário será posível realizar login"
+      tip="Cadastro de coordenador, assim que o registro for salvo com sucesso, este usuário será posível realizar login"
     >
       <Form
         initialValues={initialValues}
@@ -56,18 +55,18 @@ const CriarCoordenador = ({ title, initialValues }) => {
             <Form.Item
               name="username"
               label="Nome de Usuário"
-              rules={[{ required: true, message: "Obrigatório" }]}
+              rules={[{ required: isNew, message: "Obrigatório" }]}
             >
-              <Input placeholder="" />
+              <Input disabled={!isNew} placeholder="Usuário" />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item
               name="password"
               label="Senha"
-              rules={[{ required: true, message: "Obrigatório" }]}
+              rules={[{ required: isNew, message: "Obrigatório" }]}
             >
-              <Input placeholder="" />
+              <Input disabled={!isNew} placeholder="Senha" />
             </Form.Item>
           </Col>
         </Row>
@@ -96,17 +95,11 @@ const CriarCoordenador = ({ title, initialValues }) => {
               label="Gênero"
               rules={[{ required: true, message: "Obrigatório" }]}
             >
-              <div className="testando">
-                <Select
-                  size="large"
-                  placeholder="Selecione o gênero"
-                  allowClear
-                >
-                  <Option value="masculino">Masculino</Option>
-                  <Option value="feminino">Feminino</Option>
-                  <Option value="outro">Outro</Option>
-                </Select>
-              </div>
+              <Select size="large" placeholder="Selecione o gênero" allowClear>
+                <Option value="masculino">Masculino</Option>
+                <Option value="feminino">Feminino</Option>
+                <Option value="outro">Outro</Option>
+              </Select>
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -115,12 +108,12 @@ const CriarCoordenador = ({ title, initialValues }) => {
               label="CPF"
               rules={[{ required: true, message: "Obrigatório" }]}
             >
-              <Input placeholder="Digite somente números" />
+              <Input disabled={!isNew} placeholder="Digite somente números" />
             </Form.Item>
           </Col>
           <Col span={8}>
             <Form.Item name="rg" label="RG">
-              <Input placeholder="Digite somente números" />
+              <Input disabled={!isNew} placeholder="Digite somente números" />
             </Form.Item>
           </Col>
           <Col span={8}>

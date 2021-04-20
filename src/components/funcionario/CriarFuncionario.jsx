@@ -17,16 +17,34 @@ const CriarFuncionario = ({ title, initialValues }) => {
 
   const onFinish = async (values) => {
     if (isNew) {
-      funcionario.criar(values);
-      await usuario.criar({
-        username: values.username,
-        senha: values.password,
-        tipo: ROLE.funcionario,
+      const funcResponse = await funcionario.criar(values).catch((error) => {
+        return new Error(error);
       });
-      Modal.success({ title: `Funcionário foi criado com sucesso!` });
+      const userResponse = await usuario
+        .criar({
+          username: values.username,
+          senha: values.password,
+          tipo: ROLE.funcionario,
+        })
+        .catch((error) => {
+          return new Error(error);
+        });
+      if (funcResponse instanceof Error || userResponse instanceof Error) {
+        if (funcResponse instanceof Error)
+          Modal.error({ title: "Erro ao criar funcionário" });
+        if (userResponse instanceof Error)
+          Modal.error({ title: "Erro ao criar usuário" });
+      } else Modal.success({ title: `Funcionário foi criado com sucesso!` });
     } else {
-      funcionario.atualizar(values);
-      Modal.success({ title: `Funcionário foi atualizado com sucesso!` });
+      const funcResponse = await funcionario
+        .atualizar(values)
+        .catch((error) => {
+          return new Error(error);
+        });
+
+      if (funcResponse instanceof Error)
+        Modal.error({ title: "Erro ao atualizar o funcionário" });
+      else Modal.success({ title: `Funcionário foi atualizado com sucesso!` });
     }
   };
 

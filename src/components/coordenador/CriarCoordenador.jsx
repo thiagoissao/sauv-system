@@ -2,7 +2,7 @@ import React from "react";
 import { mockCoordenador } from "../../models/coordenador";
 import Input from "../Input";
 import FormCard from "../FormCard";
-import { Form, Button, Select, Col, Row, Space, message, Modal } from "antd";
+import { Form, Button, Select, Col, Row, Space, Modal } from "antd";
 import { Usuario } from "../../services/usuario";
 import Coordenador from "../../services/coordenador";
 import { ROLE } from "../../utils/enum";
@@ -17,16 +17,35 @@ const CriarCoordenador = ({ title, initialValues }) => {
 
   const onFinish = async (values) => {
     if (isNew) {
-      coordenador.criar(values);
-      await usuario.criar({
-        username: values.username,
-        senha: values.password,
-        tipo: ROLE.coordenador,
+      const coorResponse = await coordenador.criar(values).catch((error) => {
+        return new Error(error);
       });
-      Modal.success({ title: `Coordenador foi criado com sucesso!` });
+
+      const userResponse = await usuario
+        .criar({
+          username: values.username,
+          senha: values.password,
+          tipo: ROLE.coordenador,
+        })
+        .catch((error) => {
+          return new Error(error);
+        });
+      if (coorResponse instanceof Error || userResponse instanceof Error) {
+        if (coorResponse instanceof Error)
+          Modal.error({ title: "Erro ao criar o coordenador" });
+        if (userResponse instanceof Error)
+          Modal.error({ title: "Erro ao criar o usuário" });
+      } else Modal.success({ title: `Coordenador foi criado com sucesso!` });
     } else {
-      coordenador.atualizar(values);
-      Modal.success({ title: `Coordenador foi atualizado com sucesso!` });
+      const coorResponse = await coordenador
+        .atualizar(values)
+        .catch((error) => {
+          return new Error(error);
+        });
+
+      if (coorResponse instanceof Error)
+        Modal.error({ title: "Erro ao atualizar coordenador " });
+      else Modal.success({ title: `Coordenador foi atualizado com sucesso!` });
     }
   };
 

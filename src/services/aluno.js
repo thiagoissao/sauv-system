@@ -29,6 +29,11 @@ class Aluno {
     return await axios.delete(url, {data:aluno})
   }
 
+  async trocaTurma (aluno) {
+    const url = `http://localhost:5000/troca-turma`
+    return await axios.post(url, {...aluno})
+  }
+
 }
 
 export default Aluno;

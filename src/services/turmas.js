@@ -12,7 +12,7 @@ class Turma {
   }
   
   async buscaPorSerie (serie) {
-    const url = `http://localhost:5000/turmas/${serie}`;
+    const url = `http://localhost:5000/turmas/${serie}`;  
     return await axios.get(url);
   }
 

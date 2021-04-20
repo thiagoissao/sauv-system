@@ -61,8 +61,8 @@ const ListarSerie = ({ tipo = 'Séries' }) => {
         setSeries(series)
       })
       .catch(error => {
-        console.log(error.response.data)
-        setSeries(false)
+        // console.log(error.response.data)
+        setSeries(false);
       })
   }, [])
 

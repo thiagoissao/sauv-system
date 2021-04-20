@@ -30,7 +30,8 @@ export default ({ title, initialValues, id }) => {
       const data = response.data.map(professor => ({
         ...professor,
         disciplinas: professor.disciplinas.reduce((array, disciplina) => {
-          array.push(disciplina.nomeDisciplina);
+          if(disciplina)
+            array.push(disciplina.nomeDisciplina);
           return array;
         }, [])
       }))

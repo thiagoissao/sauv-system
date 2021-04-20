@@ -15,7 +15,7 @@ const columns = [
     title: 'Série',
     dataIndex: 'serie',
     key: 'serie',
-    sorter: (a, b) => a.serie.localeCompare(b.serie),
+    sorter: (a, b) => a.serie > b.serie,
     sortDirections: ['descend', 'ascend'],
   },
   {
@@ -25,30 +25,6 @@ const columns = [
     sorter: (a, b) => a.turma.localeCompare(b.turma),
     sortDirections: ['descend', 'ascend'],
   },
-  // {
-  //   title: 'Disciplinas',
-  //   dataIndex: 'disciplinas',
-  //   key: 'disciplinas',
-  //   render: (record) => {
-  //     return record.join(', ')
-  //   }
-  // },
-  // {
-  //   title: 'Professores',
-  //   dataIndex: 'professores',
-  //   key: 'professores',
-  //   render: (record) => {
-  //     return record.join(', ')
-  //   }
-  // },
-  // {
-  //   title: 'Alunos',
-  //   dataIndex: 'alunos',
-  //   key: 'alunos',
-  //   render: (record) => {
-  //     return record.join(', ')
-  //   }
-  // },
   {
     title: 'Ações',
     key: 'operation',

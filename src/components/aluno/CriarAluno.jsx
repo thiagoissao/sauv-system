@@ -83,7 +83,7 @@ const CriarAluno = ({ initialValues, tipo = "Aluno" }) => {
                 { required: true, message: "CPF é um campo obrigatório" },
               ]}
             >
-              <Input disabled={!isNew} placeholder="Ex: 333.666.999-11" />
+              <Input disabled={!isNew} min={10000000000} max={99999999999} type="number" placeholder="Ex: 33366699911" />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -92,7 +92,7 @@ const CriarAluno = ({ initialValues, tipo = "Aluno" }) => {
               name="rg"
               rules={[{ required: true, message: "RG é um campo obrigatório" }]}
             >
-              <Input disabled={!isNew} placeholder="Ex: 12.345.678-9" />
+              <Input disabled={!isNew} type="number" min={100000000} max={9999999999} placeholder="Ex: 123456789" />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -188,7 +188,7 @@ const CriarAluno = ({ initialValues, tipo = "Aluno" }) => {
                 { required: true, message: "CPF é um campo obrigatório" },
               ]}
             >
-              <Input disabled={!isNew} placeholder="Ex: 333.666.999-11" />
+              <Input disabled={!isNew} type="number" min={10000000000} max={99999999999} placeholder="Ex: 33366699911" />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -202,7 +202,7 @@ const CriarAluno = ({ initialValues, tipo = "Aluno" }) => {
                 },
               ]}
             >
-              <Input placeholder="Ex: (44) 9 8765-4321" />
+              <Input type="number" placeholder="Ex: 44987654321" />
             </Form.Item>
           </Col>
           <Col span={8}>
@@ -227,7 +227,7 @@ const CriarAluno = ({ initialValues, tipo = "Aluno" }) => {
                 { required: true, message: "CEP é um campo obrigatório" },
               ]}
             >
-              <Input placeholder="Ex: 123456789" />
+              <Input type="number" placeholder="Ex: 123456789" />
             </Form.Item>
           </Col>
           <Col span={8}>

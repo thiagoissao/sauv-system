@@ -20,18 +20,29 @@ const CriarAluno = ({ initialValues, tipo = "Aluno" }) => {
         setValue(e.target.value);
     };
 
-    const onFinish = async values => {
+
+    const onFinish = async (values) => {
         values.cpf = values.cpf.replace(".", "")
         values.cpf = values.cpf.replace(".", "")
         values.cpf = values.cpf.replace("-", "")
         if (isNew) {
-            aluno.criar(values)
-            Modal.success({ title: "Aluno Cadastrado com Sucesso." })
+          const response = await aluno.criar(values).catch((error) => {
+            return new Error(error);
+          });
+    
+          if (response instanceof Error)
+            Modal.error({ title: "Erro ao cadastrar aluno" });
+          else Modal.success({ title: "Aluno Cadastrado com Sucesso." });
         } else {
-            aluno.atualizar(values)
-            Modal.success({ title: "Aluno Atualizado com Sucesso." })
+          const response = aluno.atualizar(values).catch((error) => {
+            return new Error(error);
+          });
+    
+          if (response instanceof Error)
+            Modal.error({ title: "Erro ao atualizar aluno" });
+          else Modal.success({ title: "Aluno Atualizado com Sucesso." });
         }
-    };
+      };
 
     const onReset = () => {
         form.resetFields();

@@ -6,8 +6,8 @@ class Serie {
     return await axios.get(url);
   }
 
-  async buscaPorAnoLetivo (anoLetivo) {
-    const url = `http://localhost:5000/series/${anoLetivo}`;
+  async buscaPorAnoLetivo (serie) {
+    const url = `http://localhost:5000/series/${serie}`;
     return await axios.get(url);
   }
 

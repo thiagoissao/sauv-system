@@ -5,34 +5,12 @@ import CriarSerie from './CriarSerie'
 import Serie from '../../services/series'
 import { ROLE } from '../../utils/enum';
 
-const formatRecord = record => {
-
-  const formattedDisciplinas = record.map(disciplina => {
-    if (disciplina === 'arte') return 'Arte'
-    if (disciplina === 'biologia') return 'Biologia'
-    if (disciplina === 'ciencias') return 'Ciências'
-    if (disciplina === 'edFisica') return 'Educação Fisica'
-    if (disciplina === 'ensReligioso') return 'Ensino Religioso'
-    if (disciplina === 'fisica') return 'Física'
-    if (disciplina === 'geografia') return 'Geografia'
-    if (disciplina === 'historia') return 'História'
-    if (disciplina === 'ingles') return 'Inglês'
-    if (disciplina === 'matematica') return 'Matemática'
-    if (disciplina === 'portugues') return 'Português'
-    if (disciplina === 'quimica') return 'Quimíca'
-    return disciplina
-  });
-
-
-  return formattedDisciplinas;
-}
-
 const columns = [
   {
     title: 'Série',
-    dataIndex: 'anoLetivo',
-    key: 'anoLetivo',
-    sorter: (a, b) => a["anoLetivo"].localeCompare(b["anoLetivo"]),
+    dataIndex: 'serie',
+    key: 'serie',
+    sorter: (a, b) => a["serie"].localeCompare(b["serie"]),
     sortDirections: ['descend', 'ascend'],
   },
   {
@@ -40,7 +18,6 @@ const columns = [
     dataIndex: 'disciplinas',
     key: 'disciplinas',
     render: (record) => {
-      record = formatRecord(record);
       return record.join(', ')
     }
   },
@@ -78,7 +55,10 @@ const ListarSerie = ({ tipo = 'Séries' }) => {
   useEffect(() => {
     classSeries.buscaTodas()
       .then(response => {
-        setSeries(response.data)
+        const series = response.data.map((serie) => {
+          return {...serie, disciplinas:JSON.parse(serie.disciplinas)}
+        })
+        setSeries(series)
       })
       .catch(error => {
         console.log(error.response.data)

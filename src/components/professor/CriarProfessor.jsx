@@ -29,7 +29,6 @@ const CriarProfessor = ({ initialValues, setOpenEdit }) => {
             senha: values.password,
             tipo: ROLE.professor
         })
-            user.criar()
         if (response.ok) {
             Modal.success({
                 content: `Cadastro atualizado com sucesso!`,

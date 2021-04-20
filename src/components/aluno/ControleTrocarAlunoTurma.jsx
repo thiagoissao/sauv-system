@@ -28,7 +28,6 @@ const ControleTrocarAlunoTurma = () => {
     
     const dadosAluno = await alunoClass.buscaCPF(cpfAluno)
       .then(response => {
-        console.log(response.data)
         setAluno(response.data[0]);
         return response.data[0];
       })
@@ -39,10 +38,8 @@ const ControleTrocarAlunoTurma = () => {
 
     const turmaPorSerie = new Turma();
     //pegar quantidade de alunos na turma
-    console.log(dadosAluno)
     const turmas = await turmaPorSerie.buscaPorSerie(dadosAluno.serie)
       .then(response => {
-        console.log(response.data)
         return response.data;
       })
       .catch(error => {

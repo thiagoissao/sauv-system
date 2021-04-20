@@ -3,9 +3,12 @@ export const formatDisciplinasToList = items => {
 
   const formatted = items.reduce((prev, curr, index) => {
     if (index === 0) {
+      if(curr)
       return curr.nomeDisciplina;
     }
-    return `${prev}, ${curr.nomeDisciplina}`;
+    if(curr)
+      return `${prev}, ${curr.nomeDisciplina}`;
+    return ''
   }, '');
   return formatted;
   };

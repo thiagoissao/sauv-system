@@ -21,6 +21,9 @@ const CriarAluno = ({ initialValues, tipo = "Aluno" }) => {
   };
 
   const onFinish = async (values) => {
+    values.cpf = values.cpf.replace(".", "")
+    values.cpf = values.cpf.replace(".", "")
+    values.cpf = values.cpf.replace("-", "")
     if (isNew) {
       const response = await aluno.criar(values).catch((error) => {
         return new Error(error);

@@ -10,6 +10,7 @@ class Aluno {
     cpf = cpf.replace(".","")
     cpf = cpf.replace(".","")
     cpf = cpf.replace("-","")
+    console.log(cpf)
     const url = `http://localhost:5000/aluno/${parseInt(cpf)}`;
     return await axios.get(url);
   }
@@ -27,6 +28,11 @@ class Aluno {
   async deletar (aluno) {
     const url = `http://localhost:5000/aluno`;
     return await axios.delete(url, {data:aluno})
+  }
+
+  async trocaTurma (aluno) {
+    const url = `http://localhost:5000/troca-turma`
+    return await axios.post(url, {...aluno})
   }
 
 }

@@ -8,10 +8,12 @@ import {
   Col,
   Input,
   message,
+  Modal,
   Typography
 } from 'antd';
 import { mockAlunoList } from '../../models/aluno';
 import Turma from '../../services/turmas';
+import Aluno from '../../services/aluno'
 
 
 const ControleTrocarAlunoTurma = () => {
@@ -20,44 +22,60 @@ const ControleTrocarAlunoTurma = () => {
   const [aluno, setAluno] = useState();
   const [turmas, setTurmas] = useState(false);
   const { Option } = Select;
+  const alunoClass = new Aluno();
 
   const handleFinish = async ({ cpfAluno }) => {
-    const alunoFind = mockAlunoList.find(aluno => aluno.cpfAluno === cpfAluno)
-    //buscar aluno
-    if (!alunoFind) {
-      return message.error('CPF não encontrado!')
-    }
-    setAluno(alunoFind);
+    
+    const dadosAluno = await alunoClass.buscaCPF(cpfAluno)
+      .then(response => {
+        setAluno(response.data[0]);
+        return response.data[0];
+      })
+      .catch(error => {
+        console.log(error);
+        setAluno(false);
+      })
+
     const turmaPorSerie = new Turma();
     //pegar quantidade de alunos na turma
-    const turmaSemQtdd = await turmaPorSerie.buscaPorSerie(alunoFind.serie_turma)
-      .then(response => response.data)
+    const turmas = await turmaPorSerie.buscaPorSerie(dadosAluno.serie)
+      .then(response => {
+        return response.data;
+      })
       .catch(error => {
         console.log(error);
         return false;
       })
-    if(turmaSemQtdd) {
-      const todosAlunosDeUmaSerie = (aluno) => aluno["serie_turma"] === alunoFind["serie_turma"];
-      const turmasComQtdd = turmaSemQtdd.map(turma => {
-        const todosAlunosDeUmaTurma = (aluno) => aluno.turma.toUpperCase() === turma.turma.toUpperCase();
-        return {
-          ...turma,
-          qtddAlunos: mockAlunoList.filter(todosAlunosDeUmaSerie).filter(todosAlunosDeUmaTurma).length
-        }
-      })
-      setTurmas(turmasComQtdd);
-    } else {
-      setTurmas(false);
-    }
-    
+    setTurmas(turmas);
   }
 
-  const handleSubmit = ({ turma }) => {
-    //chamar update do aluno.
-    if (turma === 'C') {
-      return message.warning('Erro! turma lotada!')
+  const handleSubmit = async ({ turma }) => {
+    if(aluno.turma != turma) {
+      await alunoClass.trocaTurma({
+        cpf: aluno.cpf,
+        serie: aluno.serie,
+        turma: turma,
+        anoTurma: aluno.anoTurma
+      })
+        .then(response => {
+          Modal.success({title: response.data.message})
+          setAluno(false);
+          setTurmas(false);
+        })
+        .catch(error => {
+          console.log(error);
+          if (error && error.response && error.response.data && error.response.data.message)
+            Modal.error({
+              title: "Erro ao trocar aluno de turma",
+              content: error.response.data.message
+            })
+          else
+            Modal.error({title:"Erro ao trocar aluno de turma"})
+        })
+    } else {
+      Modal.error({title:"Aluno já pertence a está turma!"})
     }
-    return message.success('Troca de turma realizada com sucesso!')
+
   }
 
   return (
@@ -97,7 +115,7 @@ const ControleTrocarAlunoTurma = () => {
             <FormCard title='Série - Turma'>
               <Row gutter={24} style={{ marginBottom: 16 }}>
                 <Col>
-                  <Typography.Text>Selecione a nova turma para o aluno <b>{aluno.nomeAluno}</b></Typography.Text>
+                  <Typography.Text>Selecione a nova turma para o aluno <b>{aluno.nomeAluno}</b> da série {aluno.serie}</Typography.Text>
                 </Col>
               </Row>
               <Form
@@ -112,7 +130,7 @@ const ControleTrocarAlunoTurma = () => {
                       rules={[{ required: true, message: 'Obrigatório' }]}
                     >
                       <Select placeholder="Turma">
-                        { turmas &&
+                        {turmas &&
                           turmas.map((turma, index) => (
                             <Option disabled={turma.qtddAlunos >= 2} value={turma.turma}>{turma.turma}</Option>
                           ))

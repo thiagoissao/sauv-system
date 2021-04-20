@@ -161,24 +161,28 @@ const CriarProfessor = ({ initialValues, setOpenEdit }) => {
                             </Select>
                     </Form.Item>
                     </Col>
-                    <Col span={8}>
-                        <Form.Item
-                            label="Username"
-                            name="username"
-                            rules={[{ required: true, message: 'Username é um campo obrigatório' }]}
-                        >
-                            <Input  />
-                        </Form.Item>
-                    </Col>
-                    <Col span={8}>
-                        <Form.Item
-                            label="Senha"
-                            name="password"
-                            rules={[{ required: true, message: 'Senha é um campo obrigatório' }]}
-                        >
-                            <Input type='password' />
-                        </Form.Item>
-                    </Col>
+                    {isNew && (
+                        <>
+                        <Col span={8}>
+                            <Form.Item
+                                label="Username"
+                                name="username"
+                                rules={[{ required: true, message: 'Username é um campo obrigatório' }]}
+                            >
+                                <Input  />
+                            </Form.Item>
+                        </Col>
+                        <Col span={8}>
+                            <Form.Item
+                                label="Senha"
+                                name="password"
+                                rules={[{ required: true, message: 'Senha é um campo obrigatório' }]}
+                            >
+                                <Input type='password' />
+                            </Form.Item>
+                        </Col>
+                        </>
+                    ) }
                 </Row>
 
                 <Row gutter={24}>

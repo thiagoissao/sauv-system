@@ -10,7 +10,7 @@ const columns = [
     title: 'Série',
     dataIndex: 'serie',
     key: 'serie',
-    sorter: (a, b) => a["serie"].localeCompare(b["serie"]),
+    sorter: (a, b) => a.serie > b.serie,
     sortDirections: ['descend', 'ascend'],
   },
   {

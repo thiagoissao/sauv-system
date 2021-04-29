@@ -35,18 +35,24 @@ const ControleTrocarAlunoTurma = () => {
         console.log(error);
         setAluno(false);
       })
-
-    const turmaPorSerie = new Turma();
-    //pegar quantidade de alunos na turma
-    const turmas = await turmaPorSerie.buscaPorSerie(dadosAluno.serie)
-      .then(response => {
-        return response.data;
+    if(dadosAluno) {
+      const turmaPorSerie = new Turma();
+      //pegar quantidade de alunos na turma
+      const turmas = await turmaPorSerie.buscaPorSerie(dadosAluno.serie)
+        .then(response => {
+          return response.data;
+        })
+        .catch(error => {
+          console.log(error);
+          return false;
+        })
+      setTurmas(turmas);
+    }
+    else {
+      Modal.error({
+        title: "Erro ao encontrar aluno"
       })
-      .catch(error => {
-        console.log(error);
-        return false;
-      })
-    setTurmas(turmas);
+    }
   }
 
   const handleSubmit = async ({ turma }) => {
